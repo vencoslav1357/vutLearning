@@ -64,6 +64,15 @@ export function QuizRunner({ config }: { config: SessionConfig }) {
     setEvaluation(null);
   }
 
+  // Po dobu kvízu se na mobilu schová spodní navigace – jinak by překryla
+  // ovládání otázky. Příznak čte pravidlo v globals.css.
+  useEffect(() => {
+    document.body.dataset.quizActive = "1";
+    return () => {
+      delete document.body.dataset.quizActive;
+    };
+  }, []);
+
   // Měření času a příznak nápovědy jsou refy – patří až za render.
   useEffect(() => {
     if (!current) return;

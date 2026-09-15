@@ -262,3 +262,15 @@ body {
 .dark .shiki {
   background-color: var(--bg-subtle) !important;
 }
+
+/* ==================================================================
+   Kolize dvou spodních lišt
+
+   Navigace na mobilu i ovládání kvízu sedí na spodním okraji. Kdyby
+   běžely obě, navigace (z-40) by překryla tlačítko „Zkontrolovat"
+   (z-30) a na telefonu by nešlo odpovědět. Během kvízu má proto
+   přednost ovládání otázky – zpět se dá odkazem v hlavičce kvízu.
+   ================================================================== */
+body[data-quiz-active] [data-mobile-nav] {
+  display: none;
+}
