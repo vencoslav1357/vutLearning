@@ -1,0 +1,198 @@
+{
+  "$schema": "../../schemas/question-set.schema.json",
+  "id": "02-ukazatele-pole-retezce",
+  "title": "Ukazatele, pole a řetězce",
+  "course": "izp",
+  "lecture": 6,
+  "description": "Vztah pole a ukazatele, ukončení řetězce nulovým znakem, předávání odkazem a dynamická paměť.",
+  "schemaVersion": 1,
+  "questions": [
+    {
+      "id": "izp-02-sizeof-vs-strlen",
+      "type": "codeOutput",
+      "prompt": "Co program vypíše na standardní výstup?",
+      "language": "c",
+      "filename": "retezec.c",
+      "source": "#include <stdio.h>\n#include <string.h>\n\nint main(void)\n{\n    char s[] = \"ahoj\";\n\n    printf(\"%zu %zu\\n\", sizeof(s), strlen(s));\n\n    return 0;\n}\n",
+      "mode": "choice",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`4 4`",
+          "feedback": "`strlen` opravdu vrátí 4, ale `sizeof` počítá i ukončovací nulový znak, který se do pole vešel navíc."
+        },
+        {
+          "id": "b",
+          "text": "`5 4`"
+        },
+        {
+          "id": "c",
+          "text": "`4 5`",
+          "feedback": "Prohozené hodnoty. Větší je `sizeof` – ten nulový znak započítá, zatímco `strlen` počítá jen znaky před ním."
+        },
+        {
+          "id": "d",
+          "text": "`5 5`",
+          "feedback": "`strlen` ukončovací `'\\0'` nepočítá; zastaví se u něj. Vrátí tedy 4, ne 5."
+        }
+      ],
+      "correct": "b",
+      "hint": "Kolik bajtů si překladač na pole `s` vyhradil a kolik znaků v něm `strlen` napočítá?",
+      "explanation": "Literál `\"ahoj\"` má čtyři znaky a ukončovací nulový znak `'\\0'`, takže pole `s` má velikost **5 bajtů** – `sizeof(s)` vrátí 5. Funkce `strlen` naproti tomu počítá znaky až po první `'\\0'`, který do délky nezahrne, a vrátí **4**. Rozdíl mezi „kolik místa to zabírá\" a „jak je to dlouhé\" je u řetězců v C zásadní.",
+      "difficulty": 3,
+      "tags": ["izp", "retezce", "pole", "sizeof", "strlen"],
+      "status": "draft"
+    },
+    {
+      "id": "izp-02-aritmetika-ukazatelu",
+      "type": "numeric",
+      "prompt": "Mějme pole `int a[5];` a platformu, kde `sizeof(int) == 4`. O kolik bajtů se liší hodnota ukazatele `a + 3` od hodnoty `a`?",
+      "answer": 12,
+      "tolerance": { "kind": "absolute", "value": 0 },
+      "unit": "bajtů",
+      "hint": "Ukazatelová aritmetika počítá v prvcích, ne v bajtech.",
+      "explanation": "Přičtení celého čísla k ukazateli se počítá v **prvcích**, ne v bajtech: `a + 3` ukazuje na čtvrtý prvek pole. V bajtech je to $3 \\cdot \\texttt{sizeof(int)} = 3 \\cdot 4 = 12$ bajtů. Kdyby šlo o pole `double` (8 bajtů), byl by rozdíl 24 bajtů – proto se ukazatel bez typu nedá smysluplně posouvat.",
+      "difficulty": 3,
+      "tags": ["izp", "ukazatele", "aritmetika-ukazatelu", "pole"],
+      "status": "draft"
+    },
+    {
+      "id": "izp-02-pole-jako-parametr",
+      "type": "trueFalse",
+      "prompt": "Předáme-li pole funkci s hlavičkou `void f(int a[])`, vrátí `sizeof(a)` uvnitř funkce velikost celého pole v bajtech.",
+      "answer": false,
+      "explanation": "Nevrátí. Pole se při předání funkci **rozpadne na ukazatel** na svůj první prvek – zápis `int a[]` v hlavičce je jen jiný zápis pro `int *a`. `sizeof(a)` uvnitř funkce proto vrátí velikost ukazatele (typicky 8 bajtů), ne velikost pole. Informaci o počtu prvků musí funkce dostat zvlášť dalším parametrem, což je běžná konvence `void f(int *a, size_t n)`.",
+      "difficulty": 3,
+      "tags": ["izp", "pole", "ukazatele", "funkce", "sizeof"],
+      "status": "draft"
+    },
+    {
+      "id": "izp-02-ukonceni-retezce",
+      "type": "single",
+      "prompt": "Jak program v jazyce C pozná konec řetězce uloženého v poli typu `char`?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Na prvním místě pole je uložena jeho délka.",
+          "feedback": "Takhle to dělá Pascal a některé moderní jazyky. C zvolilo levnější variantu: jeden znak navíc na konci."
+        },
+        {
+          "id": "b",
+          "text": "Řetězec je ukončen znakem konce řádku `'\\n'`.",
+          "feedback": "`'\\n'` je obyčejný znak jako každý jiný a může se uvnitř řetězce klidně vyskytnout. Konec označuje jiný znak."
+        },
+        {
+          "id": "c",
+          "text": "Řetězec je ukončen nulovým znakem `'\\0'`."
+        },
+        {
+          "id": "d",
+          "text": "Délku si musí program pamatovat v jiné proměnné.",
+          "feedback": "To je sice dobrý zvyk kvůli rychlosti, ale knihovní funkce jako `strlen` nebo `printf(\"%s\")` žádnou délku nedostávají – poznají konec samy."
+        }
+      ],
+      "correct": "c",
+      "hint": "Jak by jinak `strlen` zjistil délku, když dostane jen ukazatel?",
+      "explanation": "Řetězec je v C posloupnost znaků ukončená **nulovým znakem** `'\\0'` (hodnota 0). Díky tomu stačí funkcím jako `strlen`, `strcpy` nebo `printf` jediný ukazatel – konec si najdou samy. Odtud také plyne, že pole musí být vždy aspoň o jeden znak delší než samotný text; zapomenuté místo na `'\\0'` je klasická příčina přepsání paměti.",
+      "difficulty": 2,
+      "tags": ["izp", "retezce", "pole"],
+      "status": "draft"
+    },
+    {
+      "id": "izp-02-predavani-odkazem",
+      "type": "codeOutput",
+      "prompt": "Co program vypíše na standardní výstup?",
+      "language": "c",
+      "filename": "predavani.c",
+      "source": "#include <stdio.h>\n\nvoid hodnotou(int x)\n{\n    x = 99;\n}\n\nvoid odkazem(int *x)\n{\n    *x = 42;\n}\n\nint main(void)\n{\n    int a = 1;\n\n    hodnotou(a);\n    printf(\"%d\\n\", a);\n\n    odkazem(&a);\n    printf(\"%d\\n\", a);\n\n    return 0;\n}\n",
+      "mode": "exact",
+      "expected": "1\n42",
+      "hint": "Co přesně dostane funkce `hodnotou` – proměnnou `a`, nebo její kopii?",
+      "explanation": "C předává parametry **vždy hodnotou**. Funkce `hodnotou` dostane kopii proměnné `a` a přepíše jen ji; původní `a` zůstane rovna 1. Funkce `odkazem` dostane kopii **adresy** – ta kopie ale ukazuje na tutéž paměť, takže zápis `*x = 42` změní skutečné `a`. Tohle je jediný způsob, jak v C nechat funkci změnit proměnnou volajícího.",
+      "difficulty": 3,
+      "tags": ["izp", "ukazatele", "funkce", "predavani-parametru"],
+      "status": "draft"
+    },
+    {
+      "id": "izp-02-dvojrozmerne-pole-velikost",
+      "type": "numeric",
+      "prompt": "Kolik bajtů zabírá pole `int m[3][4];` na platformě, kde `sizeof(int) == 4`?",
+      "answer": 48,
+      "tolerance": { "kind": "absolute", "value": 0 },
+      "unit": "bajtů",
+      "hint": "Dvojrozměrné pole je v C souvislý blok paměti.",
+      "explanation": "Dvojrozměrné pole je v C uloženo jako souvislý blok po řádcích, takže má $3 \\cdot 4 = 12$ prvků typu `int`. Celkem tedy $12 \\cdot 4 = 48$ bajtů. Žádné ukazatele na řádky se navíc neukládají – proto je `sizeof(m)` opravdu 48 a ne velikost tří ukazatelů.",
+      "difficulty": 2,
+      "tags": ["izp", "pole", "sizeof", "pamet"],
+      "status": "draft"
+    },
+    {
+      "id": "izp-02-malloc-vlastnosti",
+      "type": "multi",
+      "prompt": "Co platí o funkci `malloc` z hlavičkového souboru `<stdlib.h>`?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Požadovaná velikost se zadává v bajtech."
+        },
+        {
+          "id": "b",
+          "text": "Přidělenou paměť vynuluje.",
+          "feedback": "Tohle dělá `calloc`. `malloc` obsah nově přidělené paměti nijak neurčuje – je neinicializovaný a čtení z něj nemá smysl."
+        },
+        {
+          "id": "c",
+          "text": "Při neúspěchu vrátí `NULL`."
+        },
+        {
+          "id": "d",
+          "text": "Přidělená paměť zaniká při návratu z funkce, ve které byl `malloc` zavolán.",
+          "feedback": "Takhle se chovají lokální proměnné na zásobníku. Dynamicky přidělená paměť žije na haldě až do volání `free`, což je právě důvod, proč ji `malloc` používáme."
+        },
+        {
+          "id": "e",
+          "text": "Přidělenou paměť je nutné uvolnit voláním `free`."
+        }
+      ],
+      "correct": ["a", "c", "e"],
+      "partialCredit": true,
+      "hint": "Čím se `malloc` liší od `calloc` a od běžné lokální proměnné?",
+      "explanation": "`malloc(n)` přidělí blok o velikosti `n` **bajtů** (proto se obvykle píše `malloc(pocet * sizeof(typ))`), při neúspěchu vrátí `NULL` – návratovou hodnotu je tedy nutné vždy zkontrolovat – a přidělený blok žije na haldě, dokud ho program neuvolní pomocí `free`. Obsah bloku `malloc` neinicializuje; vynulovanou paměť vrací až `calloc`.",
+      "difficulty": 3,
+      "tags": ["izp", "dynamicka-pamet", "malloc", "ukazatele"],
+      "status": "draft"
+    },
+    {
+      "id": "izp-02-ukazatel-na-lokalni-promennou",
+      "type": "single",
+      "prompt": "Proč je chyba vracet z funkce ukazatel na její lokální proměnnou?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Lokální proměnné jsou jen pro čtení, zápis přes ukazatel selže.",
+          "feedback": "Lokální proměnné se běžně mění, zápis do nich není žádný problém. Potíž nastane až poté, co funkce skončí."
+        },
+        {
+          "id": "b",
+          "text": "Překladač takový program vždy odmítne přeložit s chybou.",
+          "feedback": "Většina překladačů jen varuje (`-Wreturn-local-addr`) a program přeloží. Zrádné je, že často i „funguje\" – dokud paměť něco nepřepíše."
+        },
+        {
+          "id": "c",
+          "text": "Lokální proměnné nemají adresu, operátor `&` na ně nelze použít.",
+          "feedback": "Adresu mají a `&` na ně použít lze – právě proto je předávání odkazem `f(&a)` naprosto běžné. Problém je jen v tom, jak dlouho ta adresa platí."
+        },
+        {
+          "id": "d",
+          "text": "Proměnná návratem z funkce zaniká a ukazatel míří mimo platnou paměť."
+        }
+      ],
+      "correct": "d",
+      "hint": "Jak dlouho existuje automatická proměnná na zásobníku?",
+      "explanation": "Lokální (automatická) proměnná existuje jen po dobu běhu funkce – její rámec na zásobníku se návratem uvolní a další volání ho přepíše. Vrácený ukazatel pak míří na paměť, která už proměnné nepatří, a jakákoli práce s ním je nedefinované chování. Řešení je buď paměť přidělit přes `malloc`, nebo nechat výsledek zapsat do bufferu, který dodá volající.",
+      "difficulty": 4,
+      "tags": ["izp", "ukazatele", "pamet", "zivotnost-promennych", "nedefinovane-chovani"],
+      "status": "draft"
+    }
+  ]
+}

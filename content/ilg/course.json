@@ -1,0 +1,11 @@
+{
+  "$schema": "../../schemas/course.schema.json",
+  "code": "ilg",
+  "abbr": "ILG",
+  "name": "Lineární algebra",
+  "semester": "zimni",
+  "year": 1,
+  "credits": 5,
+  "description": "Matice, determinanty a řešení soustav lineárních rovnic Gaussovou eliminací. Dále vektorové prostory, lineární nezávislost, báze, lineární zobrazení a vlastní čísla.",
+  "accent": "violet"
+}

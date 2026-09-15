@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Předmět",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "code": {
+      "type": "string",
+      "enum": [
+        "izp",
+        "ilg",
+        "idm",
+        "iel",
+        "ius"
+      ]
+    },
+    "abbr": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 6
+    },
+    "name": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 120
+    },
+    "semester": {
+      "type": "string",
+      "enum": [
+        "zimni",
+        "letni"
+      ]
+    },
+    "year": {
+      "default": 1,
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 3
+    },
+    "credits": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 12
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 500
+    },
+    "accent": {
+      "type": "string",
+      "enum": [
+        "slate",
+        "indigo",
+        "violet",
+        "teal",
+        "amber",
+        "rose"
+      ]
+    },
+    "url": {
+      "type": "string",
+      "format": "uri"
+    }
+  },
+  "required": [
+    "code",
+    "abbr",
+    "name",
+    "semester",
+    "accent"
+  ]
+}

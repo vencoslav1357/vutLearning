@@ -1,0 +1,11 @@
+{
+  "$schema": "../../schemas/course.schema.json",
+  "code": "iel",
+  "abbr": "IEL",
+  "name": "Elektronika pro informační technologie",
+  "semester": "zimni",
+  "year": 1,
+  "credits": 6,
+  "description": "Základy elektrotechniky pro informatiky: stejnosměrné i střídavé obvody, Ohmův zákon a Kirchhoffovy zákony. Na ně navazují polovodičové součástky, zesilovače a číslicové obvody.",
+  "accent": "amber"
+}

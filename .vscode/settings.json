@@ -1,0 +1,16 @@
+{
+  "json.schemas": [
+    {
+      "fileMatch": [
+        "content/*/*.questions.json"
+      ],
+      "url": "./schemas/question-set.schema.json"
+    },
+    {
+      "fileMatch": [
+        "content/*/course.json"
+      ],
+      "url": "./schemas/course.schema.json"
+    }
+  ]
+}

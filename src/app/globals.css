@@ -1,0 +1,264 @@
+@import "tailwindcss";
+
+/* Tmavý režim řídí next-themes třídou .dark na <html>, ne jen systémové
+   nastavení – uživatel si to musí umět přepnout ručně. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ==================================================================
+   Barvy
+
+   Návrh: jeden studený neutrál jako podklad, jeden akcent na akci,
+   a pastelové (ne křiklavé) barvy pro předměty a stavy.
+   Všechny páry text/pozadí drží aspoň 4.5:1 v obou režimech.
+   ================================================================== */
+:root {
+  --bg: oklch(99% 0.004 265);
+  --bg-subtle: oklch(97.2% 0.006 265);
+  --surface: oklch(100% 0 0);
+  --surface-hover: oklch(97.8% 0.005 265);
+  --border: oklch(91% 0.008 265);
+  --border-strong: oklch(84% 0.012 265);
+
+  --text: oklch(24% 0.018 265);
+  --text-muted: oklch(50% 0.016 265);
+  --text-faint: oklch(64% 0.014 265);
+
+  --accent: oklch(55% 0.16 264);
+  --accent-hover: oklch(49% 0.17 264);
+  --accent-soft: oklch(95.5% 0.028 264);
+  --accent-text: oklch(100% 0 0);
+
+  --ok: oklch(58% 0.13 152);
+  --ok-soft: oklch(95.5% 0.04 152);
+  --ok-border: oklch(80% 0.09 152);
+
+  --bad: oklch(58% 0.17 22);
+  --bad-soft: oklch(96% 0.028 22);
+  --bad-border: oklch(82% 0.1 22);
+
+  --warn: oklch(66% 0.13 75);
+  --warn-soft: oklch(96% 0.05 85);
+  --warn-border: oklch(84% 0.1 80);
+
+  /* Akcenty předmětů – tlumené, aby přehled nevypadal jako cukrárna. */
+  --accent-slate: oklch(54% 0.04 250);
+  --accent-indigo: oklch(55% 0.16 264);
+  --accent-violet: oklch(56% 0.16 300);
+  --accent-teal: oklch(56% 0.1 190);
+  --accent-amber: oklch(62% 0.12 75);
+  --accent-rose: oklch(58% 0.15 15);
+
+  --shadow-card: 0 1px 2px oklch(24% 0.02 265 / 0.05), 0 4px 16px oklch(24% 0.02 265 / 0.05);
+  --shadow-lift: 0 2px 4px oklch(24% 0.02 265 / 0.06), 0 12px 32px oklch(24% 0.02 265 / 0.09);
+}
+
+.dark {
+  --bg: oklch(17.5% 0.012 265);
+  --bg-subtle: oklch(20.5% 0.013 265);
+  --surface: oklch(22% 0.014 265);
+  --surface-hover: oklch(25.5% 0.016 265);
+  --border: oklch(30% 0.016 265);
+  --border-strong: oklch(38% 0.018 265);
+
+  --text: oklch(95% 0.006 265);
+  --text-muted: oklch(72% 0.014 265);
+  --text-faint: oklch(58% 0.014 265);
+
+  --accent: oklch(72% 0.13 264);
+  --accent-hover: oklch(78% 0.12 264);
+  --accent-soft: oklch(30% 0.055 264);
+  --accent-text: oklch(17% 0.02 265);
+
+  --ok: oklch(75% 0.14 152);
+  --ok-soft: oklch(29% 0.05 152);
+  --ok-border: oklch(43% 0.08 152);
+
+  --bad: oklch(72% 0.15 22);
+  --bad-soft: oklch(29% 0.06 22);
+  --bad-border: oklch(45% 0.1 22);
+
+  --warn: oklch(80% 0.12 80);
+  --warn-soft: oklch(30% 0.05 80);
+  --warn-border: oklch(46% 0.08 80);
+
+  --accent-slate: oklch(72% 0.03 250);
+  --accent-indigo: oklch(72% 0.13 264);
+  --accent-violet: oklch(73% 0.13 300);
+  --accent-teal: oklch(74% 0.09 190);
+  --accent-amber: oklch(80% 0.11 75);
+  --accent-rose: oklch(73% 0.13 15);
+
+  --shadow-card: 0 1px 2px oklch(0% 0 0 / 0.3), 0 4px 16px oklch(0% 0 0 / 0.25);
+  --shadow-lift: 0 2px 4px oklch(0% 0 0 / 0.35), 0 12px 32px oklch(0% 0 0 / 0.35);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-subtle: var(--bg-subtle);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+  --color-border-base: var(--border);
+  --color-border-strong: var(--border-strong);
+
+  --color-text: var(--text);
+  --color-text-muted: var(--text-muted);
+  --color-text-faint: var(--text-faint);
+
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-text: var(--accent-text);
+
+  --color-ok: var(--ok);
+  --color-ok-soft: var(--ok-soft);
+  --color-ok-border: var(--ok-border);
+  --color-bad: var(--bad);
+  --color-bad-soft: var(--bad-soft);
+  --color-bad-border: var(--bad-border);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+  --color-warn-border: var(--warn-border);
+
+  --color-accent-slate: var(--accent-slate);
+  --color-accent-indigo: var(--accent-indigo);
+  --color-accent-violet: var(--accent-violet);
+  --color-accent-teal: var(--accent-teal);
+  --color-accent-amber: var(--accent-amber);
+  --color-accent-rose: var(--accent-rose);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-mono-code), ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* Zaoblení: štědré, ale ne pilulkové. */
+  --radius-card: 1rem;
+  --radius-control: 0.75rem;
+  --radius-chip: 0.625rem;
+
+  --shadow-card: var(--shadow-card);
+  --shadow-lift: var(--shadow-lift);
+
+  /* Doby animací – držet se jich, ať je web konzistentní. */
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.32, 0.64, 1);
+}
+
+/* ==================================================================
+   Základ dokumentu
+   ================================================================== */
+html {
+  color-scheme: light;
+  scrollbar-gutter: stable;
+}
+.dark html,
+html.dark {
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Viditelné zaměření klávesnicí. Nikdy to nevypínej – celý kvíz
+   se dá proklikat od klávesnice a bez tohohle by to bylo naslepo. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+::selection {
+  background: var(--accent-soft);
+  color: var(--text);
+}
+
+/* ==================================================================
+   Přechody mezi stránkami (React <ViewTransition>)
+   ================================================================== */
+::view-transition {
+  /* Bez tohohle prohlížeč během přechodu spolkne kliknutí. */
+  pointer-events: none;
+}
+
+::view-transition-old(root) {
+  animation: 150ms var(--ease-out-soft) both fade-out;
+}
+::view-transition-new(root) {
+  animation: 210ms var(--ease-out-soft) both fade-in;
+}
+
+@keyframes fade-out {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+/* ==================================================================
+   Omezený pohyb
+
+   Tohle jsou tři nezávislé systémy a každý se musí vypnout zvlášť:
+   view transitions (tady), CSS transitions (tady), a motion
+   (přes <MotionConfig reducedMotion="user"> v providers.tsx).
+   ================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+}
+
+/* ==================================================================
+   Matematika (KaTeX) a kód (Shiki)
+
+   Obojí se renderuje na serveru, do prohlížeče nejde ani kilobajt
+   jejich JS. Tady se jen doladí vzhled.
+   ================================================================== */
+.katex {
+  font-size: 1.06em;
+}
+/* Dlouhý vzorec radši odroluj, než aby roztáhl celou stránku. */
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-block: 0.4rem;
+  margin-block: 0.75rem;
+}
+
+.shiki {
+  background-color: var(--bg-subtle) !important;
+  border-radius: var(--radius-control);
+  padding: 0.9rem 1rem;
+  overflow-x: auto;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  tab-size: 4;
+}
+/* Shiki vygeneruje obě barevné varianty naráz; tady se přepíná. */
+.dark .shiki,
+.dark .shiki span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+}
+.dark .shiki {
+  background-color: var(--bg-subtle) !important;
+}

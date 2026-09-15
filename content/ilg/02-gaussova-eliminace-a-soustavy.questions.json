@@ -1,0 +1,176 @@
+{
+  "$schema": "../../schemas/question-set.schema.json",
+  "id": "02-gaussova-eliminace-a-soustavy",
+  "title": "Gaussova eliminace a soustavy rovnic",
+  "course": "ilg",
+  "lecture": 3,
+  "description": "Pojmy Gaussovy eliminace, Frobeniova věta a počet řešení soustavy podle hodnosti matice.",
+  "schemaVersion": 1,
+  "questions": [
+    {
+      "id": "ilg-02-pojmy-gaussovy-eliminace",
+      "type": "cloze",
+      "prompt": "Doplňte pojmy z terminologie Gaussovy eliminace.",
+      "template": "Gaussova eliminace převádí matici pomocí {{1}} řádkových úprav na {{2}} tvar. První nenulový prvek zleva se v každém nenulovém řádku nazývá {{3}}. Počet nenulových řádků výsledné matice udává {{4}} původní matice.",
+      "blanks": {
+        "1": {
+          "accept": ["elementárních", "ekvivalentních", "elementarnich", "ekvivalentnich"],
+          "placeholder": "např. ...ních"
+        },
+        "2": {
+          "accept": ["schodovitý", "stupňovitý", "trojúhelníkový", "schodovity", "stupnovity"],
+          "placeholder": "např. ...tý"
+        },
+        "3": {
+          "accept": ["pivot", "vedoucí prvek", "hlavní prvek", "pivotem", "vedouci prvek"],
+          "placeholder": "jedno slovo"
+        },
+        "4": {
+          "accept": ["hodnost", "hodnost matice", "hodnost puvodni matice"],
+          "placeholder": "veličina"
+        }
+      },
+      "hint": "Druhá mezera je tvar, kterému se anglicky říká *row echelon form*.",
+      "explanation": "Elementární (ekvivalentní) řádkové úpravy – záměna řádků, násobení řádku nenulovým číslem a přičtení násobku jiného řádku – nemění množinu řešení soustavy ani hodnost matice. Jejich cílem je **schodovitý (stupňovitý) tvar**, ve kterém každý další řádek začíná více nulami než ten předchozí. Vedoucímu nenulovému prvku řádku se říká **pivot** a počet pivotů, tedy počet nenulových řádků, je roven **hodnosti** matice.",
+      "difficulty": 3,
+      "tags": ["ilg", "gaussova-eliminace", "hodnost", "pivot", "terminologie"],
+      "status": "draft"
+    },
+    {
+      "id": "ilg-02-frobeniova-veta",
+      "type": "single",
+      "prompt": "Podle Frobeniovy věty má soustava lineárních rovnic $A\\mathbf{x} = \\mathbf{b}$ řešení právě tehdy, když:",
+      "choices": [
+        {
+          "id": "a",
+          "text": "$\\det A \\neq 0$",
+          "feedback": "To je podmínka pro *jediné* řešení u čtvercové soustavy. Frobeniova věta je obecnější – funguje i pro obdélníkové matice, kde determinant vůbec není definovaný."
+        },
+        {
+          "id": "b",
+          "text": "$h(A) < h(A \\mid \\mathbf{b})$",
+          "feedback": "Tohle je naopak podmínka, kdy soustava řešení **nemá**. Rozšířená matice přitom nikdy nemůže mít hodnost menší než matice soustavy."
+        },
+        {
+          "id": "c",
+          "text": "$h(A) = h(A \\mid \\mathbf{b})$"
+        },
+        {
+          "id": "d",
+          "text": "počet rovnic se rovná počtu neznámých",
+          "feedback": "Na řešitelnosti to nic nemění. Soustava $x = 1$, $x = 2$ má stejný počet neznámých i rovnic jako řešitelná soustava, a přesto řešení nemá."
+        }
+      ],
+      "hint": "Rozhodující je porovnání hodnosti matice soustavy a matice rozšířené o pravou stranu.",
+      "correct": "c",
+      "explanation": "Frobeniova (Kroneckerova–Capelliho) věta říká, že soustava je řešitelná právě tehdy, když má matice soustavy $A$ stejnou hodnost jako rozšířená matice $(A \\mid \\mathbf{b})$. Při eliminaci se to pozná okamžitě: kdyby vznikl řádek tvaru $(0\\ 0\\ \\cdots\\ 0 \\mid c)$ s $c \\neq 0$, znamenal by rovnici $0 = c$ a soustava by byla neřešitelná.",
+      "difficulty": 3,
+      "tags": ["ilg", "soustavy-rovnic", "frobeniova-veta", "hodnost"],
+      "status": "draft"
+    },
+    {
+      "id": "ilg-02-pocet-parametru-reseni",
+      "type": "numeric",
+      "prompt": "Soustava lineárních rovnic má 5 neznámých a platí $h(A) = h(A \\mid \\mathbf{b}) = 3$. Kolika parametry je popsána množina jejích řešení?",
+      "answer": 2,
+      "tolerance": { "kind": "absolute", "value": 0 },
+      "unit": null,
+      "hint": "Počet volných neznámých = počet neznámých − hodnost.",
+      "explanation": "Hodnoty neznámých odpovídajících pivotům jsou eliminací určeny, zbylé neznámé se volí libovolně jako parametry. Jejich počet je $n - h(A) = 5 - 3 = 2$. Protože zároveň $h(A) = h(A \\mid \\mathbf{b})$, soustava je řešitelná a má nekonečně mnoho řešení popsaných dvěma parametry.",
+      "difficulty": 3,
+      "tags": ["ilg", "soustavy-rovnic", "hodnost", "parametry-reseni"],
+      "status": "draft"
+    },
+    {
+      "id": "ilg-02-homogenni-soustava",
+      "type": "trueFalse",
+      "prompt": "Homogenní soustava $A\\mathbf{x} = \\mathbf{0}$ má vždy aspoň jedno řešení.",
+      "answer": true,
+      "explanation": "Ano – vždy vyhovuje nulový vektor $\\mathbf{x} = \\mathbf{0}$, kterému se říká triviální řešení. Homogenní soustava proto nikdy nemůže být neřešitelná: přidáním nulového sloupce se hodnost nezmění, takže $h(A) = h(A \\mid \\mathbf{0})$ platí automaticky. Zajímavá otázka u homogenní soustavy tedy není *zda* řešení existuje, ale jestli existuje i **netriviální** – to nastane právě když $h(A) < n$.",
+      "difficulty": 3,
+      "tags": ["ilg", "soustavy-rovnic", "homogenni-soustava"],
+      "status": "draft"
+    },
+    {
+      "id": "ilg-02-elementarni-radkove-upravy",
+      "type": "multi",
+      "prompt": "Které z následujících úprav jsou elementární řádkové úpravy, tedy nemění hodnost matice ani množinu řešení soustavy?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Záměna dvou řádků."
+        },
+        {
+          "id": "b",
+          "text": "Vynásobení řádku nulou.",
+          "feedback": "Násobit se smí jen **nenulovým** číslem. Vynásobením nulou by řádek zmizel a hodnost by mohla klesnout – ztratili bychom rovnici."
+        },
+        {
+          "id": "c",
+          "text": "Přičtení násobku jednoho řádku k jinému."
+        },
+        {
+          "id": "d",
+          "text": "Umocnění všech prvků řádku na druhou.",
+          "feedback": "Elementární úpravy jsou lineární. Umocnění lineární není a odpovídající rovnici změní na úplně jinou – z $x + y = 2$ by se stalo $x^2 + y^2 = 4$."
+        },
+        {
+          "id": "e",
+          "text": "Vynásobení řádku nenulovým číslem."
+        }
+      ],
+      "correct": ["a", "c", "e"],
+      "partialCredit": true,
+      "hint": "Každá elementární úprava musí být vratná – musí jít provést zpět jinou takovou úpravou.",
+      "explanation": "Elementární řádkové úpravy jsou právě tři: záměna dvou řádků, vynásobení řádku **nenulovým** číslem a přičtení násobku jednoho řádku k jinému. Všechny tři jsou vratné, a proto zachovávají hodnost matice i množinu řešení soustavy. Násobení nulou vratné není a umocňování není lineární operace.",
+      "difficulty": 3,
+      "tags": ["ilg", "gaussova-eliminace", "radkove-upravy", "hodnost"],
+      "status": "draft"
+    },
+    {
+      "id": "ilg-02-pocet-reseni-podle-hodnosti",
+      "type": "single",
+      "prompt": "Soustava tří rovnic o třech neznámých má $h(A) = h(A \\mid \\mathbf{b}) = 2$. Kolik má řešení?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Právě jedno.",
+          "feedback": "Jediné řešení by vyžadovalo $h(A) = n = 3$. Hodnost 2 znamená, že jedna z rovnic je závislá na ostatních a jedna neznámá zůstane volná."
+        },
+        {
+          "id": "b",
+          "text": "Žádné.",
+          "feedback": "Neřešitelná by byla, kdyby $h(A) < h(A \\mid \\mathbf{b})$. Tady se obě hodnosti rovnají, takže řešení podle Frobeniovy věty existuje."
+        },
+        {
+          "id": "c",
+          "text": "Nekonečně mnoho, závislých na dvou parametrech.",
+          "feedback": "Počet parametrů je $n - h(A) = 3 - 2 = 1$, ne 2. Dva parametry by odpovídaly hodnosti 1."
+        },
+        {
+          "id": "d",
+          "text": "Nekonečně mnoho, závislých na jednom parametru."
+        }
+      ],
+      "correct": "d",
+      "hint": "Nejdřív rozhodni o řešitelnosti, potom spočítej $n - h(A)$.",
+      "explanation": "Protože $h(A) = h(A \\mid \\mathbf{b})$, soustava je podle Frobeniovy věty řešitelná. Hodnost je ale menší než počet neznámých ($2 < 3$), takže řešení není jediné – počet volných parametrů je $n - h(A) = 3 - 2 = 1$. Geometricky jde o průsečnici tří rovin, které se protínají v jedné přímce.",
+      "difficulty": 4,
+      "tags": ["ilg", "soustavy-rovnic", "hodnost", "pocet-reseni"],
+      "status": "draft"
+    },
+    {
+      "id": "ilg-02-reseni-soustavy-dve-rovnice",
+      "type": "numeric",
+      "prompt": "Vyřešte soustavu\n\n$$\\begin{aligned} 2x + y &= 7 \\\\ x - y &= 2 \\end{aligned}$$\n\nJaká je hodnota neznámé $x$?",
+      "answer": 3,
+      "tolerance": { "kind": "absolute", "value": 0 },
+      "unit": null,
+      "hint": "Sečtením obou rovnic se jedna neznámá vyloučí.",
+      "explanation": "Sečtením obou rovnic se vyloučí $y$: $(2x + y) + (x - y) = 7 + 2$, tedy $3x = 9$ a $x = 3$. Dosazením do druhé rovnice vyjde $y = x - 2 = 1$. Zkouška: $2\\cdot3 + 1 = 7$ a $3 - 1 = 2$ – obě rovnice platí.",
+      "difficulty": 1,
+      "tags": ["ilg", "soustavy-rovnic", "gaussova-eliminace"],
+      "status": "draft"
+    }
+  ]
+}

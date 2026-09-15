@@ -1,0 +1,143 @@
+{
+  "$schema": "../../schemas/question-set.schema.json",
+  "id": "02-soucastky-a-stridave-obvody",
+  "title": "Součástky a střídavé obvody",
+  "course": "iel",
+  "lecture": 5,
+  "description": "Kondenzátor a jeho energie, časová konstanta RC článku, dioda a základy harmonických signálů.",
+  "schemaVersion": 1,
+  "questions": [
+    {
+      "id": "iel-02-energie-kondenzatoru",
+      "type": "numeric",
+      "prompt": "Kondenzátor o kapacitě $C = 100\\ \\mu\\mathrm{F}$ je nabit na napětí $U = 10\\ \\mathrm{V}$. Kolik energie je v něm uloženo?",
+      "answer": 5,
+      "tolerance": { "kind": "absolute", "value": 0 },
+      "unit": "mJ",
+      "hint": "$W = \\tfrac{1}{2} C U^2$. Výsledek uveď v milijoulech.",
+      "explanation": "Energie uložená v elektrickém poli kondenzátoru je $W = \\tfrac{1}{2} C U^2 = \\tfrac{1}{2} \\cdot 100 \\cdot 10^{-6} \\cdot 10^2 = 5 \\cdot 10^{-3}\\ \\mathrm{J} = 5\\ \\mathrm{mJ}$. Závislost na napětí je kvadratická, takže zdvojnásobení napětí uloženou energii zčtyřnásobí. Vynechání činitele $\\tfrac12$ by dalo chybných 10 mJ.",
+      "difficulty": 3,
+      "tags": ["iel", "kondenzator", "energie", "kapacita"],
+      "status": "draft"
+    },
+    {
+      "id": "iel-02-casova-konstanta-rc",
+      "type": "numeric",
+      "prompt": "RC článek je tvořen rezistorem $R = 10\\ \\mathrm{k}\\Omega$ a kondenzátorem $C = 4{,}7\\ \\mu\\mathrm{F}$. Jaká je jeho časová konstanta?",
+      "answer": 47,
+      "tolerance": { "kind": "absolute", "value": 0 },
+      "unit": "ms",
+      "hint": "$\\tau = RC$. Hlídej si předpony – kilo krát mikro dává mili.",
+      "explanation": "Časová konstanta je $\\tau = RC = 10^4\\ \\Omega \\cdot 4{,}7 \\cdot 10^{-6}\\ \\mathrm{F} = 4{,}7 \\cdot 10^{-2}\\ \\mathrm{s} = 47\\ \\mathrm{ms}$. Za dobu $\\tau$ se kondenzátor nabije zhruba na 63 % cílového napětí a po $5\\tau$ se považuje za nabitý (přes 99 %). Nejčastější chybou je řádový přehmat v předponách: $\\mathrm{k}\\Omega \\cdot \\mu\\mathrm{F} = \\mathrm{ms}$.",
+      "difficulty": 3,
+      "tags": ["iel", "rc-clanek", "casova-konstanta", "kondenzator"],
+      "status": "draft"
+    },
+    {
+      "id": "iel-02-ubytek-na-diode",
+      "type": "single",
+      "prompt": "Jaký je přibližný úbytek napětí na křemíkové diodě v propustném směru?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "$0{,}3\\ \\mathrm{V}$",
+          "feedback": "Takový úbytek má **germaniová** dioda, případně Schottkyho dioda. Křemík potřebuje k otevření znatelně víc."
+        },
+        {
+          "id": "b",
+          "text": "$0{,}7\\ \\mathrm{V}$"
+        },
+        {
+          "id": "c",
+          "text": "$1{,}5\\ \\mathrm{V}$",
+          "feedback": "Tolik má spíš svítivá dioda (LED), u níž úbytek podle barvy roste zhruba od 1,8 V výš. Běžná křemíková usměrňovací dioda je na tom lépe."
+        },
+        {
+          "id": "d",
+          "text": "$0\\ \\mathrm{V}$",
+          "feedback": "Nulový úbytek má jen **ideální** dioda z učebnicového modelu. Reálná křemíková dioda se otevře až po překonání prahového napětí."
+        }
+      ],
+      "correct": "b",
+      "hint": "Je to hodnota, kterou se u křemíku počítá i úbytek na přechodu báze–emitor tranzistoru.",
+      "explanation": "Křemíkový PN přechod se v propustném směru otevírá zhruba při 0,6 až 0,7 V a v běžných výpočtech se uvažuje úbytek **0,7 V** prakticky nezávislý na proudu. Stejná hodnota se používá pro přechod báze–emitor bipolárního tranzistoru. Germaniové diody mají asi 0,3 V, Schottkyho diody 0,2 až 0,4 V a LED podle barvy 1,8 až 3,4 V.",
+      "difficulty": 2,
+      "tags": ["iel", "dioda", "polovodice", "pn-prechod"],
+      "status": "draft"
+    },
+    {
+      "id": "iel-02-teplotne-zavisly-rezistor",
+      "type": "shortText",
+      "prompt": "Jak se nazývá součástka, jejíž elektrický odpor se výrazně mění s teplotou a která se proto používá jako teplotní čidlo (vyrábí se v provedení NTC a PTC)?",
+      "accept": ["termistor", "termistory", "NTC termistor", "PTC termistor", "teplotne zavisly rezistor"],
+      "normalize": {
+        "caseInsensitive": true,
+        "stripDiacritics": true,
+        "trim": true,
+        "collapseWhitespace": true,
+        "stripPunctuation": false
+      },
+      "placeholder": "jedno slovo",
+      "hint": "Název vznikl spojením slov *termo* a *rezistor*.",
+      "explanation": "Jde o **termistor**. Typ NTC (negative temperature coefficient) má se stoupající teplotou klesající odpor a používá se pro měření teploty i jako omezovač zapínacího proudu; typ PTC má odpor rostoucí a slouží jako vratná nadproudová pojistka. Termistor nepatří mezi lineární součástky – jeho odpor závisí na teplotě silně nelineárně.",
+      "difficulty": 2,
+      "tags": ["iel", "termistor", "soucastky", "rezistor"],
+      "status": "draft"
+    },
+    {
+      "id": "iel-02-kondenzatory-v-serii",
+      "type": "single",
+      "prompt": "Dva stejné kondenzátory o kapacitě $C$ jsou zapojeny do série. Jaká je výsledná kapacita?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "$2C$",
+          "feedback": "Zdvojnásobení nastane při zapojení **paralelním** – u kondenzátorů se totiž kapacity sčítají v paralelním, ne v sériovém řazení. Je to přesně naopak než u rezistorů."
+        },
+        {
+          "id": "b",
+          "text": "$C$",
+          "feedback": "Výsledek nezávislý na počtu kondenzátorů neodpovídá tomu, že se v sérii sčítají tloušťky dielektrik, a kapacita tedy musí klesnout."
+        },
+        {
+          "id": "c",
+          "text": "$C^2$",
+          "feedback": "Součin kapacit nemá správný fyzikální rozměr – výsledkem musí být opět kapacita ve faradech."
+        },
+        {
+          "id": "d",
+          "text": "$C/2$"
+        }
+      ],
+      "correct": "d",
+      "hint": "U kondenzátorů se vzorce pro sériové a paralelní řazení oproti rezistorům prohodí.",
+      "explanation": "V sérii se sčítají převrácené hodnoty kapacit: $\\dfrac{1}{C_\\mathrm{v}} = \\dfrac{1}{C} + \\dfrac{1}{C} = \\dfrac{2}{C}$, tedy $C_\\mathrm{v} = C/2$. Kondenzátory se v tomhle chovají opačně než rezistory – paralelně se kapacity prostě sčítají ($C_\\mathrm{v} = 2C$). Fyzikálně: sériové zapojení odpovídá většímu odstupu elektrod, což kapacitu zmenšuje.",
+      "difficulty": 3,
+      "tags": ["iel", "kondenzator", "kapacita", "seriove-razeni"],
+      "status": "draft"
+    },
+    {
+      "id": "iel-02-amplituda-sitoveho-napeti",
+      "type": "numeric",
+      "prompt": "Efektivní hodnota harmonického síťového napětí je $230\\ \\mathrm{V}$. Jaká je jeho amplituda (vrcholová hodnota)? Zaokrouhlete na celé volty.",
+      "answer": 325,
+      "tolerance": { "kind": "absolute", "value": 1 },
+      "unit": "V",
+      "hint": "$U_\\mathrm{ef} = U_\\mathrm{m} / \\sqrt{2}$",
+      "explanation": "Pro harmonický průběh platí $U_\\mathrm{ef} = \\dfrac{U_\\mathrm{m}}{\\sqrt{2}}$, tedy $U_\\mathrm{m} = U_\\mathrm{ef}\\sqrt{2} = 230 \\cdot 1{,}4142 \\doteq 325\\ \\mathrm{V}$. Špička je tedy o 41 % vyšší než udávaných 230 V – proto musí být součástky v síťových obvodech dimenzovány na napětí kolem 400 V. Dělení odmocninou místo násobení by dalo chybných 163 V.",
+      "difficulty": 3,
+      "tags": ["iel", "stridavy-proud", "efektivni-hodnota", "amplituda"],
+      "status": "draft"
+    },
+    {
+      "id": "iel-02-impedance-kondenzatoru-s-frekvenci",
+      "type": "trueFalse",
+      "prompt": "Impedance ideálního kondenzátoru s rostoucí frekvencí roste.",
+      "answer": false,
+      "explanation": "Naopak **klesá**. Pro kapacitní reaktanci platí $X_C = \\dfrac{1}{\\omega C} = \\dfrac{1}{2\\pi f C}$, takže je nepřímo úměrná frekvenci: pro stejnosměrný proud ($f = 0$) je nekonečná a kondenzátor se chová jako rozpojený obvod, zatímco pro velmi vysoké frekvence se blíží nule a kondenzátor se chová jako zkrat. Rostoucí reaktanci má naopak cívka, $X_L = \\omega L$. Právě na tom stojí dolní a horní propust z RC článku.",
+      "difficulty": 3,
+      "tags": ["iel", "kondenzator", "impedance", "reaktance", "stridavy-proud"],
+      "status": "draft"
+    }
+  ]
+}

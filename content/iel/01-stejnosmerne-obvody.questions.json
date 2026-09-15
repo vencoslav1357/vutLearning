@@ -1,0 +1,143 @@
+{
+  "$schema": "../../schemas/question-set.schema.json",
+  "id": "01-stejnosmerne-obvody",
+  "title": "Stejnosměrné obvody",
+  "course": "iel",
+  "lecture": 2,
+  "description": "Ohmův zákon, sériové a paralelní řazení rezistorů, dělič napětí a ztrátový výkon.",
+  "schemaVersion": 1,
+  "questions": [
+    {
+      "id": "iel-01-ohmuv-zakon-seriove",
+      "type": "numeric",
+      "prompt": "Ke zdroji napětí $U = 5\\ \\mathrm{V}$ jsou do série připojeny rezistory $R_1 = 100\\ \\Omega$ a $R_2 = 150\\ \\Omega$. Jaký proud obvodem protéká?",
+      "answer": 20,
+      "tolerance": { "kind": "absolute", "value": 0 },
+      "unit": "mA",
+      "hint": "Nejdřív sečti odpory, pak použij Ohmův zákon. Výsledek uveď v miliampérech.",
+      "explanation": "Sériově řazené rezistory se sčítají: $R = R_1 + R_2 = 100 + 150 = 250\\ \\Omega$. Z Ohmova zákona $I = U / R = 5 / 250 = 0{,}02\\ \\mathrm{A} = 20\\ \\mathrm{mA}$. Sériovým obvodem teče všude stejný proud, takže tatáž hodnota platí pro oba rezistory.",
+      "difficulty": 2,
+      "tags": ["iel", "ohmuv-zakon", "seriove-razeni", "rezistor"],
+      "status": "draft"
+    },
+    {
+      "id": "iel-01-delic-napeti",
+      "type": "numeric",
+      "prompt": "Nezatížený dělič napětí je napájen napětím $U = 12\\ \\mathrm{V}$. Horní rezistor má odpor $R_1 = 1\\ \\mathrm{k}\\Omega$, dolní $R_2 = 3\\ \\mathrm{k}\\Omega$. Jaké je výstupní napětí odebírané z rezistoru $R_2$?",
+      "answer": 9,
+      "tolerance": { "kind": "absolute", "value": 0 },
+      "unit": "V",
+      "hint": "Napětí se rozdělí v poměru odporů. Který rezistor si vezme větší díl?",
+      "explanation": "Pro nezatížený dělič platí $U_2 = U \\cdot \\dfrac{R_2}{R_1 + R_2} = 12 \\cdot \\dfrac{3}{1 + 3} = 12 \\cdot 0{,}75 = 9\\ \\mathrm{V}$. Napětí se dělí v poměru odporů, takže větší část připadne na větší rezistor. Kontrola: na $R_1$ zbývají 3 V a součet dá zpět 12 V, jak žádá druhý Kirchhoffův zákon. Prohození poměru na $R_1/(R_1+R_2)$ by dalo chybné 3 V.",
+      "difficulty": 3,
+      "tags": ["iel", "delic-napeti", "rezistor", "kirchhoffovy-zakony"],
+      "status": "draft"
+    },
+    {
+      "id": "iel-01-paralelni-rezistory",
+      "type": "numeric",
+      "prompt": "Jaký je výsledný odpor paralelní kombinace rezistorů $R_1 = 60\\ \\Omega$ a $R_2 = 30\\ \\Omega$?",
+      "answer": 20,
+      "tolerance": { "kind": "absolute", "value": 0 },
+      "unit": "Ω",
+      "hint": "Výsledný odpor paralelní kombinace je vždy menší než menší z obou odporů.",
+      "explanation": "Pro dva paralelní rezistory platí $R = \\dfrac{R_1 R_2}{R_1 + R_2} = \\dfrac{60 \\cdot 30}{90} = 20\\ \\Omega$. Stejně vyjde i přes převrácené hodnoty: $\\frac{1}{60} + \\frac{1}{30} = \\frac{3}{60} = \\frac{1}{20}$. Kontrola zdravým rozumem: paralelní kombinace nabízí proudu víc cest, takže výsledek musí být menší než 30 Ω. Odpověď 90 Ω by odpovídala sériovému řazení.",
+      "difficulty": 2,
+      "tags": ["iel", "paralelni-razeni", "rezistor"],
+      "status": "draft"
+    },
+    {
+      "id": "iel-01-ztratovy-vykon",
+      "type": "single",
+      "prompt": "Rezistorem o odporu $R = 100\\ \\Omega$ protéká proud $I = 0{,}2\\ \\mathrm{A}$. Jaký výkon se na něm mění v teplo?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "$20\\ \\mathrm{W}$",
+          "feedback": "Takhle vyjde $R \\cdot I$ – proud nebyl umocněn. Ve vzorci $P = R I^2$ je druhá mocnina podstatná."
+        },
+        {
+          "id": "b",
+          "text": "$0{,}4\\ \\mathrm{W}$",
+          "feedback": "To je $2 \\cdot R \\cdot I^2 / 100$ nebo podobný přehmat v řádu. Zkus dosadit znovu: $100 \\cdot 0{,}04$."
+        },
+        {
+          "id": "c",
+          "text": "$4\\ \\mathrm{W}$"
+        },
+        {
+          "id": "d",
+          "text": "$40\\ \\mathrm{W}$",
+          "feedback": "Řádová chyba – nejspíš z $0{,}2^2 = 0{,}4$ místo $0{,}04$. Druhá mocnina dvou desetin je čtyři setiny."
+        }
+      ],
+      "correct": "c",
+      "hint": "$P = U I$ a zároveň $U = R I$. Co z toho plyne?",
+      "explanation": "Dosazením Ohmova zákona do vztahu pro výkon dostaneme $P = U I = (R I) \\cdot I = R I^2 = 100 \\cdot 0{,}2^2 = 100 \\cdot 0{,}04 = 4\\ \\mathrm{W}$. Kontrola druhou cestou: napětí na rezistoru je $U = 100 \\cdot 0{,}2 = 20\\ \\mathrm{V}$, takže $P = 20 \\cdot 0{,}2 = 4\\ \\mathrm{W}$. Nejčastější chyba je zapomenout proud umocnit.",
+      "difficulty": 3,
+      "tags": ["iel", "vykon", "ohmuv-zakon", "rezistor"],
+      "status": "draft"
+    },
+    {
+      "id": "iel-01-prevracena-hodnota-odporu",
+      "type": "shortText",
+      "prompt": "Jak se nazývá fyzikální veličina, která je převrácenou hodnotou elektrického odporu a měří se v siemensech (S)?",
+      "accept": ["vodivost", "elektrická vodivost", "konduktance", "vodivost G"],
+      "normalize": {
+        "caseInsensitive": true,
+        "stripDiacritics": true,
+        "trim": true,
+        "collapseWhitespace": true,
+        "stripPunctuation": false
+      },
+      "placeholder": "např. odpor",
+      "hint": "Značí se $G$ a platí $G = 1/R$.",
+      "explanation": "Jde o **vodivost** (konduktanci), značenou $G$, pro kterou platí $G = 1/R$. Jednotkou je siemens, $1\\ \\mathrm{S} = 1\\ \\Omega^{-1}$. Počítání s vodivostmi se hodí u paralelního řazení, kde se vodivosti prostě sčítají: $G = G_1 + G_2$, což je mnohem pohodlnější než vzorec s převrácenými hodnotami odporů.",
+      "difficulty": 2,
+      "tags": ["iel", "vodivost", "rezistor", "veliciny"],
+      "status": "draft"
+    },
+    {
+      "id": "iel-01-tri-stejne-rezistory-paralelne",
+      "type": "single",
+      "prompt": "Tři stejné rezistory o odporu $R$ jsou zapojeny paralelně. Jaký je výsledný odpor kombinace?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "$R/3$"
+        },
+        {
+          "id": "b",
+          "text": "$3R$",
+          "feedback": "Trojnásobek by vznikl při **sériovém** zapojení. Paralelní kombinace odpor vždy snižuje."
+        },
+        {
+          "id": "c",
+          "text": "$R$",
+          "feedback": "Výsledek nezávislý na počtu rezistorů by odporoval tomu, že přidáním další větve dáváme proudu další cestu, a celkový odpor tím klesá."
+        },
+        {
+          "id": "d",
+          "text": "$R/9$",
+          "feedback": "Devítka by vznikla umocněním počtu větví. Vodivosti se ale sčítají lineárně: $G = 3/R$, tedy $R_{\\mathrm{v}} = R/3$."
+        }
+      ],
+      "correct": "a",
+      "hint": "Sečti vodivosti jednotlivých větví.",
+      "explanation": "U paralelního řazení se sčítají vodivosti: $\\dfrac{1}{R_\\mathrm{v}} = \\dfrac{1}{R} + \\dfrac{1}{R} + \\dfrac{1}{R} = \\dfrac{3}{R}$, odkud $R_\\mathrm{v} = R/3$. Obecně platí, že $n$ stejných rezistorů paralelně dá $R/n$ a sériově $nR$. Paralelní kombinace je vždy menší než nejmenší z odporů v ní.",
+      "difficulty": 2,
+      "tags": ["iel", "paralelni-razeni", "rezistor", "vodivost"],
+      "status": "draft"
+    },
+    {
+      "id": "iel-01-zatizeny-delic-napeti",
+      "type": "trueFalse",
+      "prompt": "Připojíme-li k výstupu děliče napětí zátěž s konečným odporem, zůstane výstupní napětí stejné jako u děliče nezatíženého.",
+      "answer": false,
+      "explanation": "Nezůstane – **klesne**. Zátěž $R_\\mathrm{z}$ se ocitne paralelně k dolnímu rezistoru $R_2$ a paralelní kombinace má menší odpor než samotné $R_2$. Poměr $\\frac{R_2 \\parallel R_\\mathrm{z}}{R_1 + (R_2 \\parallel R_\\mathrm{z})}$ je proto menší než původní a výstupní napětí klesne. Rozdíl je zanedbatelný jen tehdy, je-li $R_\\mathrm{z}$ mnohem větší než $R_2$ – odtud praktické pravidlo volit odpory děliče aspoň desetkrát menší, než je odpor zátěže.",
+      "difficulty": 4,
+      "tags": ["iel", "delic-napeti", "zatez", "paralelni-razeni"],
+      "status": "draft"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "$schema": "../../schemas/course.schema.json",
+  "code": "idm",
+  "abbr": "IDM",
+  "name": "Diskrétní matematika",
+  "semester": "zimni",
+  "year": 1,
+  "credits": 4,
+  "description": "Matematické základy informatiky: množiny, relace, zobrazení a důkazové techniky. Navazuje kombinatorika, teorie čísel a základy algebraických struktur a teorie grafů.",
+  "accent": "indigo"
+}

@@ -1,0 +1,220 @@
+{
+  "$schema": "../../schemas/question-set.schema.json",
+  "id": "02-uml-diagramy",
+  "title": "UML diagramy",
+  "course": "ius",
+  "lecture": 5,
+  "description": "K čemu slouží jednotlivé diagramy UML, jak se kreslí vztahy tříd, násobnosti a vztahy mezi případy užití.",
+  "schemaVersion": 1,
+  "questions": [
+    {
+      "id": "ius-02-ucel-uml-diagramu",
+      "type": "matching",
+      "prompt": "Přiřaďte ke každému diagramu UML jeho účel. Dva popisy vpravo patří jiným diagramům.",
+      "left": [
+        { "id": "usecase", "text": "diagram případů užití" },
+        { "id": "class", "text": "diagram tříd" },
+        { "id": "seq", "text": "sekvenční diagram" },
+        { "id": "state", "text": "stavový diagram" }
+      ],
+      "right": [
+        { "id": "r-usecase", "text": "Zachycuje funkce systému z pohledu vnějších aktérů." },
+        { "id": "r-class", "text": "Popisuje statickou strukturu: třídy, atributy, operace a jejich vztahy." },
+        { "id": "r-seq", "text": "Zachycuje posloupnost zpráv mezi objekty v čase." },
+        { "id": "r-state", "text": "Popisuje stavy jednoho objektu a přechody mezi nimi." },
+        { "id": "r-act", "text": "Popisuje tok činností včetně větvení a souběžného zpracování." },
+        { "id": "r-depl", "text": "Ukazuje rozmístění softwarových komponent na hardwarové uzly." }
+      ],
+      "pairs": [
+        ["usecase", "r-usecase"],
+        ["class", "r-class"],
+        ["seq", "r-seq"],
+        ["state", "r-state"]
+      ],
+      "hint": "Rozlišuj diagramy statické (struktura) a dynamické (chování v čase).",
+      "explanation": "Diagram **případů užití** zachycuje systém zvenčí – co od něj kdo chce. Diagram **tříd** je hlavní statický diagram: třídy, jejich atributy, operace a vztahy. **Sekvenční diagram** ukazuje dynamiku jedné konkrétní interakce – kdo komu posílá jakou zprávu a v jakém pořadí. **Stavový diagram** sleduje životní cyklus jednoho objektu. Zbylé dva popisy patří diagramu **aktivit** (tok činností, větvení, souběh) a diagramu **nasazení** (rozmístění na uzly).",
+      "difficulty": 3,
+      "tags": ["ius", "uml", "diagramy", "modelovani"],
+      "status": "draft"
+    },
+    {
+      "id": "ius-02-kompozice-vs-agregace",
+      "type": "single",
+      "prompt": "Který vztah v diagramu tříd vyjadřuje, že část nemůže existovat bez celku a zaniká spolu s ním?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "asociace",
+          "feedback": "Obyčejná asociace vyjadřuje jen to, že spolu třídy nějak souvisejí. O tom, kdo je celek a kdo část, ani o životním cyklu neříká nic."
+        },
+        {
+          "id": "b",
+          "text": "agregace",
+          "feedback": "Nejtěsnější možná záměna. Agregace je také vztah celek–část, ale **slabý**: část může existovat samostatně i přežít zánik celku (student a studijní skupina)."
+        },
+        {
+          "id": "c",
+          "text": "kompozice"
+        },
+        {
+          "id": "d",
+          "text": "generalizace",
+          "feedback": "Generalizace je dědičnost, tedy vztah „je druhem\". Vztah celku a části („skládá se z\") s ní nemá nic společného."
+        }
+      ],
+      "correct": "c",
+      "hint": "Příklad: místnost a budova. Přežije místnost zbourání budovy?",
+      "explanation": "**Kompozice** je silný vztah celku a části: část patří právě jednomu celku a s jeho zánikem zaniká také (budova a místnosti, faktura a její položky). Kreslí se plnou čarou s **vyplněným** kosočtvercem u celku. **Agregace** je slabší varianta – část může existovat nezávisle a být sdílená (skupina a studenti) – a kreslí se s kosočtvercem **nevyplněným**. Rozdíl je právě ve vázanosti životního cyklu.",
+      "difficulty": 3,
+      "tags": ["ius", "uml", "diagram-trid", "kompozice", "agregace"],
+      "status": "draft"
+    },
+    {
+      "id": "ius-02-nasobnost-asociace",
+      "type": "single",
+      "prompt": "Co znamená násobnost `0..*` uvedená na konci asociace v diagramu tříd?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Na druhé straně je připojen právě jeden objekt.",
+          "feedback": "Právě jeden objekt se zapisuje jako `1`. Zápis `0..*` žádnou horní mez neurčuje."
+        },
+        {
+          "id": "b",
+          "text": "Může být připojen libovolný počet objektů, i žádný."
+        },
+        {
+          "id": "c",
+          "text": "Musí být připojen aspoň jeden objekt, horní mez není.",
+          "feedback": "To by se zapsalo `1..*`. Rozdíl je právě v dolní mezi – nula znamená, že vazba nemusí existovat vůbec."
+        },
+        {
+          "id": "d",
+          "text": "Je připojen nejvýše jeden objekt, tedy žádný nebo jeden.",
+          "feedback": "Tohle je `0..1`, typicky nepovinná vazba. Hvězdička ale znamená „bez horní meze\", ne „jeden\"."
+        }
+      ],
+      "correct": "b",
+      "hint": "Přečti zápis jako rozsah „od … do\". Co je vlevo a co vpravo od dvou teček?",
+      "explanation": "Násobnost se zapisuje jako rozsah `dolní..horní`, kde `*` znamená libovolně mnoho bez horní meze. `0..*` (často zkracováno na `*`) tedy znamená **žádný až libovolný počet** objektů. Další běžné hodnoty: `1` právě jeden, `0..1` nejvýše jeden (nepovinná vazba), `1..*` aspoň jeden, `2..5` konkrétní rozsah. Dolní mez 0 oproti 1 je zásadní – rozhoduje o tom, jestli je vazba povinná.",
+      "difficulty": 2,
+      "tags": ["ius", "uml", "diagram-trid", "nasobnost", "asociace"],
+      "status": "draft"
+    },
+    {
+      "id": "ius-02-akter-v-diagramu-pripadu-uziti",
+      "type": "shortText",
+      "prompt": "Jak se v diagramu případů užití nazývá vnější entita (člověk nebo jiný systém), která se systémem komunikuje? Kreslí se jako panáček.",
+      "accept": ["aktér", "aktor", "actor", "aktéři", "akter"],
+      "normalize": {
+        "caseInsensitive": true,
+        "stripDiacritics": true,
+        "trim": true,
+        "collapseWhitespace": true,
+        "stripPunctuation": false
+      },
+      "placeholder": "jedno slovo",
+      "hint": "Česky je to počeštěné anglické *actor*.",
+      "explanation": "Jde o **aktéra**. Aktér je role, ve které někdo nebo něco vystupuje vůči systému – nikoli konkrétní osoba. Jeden člověk proto může být zároveň aktérem *Zákazník* i *Administrátor* a naopak aktérem může být i jiný systém (platební brána) nebo čas u pravidelně spouštěných úloh. Aktéři stojí vždy **vně** hranice systému, případy užití uvnitř.",
+      "difficulty": 2,
+      "tags": ["ius", "uml", "pripady-uziti", "akter"],
+      "status": "draft"
+    },
+    {
+      "id": "ius-02-znaceni-generalizace",
+      "type": "single",
+      "prompt": "Jak se v diagramu tříd kreslí generalizace (dědičnost)?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Plnou čarou s vyplněným kosočtvercem u celku.",
+          "feedback": "Vyplněný kosočtverec označuje kompozici, tedy silný vztah celku a části. S dědičností nemá nic společného."
+        },
+        {
+          "id": "b",
+          "text": "Přerušovanou čarou s otevřenou šipkou.",
+          "feedback": "Přerušovaná čára značí závislost nebo realizaci rozhraní. Generalizace se kreslí čarou plnou."
+        },
+        {
+          "id": "c",
+          "text": "Plnou čarou s nevyplněnou trojúhelníkovou šipkou."
+        },
+        {
+          "id": "d",
+          "text": "Plnou čarou s nevyplněným kosočtvercem u celku.",
+          "feedback": "Nevyplněný kosočtverec je agregace, tedy slabý vztah celku a části („skládá se z\"), ne dědičnost („je druhem\")."
+        }
+      ],
+      "correct": "c",
+      "hint": "Šipka míří vždy k obecnějšímu prvku – k předkovi.",
+      "explanation": "Generalizace se kreslí **plnou čarou zakončenou nevyplněným (dutým) trojúhelníkem**, který míří k obecnější třídě (předkovi). V UML je dobré si tři zakončení nezaměňovat: dutý trojúhelník = generalizace, dutý kosočtverec = agregace, plný kosočtverec = kompozice. Realizace rozhraní se kreslí stejným dutým trojúhelníkem, ale na čáře **přerušované**.",
+      "difficulty": 3,
+      "tags": ["ius", "uml", "diagram-trid", "generalizace", "znaceni"],
+      "status": "draft"
+    },
+    {
+      "id": "ius-02-include-vs-extend",
+      "type": "trueFalse",
+      "prompt": "Vztah `<<extend>>` mezi případy užití znamená, že se rozšiřující případ užití provede vždy, kdykoli běží případ základní.",
+      "answer": false,
+      "explanation": "Nikoli – takhle se chová `<<include>>`. Vložený případ užití se provede **pokaždé** a slouží k vytknutí společného chování z několika případů (například *Ověření uživatele*). Naproti tomu `<<extend>>` popisuje chování **nepovinné**, které se uplatní jen za určité podmínky v tzv. rozšiřujícím bodě (třeba *Uplatnění slevového kódu* při objednávce). Liší se i směr šipky: u `include` míří od základního k vloženému, u `extend` od rozšiřujícího k základnímu.",
+      "difficulty": 4,
+      "tags": ["ius", "uml", "pripady-uziti", "include", "extend"],
+      "status": "draft"
+    },
+    {
+      "id": "ius-02-obsah-sekvencniho-diagramu",
+      "type": "multi",
+      "prompt": "Co lze vyčíst ze sekvenčního diagramu?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Pořadí, ve kterém si objekty posílají zprávy."
+        },
+        {
+          "id": "b",
+          "text": "Dědičnost mezi třídami.",
+          "feedback": "Dědičnost je statický vztah a patří do diagramu tříd. Sekvenční diagram pracuje s konkrétními objekty za běhu, ne s hierarchií tříd."
+        },
+        {
+          "id": "c",
+          "text": "Objekty (instance), které se interakce účastní."
+        },
+        {
+          "id": "d",
+          "text": "Rozmístění komponent na jednotlivé servery.",
+          "feedback": "To je úloha diagramu nasazení. Sekvenční diagram fyzickou infrastrukturu vůbec neřeší."
+        },
+        {
+          "id": "e",
+          "text": "Dobu, po kterou je objekt v rámci interakce aktivní."
+        }
+      ],
+      "correct": ["a", "c", "e"],
+      "partialCredit": true,
+      "hint": "Co zobrazuje svislá osa diagramu a co ty úzké obdélníky na čarách života?",
+      "explanation": "Sekvenční diagram je diagram interakce: nahoře stojí zúčastněné **objekty**, z nich dolů vede čára života a svislá osa představuje **čas**, takže z diagramu je přímo vidět pořadí zpráv. Úzké obdélníky na čáře života (aktivace) ukazují, kdy je objekt v rámci interakce aktivní. Dědičnost patří do diagramu tříd a rozmístění na servery do diagramu nasazení.",
+      "difficulty": 3,
+      "tags": ["ius", "uml", "sekvencni-diagram", "interakce"],
+      "status": "draft"
+    },
+    {
+      "id": "ius-02-postup-objektove-analyzy",
+      "type": "ordering",
+      "prompt": "Seřaďte kroky objektově orientované analýzy a návrhu v obvyklém pořadí.",
+      "items": [
+        { "id": "tridy", "text": "Nalezení kandidátních tříd a vztahů mezi nimi" },
+        { "id": "pozadavky", "text": "Sběr a sepsání požadavků od zadavatele" },
+        { "id": "detaily", "text": "Návrh implementačních detailů tříd a operací" },
+        { "id": "usecases", "text": "Určení aktérů a případů užití" },
+        { "id": "dynamika", "text": "Popis dynamiky pomocí sekvenčních diagramů" }
+      ],
+      "correctOrder": ["pozadavky", "usecases", "tridy", "dynamika", "detaily"],
+      "hint": "Postupuje se od toho, co zákazník chce, přes statickou strukturu k dynamice a teprve nakonec k detailům.",
+      "explanation": "Nejdřív se zjistí **požadavky**, ty se strukturují do **aktérů a případů užití** (systém zvenčí). Z podstatných jmen v požadavcích a scénářích se pak hledají **kandidátní třídy** a jejich vztahy – vzniká statický model. Chování se doplní **sekvenčními diagramy**, které ukážou, jak spolu objekty při jednotlivých scénářích komunikují, a přitom obvykle odhalí chybějící operace. Teprve nakonec se řeší **implementační detaily**. Postupuje se tedy od problému k řešení, ne naopak.",
+      "difficulty": 3,
+      "tags": ["ius", "uml", "analyza", "objektovy-navrh", "postup"],
+      "status": "draft"
+    }
+  ]
+}

@@ -1,0 +1,187 @@
+{
+  "$schema": "../../schemas/question-set.schema.json",
+  "id": "02-relace-a-zobrazeni",
+  "title": "Relace a zobrazení",
+  "course": "idm",
+  "lecture": 4,
+  "description": "Vlastnosti binárních relací, ekvivalence a uspořádání, počítání relací a typy zobrazení.",
+  "schemaVersion": 1,
+  "questions": [
+    {
+      "id": "idm-02-vlastnosti-konkretni-relace",
+      "type": "multi",
+      "prompt": "Na množině $A = \\{1, 2, 3\\}$ je dána relace\n\n$$R = \\{(1,1),\\ (2,2),\\ (3,3),\\ (1,2),\\ (2,1)\\}$$\n\nKteré vlastnosti relace $R$ má?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "reflexivní"
+        },
+        {
+          "id": "b",
+          "text": "symetrická"
+        },
+        {
+          "id": "c",
+          "text": "antisymetrická",
+          "feedback": "Relace obsahuje $(1,2)$ i $(2,1)$, přitom $1 \\neq 2$. To je přesně situace, kterou antisymetrie zakazuje. Pozor: antisymetrie není „opak symetrie\", relace může být i obojí zároveň – ale tahle není."
+        },
+        {
+          "id": "d",
+          "text": "tranzitivní"
+        },
+        {
+          "id": "e",
+          "text": "úplná (souvislá)",
+          "feedback": "Úplnost by vyžadovala, aby pro každou dvojici prvků byla v relaci aspoň jedna z dvojic. Pro 1 a 3 tu ale chybí $(1,3)$ i $(3,1)$."
+        }
+      ],
+      "correct": ["a", "b", "d"],
+      "partialCredit": true,
+      "hint": "Tranzitivitu ověř systematicky: ke každé dvojici navazujících dvojic hledej „zkratku\".",
+      "explanation": "**Reflexivita** platí, protože $R$ obsahuje $(1,1)$, $(2,2)$ i $(3,3)$. **Symetrie** platí – jediná nediagonální dvojice $(1,2)$ má svůj protějšek $(2,1)$. **Tranzitivita** také: $(1,2)$ a $(2,1)$ dávají $(1,1) \\in R$, $(2,1)$ a $(1,2)$ dávají $(2,2) \\in R$, a ostatní kombinace vedou na už přítomné dvojice. Relace $R$ je tedy **ekvivalence** s třídami $\\{1, 2\\}$ a $\\{3\\}$. Antisymetrická není kvůli dvojici $(1,2)$, $(2,1)$, a úplná není kvůli chybějící vazbě mezi 1 a 3.",
+      "difficulty": 4,
+      "tags": ["idm", "relace", "vlastnosti-relaci", "ekvivalence"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-02-definice-vlastnosti-relaci",
+      "type": "matching",
+      "prompt": "Přiřaďte k názvu vlastnosti binární relace $R$ na množině $A$ její formální definici. Dvě definice vpravo nepatří k žádné z uvedených vlastností.",
+      "left": [
+        { "id": "l1", "text": "reflexivita" },
+        { "id": "l2", "text": "symetrie" },
+        { "id": "l3", "text": "antisymetrie" },
+        { "id": "l4", "text": "tranzitivita" }
+      ],
+      "right": [
+        { "id": "r1", "text": "$\\forall a \\in A:\\ (a,a) \\in R$" },
+        { "id": "r2", "text": "$\\forall a, b \\in A:\\ (a,b) \\in R \\Rightarrow (b,a) \\in R$" },
+        { "id": "r3", "text": "$\\forall a, b \\in A:\\ (a,b) \\in R \\wedge (b,a) \\in R \\Rightarrow a = b$" },
+        { "id": "r4", "text": "$\\forall a, b, c \\in A:\\ (a,b) \\in R \\wedge (b,c) \\in R \\Rightarrow (a,c) \\in R$" },
+        { "id": "r5", "text": "$\\forall a \\in A:\\ (a,a) \\notin R$" },
+        { "id": "r6", "text": "$\\forall a, b \\in A:\\ (a,b) \\in R \\vee (b,a) \\in R$" }
+      ],
+      "pairs": [
+        ["l1", "r1"],
+        ["l2", "r2"],
+        ["l3", "r3"],
+        ["l4", "r4"]
+      ],
+      "hint": "Všímej si, kolik proměnných je v definici kvantifikováno – jedna, dvě, nebo tři.",
+      "explanation": "Reflexivita mluví o jediném prvku a požaduje všechny „smyčky\" $(a,a)$. Symetrie i antisymetrie pracují s dvojicí prvků: symetrie žádá k dvojici vždy i dvojici obrácenou, antisymetrie naopak připouští obě jen tehdy, jde-li o tentýž prvek. Tranzitivita potřebuje tři prvky a požaduje „zkratku\" $(a,c)$. Zbylé dvě definice patří **ireflexivitě** ($\\forall a: (a,a) \\notin R$) a **úplnosti** ($\\forall a, b$: aspoň jedna z dvojic je v relaci).",
+      "difficulty": 3,
+      "tags": ["idm", "relace", "vlastnosti-relaci", "definice"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-02-ekvivalence-a-rozklad",
+      "type": "trueFalse",
+      "prompt": "Každá relace ekvivalence na množině $A$ určuje rozklad množiny $A$ na navzájem disjunktní neprázdné třídy.",
+      "answer": true,
+      "explanation": "Platí to, a dokonce i obráceně – mezi ekvivalencemi na $A$ a rozklady $A$ je vzájemně jednoznačný vztah. Třída $[a] = \\{x \\in A \\mid (a,x) \\in R\\}$ je neprázdná díky reflexivitě (vždy $a \\in [a]$). Dvě třídy jsou buď totožné, nebo disjunktní: kdyby měly společný prvek, plynula by ze symetrie a tranzitivity jejich rovnost. Sjednocení všech tříd dá celou $A$.",
+      "difficulty": 3,
+      "tags": ["idm", "relace", "ekvivalence", "rozklad"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-02-castecne-usporadani",
+      "type": "single",
+      "prompt": "Relace částečného uspořádání na množině $A$ je relace, která je:",
+      "choices": [
+        {
+          "id": "a",
+          "text": "reflexivní, symetrická a tranzitivní",
+          "feedback": "To je definice relace **ekvivalence**, ne uspořádání. Uspořádání potřebuje místo symetrie vlastnost, která brání „obousměrnosti\"."
+        },
+        {
+          "id": "b",
+          "text": "ireflexivní, symetrická a tranzitivní",
+          "feedback": "Ireflexivita se objevuje u ostrého uspořádání, ale se symetrií se to neslučuje – uspořádání symetrické být nesmí."
+        },
+        {
+          "id": "c",
+          "text": "reflexivní, antisymetrická a symetrická",
+          "feedback": "Splnit symetrii i antisymetrii najednou lze jen tehdy, obsahuje-li relace pouze dvojice $(a,a)$. Taková relace je sice uspořádání, ale úplně degenerované – definice to takhle nevymezuje."
+        },
+        {
+          "id": "d",
+          "text": "reflexivní, antisymetrická a tranzitivní"
+        }
+      ],
+      "correct": "d",
+      "hint": "Vzorem je relace $\\leq$ na číslech. Které tři vlastnosti má?",
+      "explanation": "Částečné uspořádání je reflexivní, **antisymetrické** a tranzitivní – typickým příkladem je $\\leq$ na číslech nebo inkluze $\\subseteq$ na množinách. Antisymetrie zaručuje, že dva různé prvky nemohou být „menší\" jeden než druhý navzájem. Od ekvivalence se uspořádání liší právě záměnou symetrie za antisymetrii. Slovo *částečné* znamená, že některé dvojice prvků mohou být neporovnatelné – u $\\subseteq$ třeba $\\{1\\}$ a $\\{2\\}$.",
+      "difficulty": 3,
+      "tags": ["idm", "relace", "usporadani", "vlastnosti-relaci"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-02-pocet-binarnich-relaci",
+      "type": "numeric",
+      "prompt": "Kolik různých binárních relací existuje na tříprvkové množině?",
+      "answer": 512,
+      "tolerance": { "kind": "absolute", "value": 0 },
+      "unit": null,
+      "hint": "Relace je podmnožina kartézského součinu. Kolik prvků ten součin má?",
+      "explanation": "Binární relace na $A$ je libovolná podmnožina $A \\times A$. Kartézský součin má $3 \\cdot 3 = 9$ prvků a podmnožin devítiprvkové množiny je $2^9 = 512$. Obecně je na $n$-prvkové množině $2^{n^2}$ relací – číslo roste extrémně rychle, pro $n = 4$ je jich už 65 536.",
+      "difficulty": 3,
+      "tags": ["idm", "relace", "kombinatorika", "mohutnost"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-02-injektivni-zobrazeni",
+      "type": "single",
+      "prompt": "Kdy je zobrazení $f: A \\to B$ injektivní (prosté)?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Když je každý prvek $B$ obrazem aspoň jednoho prvku $A$.",
+          "feedback": "Tohle je definice **surjektivního** zobrazení (zobrazení na). Injektivita říká něco o vzorech, ne o pokrytí cílové množiny."
+        },
+        {
+          "id": "b",
+          "text": "Když různé prvky $A$ mají vždy různé obrazy."
+        },
+        {
+          "id": "c",
+          "text": "Když je každý prvek $B$ obrazem právě jednoho prvku $A$.",
+          "feedback": "To je definice **bijekce**, tedy injekce a surjekce zároveň. Injektivní zobrazení může nechat část $B$ nepokrytou."
+        },
+        {
+          "id": "d",
+          "text": "Když mají množiny $A$ a $B$ stejný počet prvků.",
+          "feedback": "Stejná mohutnost nic nezaručuje – zobrazení $\\{1,2\\} \\to \\{a,b\\}$, které pošle oba prvky na $a$, prosté není."
+        }
+      ],
+      "correct": "b",
+      "hint": "Ekvivalentní zápis: $f(x) = f(y) \\Rightarrow x = y$.",
+      "explanation": "Injektivní (prosté) zobrazení nikdy neslepí dva různé vzory do jednoho obrazu: z $f(x) = f(y)$ plyne $x = y$. Například $f(x) = 2x$ na celých číslech je prosté, kdežto $f(x) = x^2$ nikoli, protože $f(-2) = f(2)$. Surjektivní je zobrazení, jehož obor hodnot je celé $B$, a bijekce je oboje zároveň – jen bijekce má inverzní zobrazení.",
+      "difficulty": 3,
+      "tags": ["idm", "zobrazeni", "injekce", "surjekce", "bijekce"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-02-symetrie-a-tranzitivita-nedava-reflexivitu",
+      "type": "trueFalse",
+      "prompt": "Je-li binární relace na neprázdné množině symetrická a tranzitivní, je nutně i reflexivní.",
+      "answer": false,
+      "explanation": "Není. Klasickým protipříkladem je **prázdná relace** $R = \\emptyset$ na libovolné neprázdné množině: symetrii i tranzitivitu splňuje prázdně (není co porušit), ale žádnou dvojici $(a,a)$ neobsahuje, takže reflexivní není. Obecněji stačí relace, která některý prvek vůbec nezmiňuje – například $R = \\{(1,1)\\}$ na $\\{1, 2\\}$. Zdánlivý „důkaz\" ($(a,b) \\in R$ a symetrie dá $(b,a)$, tranzitivita pak $(a,a)$) totiž mlčky předpokládá, že ke každému $a$ nějaké $b$ existuje.",
+      "difficulty": 5,
+      "tags": ["idm", "relace", "vlastnosti-relaci", "protipriklad"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-02-mohutnost-kartezskeho-soucinu",
+      "type": "numeric",
+      "prompt": "Platí $|A| = 4$ a $|B| = 7$. Kolik prvků má kartézský součin $A \\times B$?",
+      "answer": 28,
+      "tolerance": { "kind": "absolute", "value": 0 },
+      "unit": null,
+      "hint": "Ke každému prvku $A$ lze přiřadit kterýkoli prvek $B$.",
+      "explanation": "Kartézský součin obsahuje všechny uspořádané dvojice $(a, b)$, kde $a \\in A$ a $b \\in B$. První složku lze zvolit 4 způsoby, druhou nezávisle 7 způsoby, takže podle pravidla součinu $|A \\times B| = 4 \\cdot 7 = 28$. Častý omyl je sečíst mohutnosti a dostat 11 – to je ale velikost sjednocení disjunktních množin, ne součinu.",
+      "difficulty": 1,
+      "tags": ["idm", "mnoziny", "kartezsky-soucin", "kombinatorika"],
+      "status": "draft"
+    }
+  ]
+}

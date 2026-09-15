@@ -1,0 +1,11 @@
+{
+  "$schema": "../../schemas/course.schema.json",
+  "code": "ius",
+  "abbr": "IUS",
+  "name": "Úvod do softwarového inženýrství",
+  "semester": "zimni",
+  "year": 1,
+  "credits": 5,
+  "description": "Životní cyklus softwaru od sběru požadavků přes návrh a implementaci až po údržbu. Těžiště je v modelování systému pomocí UML a ER diagramů a v základech řízení projektu.",
+  "accent": "rose"
+}

@@ -1,0 +1,11 @@
+{
+  "$schema": "../../schemas/course.schema.json",
+  "code": "izp",
+  "abbr": "IZP",
+  "name": "Základy programování",
+  "semester": "zimni",
+  "year": 1,
+  "credits": 7,
+  "description": "Úvod do algoritmizace a programování v jazyce C podle normy C99. Probírají se základní konstrukce jazyka, pole a řetězce, ukazatele, dynamicky přidělovaná paměť a práce se soubory.",
+  "accent": "teal"
+}

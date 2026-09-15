@@ -1,0 +1,200 @@
+{
+  "$schema": "../../schemas/question-set.schema.json",
+  "id": "01-zaklady-jazyka-c",
+  "title": "Základy jazyka C",
+  "course": "izp",
+  "lecture": 2,
+  "description": "Celočíselná aritmetika, řídicí struktury a chování, na kterém se v C nejčastěji šlape vedle.",
+  "schemaVersion": 1,
+  "questions": [
+    {
+      "id": "izp-01-celociselne-deleni",
+      "type": "codeOutput",
+      "prompt": "Co program vypíše na standardní výstup?",
+      "language": "c",
+      "filename": "deleni.c",
+      "source": "#include <stdio.h>\n\nint main(void)\n{\n    int a = 7, b = 2;\n\n    printf(\"%d\\n\", a / b);\n    printf(\"%.1f\\n\", (float)a / b);\n\n    return 0;\n}\n",
+      "mode": "exact",
+      "expected": "3\n3.5",
+      "hint": "Jakého typu jsou oba operandy v prvním a jakého ve druhém výrazu?",
+      "explanation": "Operátor `/` se chová podle typů svých operandů. V `a / b` jsou oba operandy typu `int`, takže jde o **celočíselné dělení** – desetinná část se zahodí (ořízne se směrem k nule) a vyjde `3`. Ve druhém výrazu přetypujeme `a` na `float`; kvůli obvyklým aritmetickým konverzím se pak i `b` převede na `float` a dělení proběhne v plovoucí řádové čárce: `3.5`.",
+      "difficulty": 2,
+      "tags": ["izp", "operatory", "celociselne-deleni", "pretypovani"],
+      "status": "draft"
+    },
+    {
+      "id": "izp-01-modulo-zaporne",
+      "type": "single",
+      "prompt": "Jakou hodnotu má v jazyce C (norma C99) výraz `-7 % 3`?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`-1`"
+        },
+        {
+          "id": "b",
+          "text": "`2`",
+          "feedback": "To je výsledek v Pythonu a v matematice modulo 3, kde zbytek nikdy není záporný. C99 ale dělí se zaokrouhlením k nule, takže zbytek přebírá znaménko dělence."
+        },
+        {
+          "id": "c",
+          "text": "`1`",
+          "feedback": "Správná absolutní hodnota, ale špatné znaménko. Zbytek má v C znaménko levého operandu, tedy dělence."
+        },
+        {
+          "id": "d",
+          "text": "`-2`",
+          "feedback": "`-2` je podíl `-7 / 3`, ne zbytek."
+        }
+      ],
+      "correct": "a",
+      "hint": "V C99 platí, že `(a / b) * b + a % b == a`. Nejdřív spočítej podíl.",
+      "explanation": "Od normy C99 se celočíselné dělení zaokrouhluje **k nule**, takže `-7 / 3` je `-2`. Zbytek musí doplnit identitu `(a / b) * b + a % b == a`, tedy `(-2) * 3 + x == -7`, z čehož `x == -1`. Zbytek proto přebírá znaménko dělence.",
+      "difficulty": 3,
+      "tags": ["izp", "operatory", "modulo", "celociselne-deleni"],
+      "status": "draft"
+    },
+    {
+      "id": "izp-01-pocet-iteraci-cyklu",
+      "type": "numeric",
+      "prompt": "Kolikrát se provede tělo cyklu?\n\n```c\nfor (int i = 0; i < 10; i += 3) {\n    /* telo */\n}\n```",
+      "answer": 4,
+      "tolerance": { "kind": "absolute", "value": 0 },
+      "unit": null,
+      "hint": "Vypiš si všechny hodnoty, kterých `i` při vstupu do těla nabude.",
+      "explanation": "Proměnná `i` nabývá při vstupu do těla hodnot 0, 3, 6 a 9 – to jsou čtyři průchody. Po pátém přičtení je `i == 12`, podmínka `12 < 10` neplatí a cyklus končí. Častý omyl je počítat `10 / 3` a zapomenout, že se počítá i iterace s `i == 0`.",
+      "difficulty": 2,
+      "tags": ["izp", "cykly", "for"],
+      "status": "draft"
+    },
+    {
+      "id": "izp-01-zkracene-vyhodnocovani",
+      "type": "trueFalse",
+      "prompt": "Operátory `&&` a `||` se v jazyce C vyhodnocují zkráceně: je-li výsledek jasný už z levého operandu, pravý operand se nevyhodnotí vůbec.",
+      "answer": true,
+      "explanation": "Ano, `&&` a `||` jsou zkrácené (short-circuit) operátory a norma to zaručuje včetně pořadí vyhodnocení. Proto je bezpečné psát `if (p != NULL && p->x > 0)` – když je `p` nulový ukazatel, k dereferenci vůbec nedojde. Pozor, u bitových operátorů `&` a `|` tohle **neplatí**, ty vyhodnotí oba operandy vždy.",
+      "difficulty": 3,
+      "tags": ["izp", "operatory", "logicke-operatory", "podminky"],
+      "status": "draft"
+    },
+    {
+      "id": "izp-01-switch-propad",
+      "type": "codeOutput",
+      "prompt": "Co program vypíše na standardní výstup?",
+      "language": "c",
+      "filename": "prepinac.c",
+      "source": "#include <stdio.h>\n\nint main(void)\n{\n    int x = 2;\n\n    switch (x) {\n    case 1:\n        printf(\"jedna\\n\");\n    case 2:\n        printf(\"dva\\n\");\n    case 3:\n        printf(\"tri\\n\");\n        break;\n    default:\n        printf(\"jine\\n\");\n    }\n\n    return 0;\n}\n",
+      "mode": "exact",
+      "expected": "dva\ntri",
+      "hint": "Kde přesně je `break`?",
+      "explanation": "`switch` funguje jako skok na návěští, ne jako řetězec nezávislých větví. Skočí se na `case 2:` a odtud se kód provádí dál, dokud nenarazí na `break` – proto „propadne\" i do `case 3:`. `break` je až za výpisem `tri`, takže do `default` už se program nedostane. Tomuhle chování se říká *fall-through* a je zdrojem spousty chyb.",
+      "difficulty": 3,
+      "tags": ["izp", "ridici-struktury", "switch"],
+      "status": "draft"
+    },
+    {
+      "id": "izp-01-while-postinkrement",
+      "type": "codeOutput",
+      "prompt": "Co program vypíše na standardní výstup?",
+      "language": "c",
+      "filename": "cyklus.c",
+      "source": "#include <stdio.h>\n\nint main(void)\n{\n    int i = 0;\n\n    while (i++ < 3) {\n        printf(\"%d \", i);\n    }\n    printf(\"| %d\\n\", i);\n\n    return 0;\n}\n",
+      "mode": "choice",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`1 2 3 | 4`"
+        },
+        {
+          "id": "b",
+          "text": "`0 1 2 | 3`",
+          "feedback": "Takhle by se to chovalo s předsunutým inkrementem v těle cyklu. `i++` ale hodnotu zvýší hned při testu podmínky, takže se v těle tiskne už zvýšená hodnota."
+        },
+        {
+          "id": "c",
+          "text": "`1 2 3 | 3`",
+          "feedback": "Správná část v cyklu, ale poslední inkrement chybí. Podmínka se vyhodnotí ještě jednou (a neplatí) – a i při tomhle neúspěšném testu se `i` zvýší."
+        },
+        {
+          "id": "d",
+          "text": "`1 2 3 4 | 4`",
+          "feedback": "Tělo cyklu proběhne jen třikrát. Při čtvrtém testu už je `i == 3`, podmínka `3 < 3` neplatí a do těla se nevejde."
+        }
+      ],
+      "correct": "a",
+      "hint": "`i++` vrací starou hodnotu, ale proměnnou zvýší okamžitě – i když podmínka neplatí.",
+      "explanation": "Postfixový `i++` vrátí do porovnání **starou** hodnotu a proměnnou hned zvýší. Testy tedy porovnávají 0, 1, 2 (podmínka platí, v těle se tiskne už 1, 2, 3) a pak 3 – podmínka `3 < 3` neplatí, ale `i` se i tak zvýší na 4. Proto se za svislítkem vypíše `4`.",
+      "difficulty": 4,
+      "tags": ["izp", "cykly", "while", "operatory", "inkrementace"],
+      "status": "draft"
+    },
+    {
+      "id": "izp-01-rozsah-typu-int",
+      "type": "single",
+      "prompt": "Co o typu `int` zaručuje norma jazyka C?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Má vždy přesně 32 bitů.",
+          "feedback": "To je jen obvyklá implementace na dnešních počítačích. Norma šířku typu `int` nepředepisuje – na mikrokontroléru bývá 16bitový."
+        },
+        {
+          "id": "b",
+          "text": "Uloží aspoň hodnoty od −32767 do 32767."
+        },
+        {
+          "id": "c",
+          "text": "Je vždy stejně velký jako typ `long`.",
+          "feedback": "Norma jen zaručuje, že `long` není menší než `int`. Na 64bitovém Linuxu má `int` 4 bajty a `long` 8 bajtů."
+        },
+        {
+          "id": "d",
+          "text": "Je vždy stejně velký jako ukazatel.",
+          "feedback": "Tohle je nebezpečný předpoklad – na 64bitových systémech má ukazatel 8 bajtů a `int` 4. Ukazatel se do `int` obecně nevejde."
+        }
+      ],
+      "correct": "b",
+      "hint": "Norma předepisuje minimální rozsahy, ne konkrétní počet bitů.",
+      "explanation": "Norma C nestanovuje šířku typů v bitech, jen **minimální rozsah**: `INT_MIN` musí být nejvýše −32767 a `INT_MAX` aspoň 32767, což odpovídá 16 bitům. Skutečnou velikost na dané platformě zjistíš z `sizeof(int)` a mezní hodnoty z `<limits.h>`. Přenositelný program se na konkrétní šířku nesmí spoléhat.",
+      "difficulty": 4,
+      "tags": ["izp", "datove-typy", "prenositelnost"],
+      "status": "draft"
+    },
+    {
+      "id": "izp-01-nedefinovane-chovani",
+      "type": "multi",
+      "prompt": "Které z následujících situací jsou v jazyce C **nedefinované chování** (undefined behavior)?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Dělení celého čísla nulou."
+        },
+        {
+          "id": "b",
+          "text": "Zápis do prvku pole za jeho koncem."
+        },
+        {
+          "id": "c",
+          "text": "Dělení `7 / 3`, kde výsledek není celé číslo.",
+          "feedback": "Tohle je naopak přesně definované: celočíselné dělení zahodí desetinnou část, výsledek je `2`. Nedefinované chování to není."
+        },
+        {
+          "id": "d",
+          "text": "Přetečení znaménkového typu `int`."
+        },
+        {
+          "id": "e",
+          "text": "Přetečení typu `unsigned int`.",
+          "feedback": "U bezznaménkových typů je přetečení normou definované – počítá se modulo `UINT_MAX + 1`. Nedefinované je jen přetečení znaménkové."
+        }
+      ],
+      "correct": ["a", "b", "d"],
+      "partialCredit": true,
+      "hint": "Pozor na rozdíl mezi znaménkovými a bezznaménkovými typy.",
+      "explanation": "Nedefinované chování znamená, že norma o výsledku neříká vůbec nic – překladač si s takovým kódem může dělat, co chce. Sem patří dělení nulou, přístup mimo meze pole a přetečení znaménkového celého čísla. Naproti tomu celočíselné dělení `7 / 3` je definované (ořezání k nule) a přetečení bezznaménkového typu se počítá modulo `UINT_MAX + 1`.",
+      "difficulty": 4,
+      "tags": ["izp", "nedefinovane-chovani", "datove-typy", "pole"],
+      "status": "draft"
+    }
+  ]
+}

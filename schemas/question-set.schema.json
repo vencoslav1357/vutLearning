@@ -1,0 +1,1979 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Sada otázek",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 120,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 120
+    },
+    "course": {
+      "type": "string",
+      "enum": [
+        "izp",
+        "ilg",
+        "idm",
+        "iel",
+        "ius"
+      ]
+    },
+    "lecture": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 40
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 400
+    },
+    "source": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "slides",
+            "lecture",
+            "textbook",
+            "exam",
+            "notes",
+            "exercise",
+            "other"
+          ]
+        },
+        "ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 300
+        },
+        "pages": {
+          "maxItems": 60,
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "maximum": 9007199254740991
+          }
+        },
+        "note": {
+          "type": "string",
+          "maxLength": 300
+        }
+      },
+      "required": [
+        "kind",
+        "ref"
+      ]
+    },
+    "schemaVersion": {
+      "type": "number",
+      "const": 1
+    },
+    "questions": {
+      "minItems": 1,
+      "maxItems": 200,
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 120,
+                "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+              },
+              "prompt": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8000
+              },
+              "figure": {
+                "type": "object",
+                "properties": {
+                  "src": {
+                    "type": "string",
+                    "pattern": "^\\/content\\/img\\/[a-z0-9/_-]+\\.(png|jpg|jpeg|svg|webp|avif)$"
+                  },
+                  "alt": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 300
+                  },
+                  "caption": {
+                    "type": "string",
+                    "maxLength": 300
+                  },
+                  "width": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 4000
+                  },
+                  "height": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 4000
+                  }
+                },
+                "required": [
+                  "src",
+                  "alt"
+                ]
+              },
+              "code": {
+                "type": "object",
+                "properties": {
+                  "language": {
+                    "type": "string",
+                    "enum": [
+                      "c",
+                      "cpp",
+                      "asm",
+                      "bash",
+                      "shell",
+                      "python",
+                      "javascript",
+                      "typescript",
+                      "sql",
+                      "vhdl",
+                      "verilog",
+                      "latex",
+                      "json",
+                      "yaml",
+                      "xml",
+                      "makefile",
+                      "diff",
+                      "text"
+                    ]
+                  },
+                  "source": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 6000
+                  },
+                  "filename": {
+                    "type": "string",
+                    "maxLength": 80
+                  }
+                },
+                "required": [
+                  "language",
+                  "source"
+                ]
+              },
+              "hint": {
+                "type": "string",
+                "maxLength": 600
+              },
+              "explanation": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8000
+              },
+              "difficulty": {
+                "default": 3,
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 5
+              },
+              "tags": {
+                "default": [],
+                "maxItems": 12,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 120,
+                  "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+                }
+              },
+              "formerIds": {
+                "default": [],
+                "maxItems": 10,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 120,
+                  "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+                }
+              },
+              "status": {
+                "default": "draft",
+                "type": "string",
+                "enum": [
+                  "draft",
+                  "reviewed"
+                ]
+              },
+              "type": {
+                "type": "string",
+                "const": "single"
+              },
+              "choices": {
+                "minItems": 2,
+                "maxItems": 8,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 40,
+                      "pattern": "^[a-z0-9_-]+$"
+                    },
+                    "text": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 8000
+                    },
+                    "image": {
+                      "type": "object",
+                      "properties": {
+                        "src": {
+                          "type": "string",
+                          "pattern": "^\\/content\\/img\\/[a-z0-9/_-]+\\.(png|jpg|jpeg|svg|webp|avif)$"
+                        },
+                        "alt": {
+                          "type": "string",
+                          "minLength": 3,
+                          "maxLength": 300
+                        },
+                        "caption": {
+                          "type": "string",
+                          "maxLength": 300
+                        },
+                        "width": {
+                          "type": "integer",
+                          "exclusiveMinimum": 0,
+                          "maximum": 4000
+                        },
+                        "height": {
+                          "type": "integer",
+                          "exclusiveMinimum": 0,
+                          "maximum": 4000
+                        }
+                      },
+                      "required": [
+                        "src",
+                        "alt"
+                      ]
+                    },
+                    "feedback": {
+                      "type": "string",
+                      "maxLength": 1000
+                    },
+                    "pin": {
+                      "type": "string",
+                      "enum": [
+                        "first",
+                        "last"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "text"
+                  ]
+                }
+              },
+              "correct": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 40,
+                "pattern": "^[a-z0-9_-]+$"
+              },
+              "shuffleChoices": {
+                "default": true,
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "id",
+              "prompt",
+              "type",
+              "choices",
+              "correct"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 120,
+                "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+              },
+              "prompt": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8000
+              },
+              "figure": {
+                "type": "object",
+                "properties": {
+                  "src": {
+                    "type": "string",
+                    "pattern": "^\\/content\\/img\\/[a-z0-9/_-]+\\.(png|jpg|jpeg|svg|webp|avif)$"
+                  },
+                  "alt": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 300
+                  },
+                  "caption": {
+                    "type": "string",
+                    "maxLength": 300
+                  },
+                  "width": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 4000
+                  },
+                  "height": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 4000
+                  }
+                },
+                "required": [
+                  "src",
+                  "alt"
+                ]
+              },
+              "code": {
+                "type": "object",
+                "properties": {
+                  "language": {
+                    "type": "string",
+                    "enum": [
+                      "c",
+                      "cpp",
+                      "asm",
+                      "bash",
+                      "shell",
+                      "python",
+                      "javascript",
+                      "typescript",
+                      "sql",
+                      "vhdl",
+                      "verilog",
+                      "latex",
+                      "json",
+                      "yaml",
+                      "xml",
+                      "makefile",
+                      "diff",
+                      "text"
+                    ]
+                  },
+                  "source": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 6000
+                  },
+                  "filename": {
+                    "type": "string",
+                    "maxLength": 80
+                  }
+                },
+                "required": [
+                  "language",
+                  "source"
+                ]
+              },
+              "hint": {
+                "type": "string",
+                "maxLength": 600
+              },
+              "explanation": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8000
+              },
+              "difficulty": {
+                "default": 3,
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 5
+              },
+              "tags": {
+                "default": [],
+                "maxItems": 12,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 120,
+                  "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+                }
+              },
+              "formerIds": {
+                "default": [],
+                "maxItems": 10,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 120,
+                  "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+                }
+              },
+              "status": {
+                "default": "draft",
+                "type": "string",
+                "enum": [
+                  "draft",
+                  "reviewed"
+                ]
+              },
+              "type": {
+                "type": "string",
+                "const": "multi"
+              },
+              "choices": {
+                "minItems": 3,
+                "maxItems": 10,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 40,
+                      "pattern": "^[a-z0-9_-]+$"
+                    },
+                    "text": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 8000
+                    },
+                    "image": {
+                      "type": "object",
+                      "properties": {
+                        "src": {
+                          "type": "string",
+                          "pattern": "^\\/content\\/img\\/[a-z0-9/_-]+\\.(png|jpg|jpeg|svg|webp|avif)$"
+                        },
+                        "alt": {
+                          "type": "string",
+                          "minLength": 3,
+                          "maxLength": 300
+                        },
+                        "caption": {
+                          "type": "string",
+                          "maxLength": 300
+                        },
+                        "width": {
+                          "type": "integer",
+                          "exclusiveMinimum": 0,
+                          "maximum": 4000
+                        },
+                        "height": {
+                          "type": "integer",
+                          "exclusiveMinimum": 0,
+                          "maximum": 4000
+                        }
+                      },
+                      "required": [
+                        "src",
+                        "alt"
+                      ]
+                    },
+                    "feedback": {
+                      "type": "string",
+                      "maxLength": 1000
+                    },
+                    "pin": {
+                      "type": "string",
+                      "enum": [
+                        "first",
+                        "last"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "text"
+                  ]
+                }
+              },
+              "correct": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 40,
+                  "pattern": "^[a-z0-9_-]+$"
+                }
+              },
+              "partialCredit": {
+                "default": true,
+                "type": "boolean"
+              },
+              "shuffleChoices": {
+                "default": true,
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "id",
+              "prompt",
+              "type",
+              "choices",
+              "correct"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 120,
+                "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+              },
+              "prompt": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8000
+              },
+              "figure": {
+                "type": "object",
+                "properties": {
+                  "src": {
+                    "type": "string",
+                    "pattern": "^\\/content\\/img\\/[a-z0-9/_-]+\\.(png|jpg|jpeg|svg|webp|avif)$"
+                  },
+                  "alt": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 300
+                  },
+                  "caption": {
+                    "type": "string",
+                    "maxLength": 300
+                  },
+                  "width": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 4000
+                  },
+                  "height": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 4000
+                  }
+                },
+                "required": [
+                  "src",
+                  "alt"
+                ]
+              },
+              "code": {
+                "type": "object",
+                "properties": {
+                  "language": {
+                    "type": "string",
+                    "enum": [
+                      "c",
+                      "cpp",
+                      "asm",
+                      "bash",
+                      "shell",
+                      "python",
+                      "javascript",
+                      "typescript",
+                      "sql",
+                      "vhdl",
+                      "verilog",
+                      "latex",
+                      "json",
+                      "yaml",
+                      "xml",
+                      "makefile",
+                      "diff",
+                      "text"
+                    ]
+                  },
+                  "source": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 6000
+                  },
+                  "filename": {
+                    "type": "string",
+                    "maxLength": 80
+                  }
+                },
+                "required": [
+                  "language",
+                  "source"
+                ]
+              },
+              "hint": {
+                "type": "string",
+                "maxLength": 600
+              },
+              "explanation": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8000
+              },
+              "difficulty": {
+                "default": 3,
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 5
+              },
+              "tags": {
+                "default": [],
+                "maxItems": 12,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 120,
+                  "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+                }
+              },
+              "formerIds": {
+                "default": [],
+                "maxItems": 10,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 120,
+                  "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+                }
+              },
+              "status": {
+                "default": "draft",
+                "type": "string",
+                "enum": [
+                  "draft",
+                  "reviewed"
+                ]
+              },
+              "type": {
+                "type": "string",
+                "const": "trueFalse"
+              },
+              "answer": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "id",
+              "prompt",
+              "type",
+              "answer"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 120,
+                "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+              },
+              "prompt": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8000
+              },
+              "figure": {
+                "type": "object",
+                "properties": {
+                  "src": {
+                    "type": "string",
+                    "pattern": "^\\/content\\/img\\/[a-z0-9/_-]+\\.(png|jpg|jpeg|svg|webp|avif)$"
+                  },
+                  "alt": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 300
+                  },
+                  "caption": {
+                    "type": "string",
+                    "maxLength": 300
+                  },
+                  "width": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 4000
+                  },
+                  "height": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 4000
+                  }
+                },
+                "required": [
+                  "src",
+                  "alt"
+                ]
+              },
+              "code": {
+                "type": "object",
+                "properties": {
+                  "language": {
+                    "type": "string",
+                    "enum": [
+                      "c",
+                      "cpp",
+                      "asm",
+                      "bash",
+                      "shell",
+                      "python",
+                      "javascript",
+                      "typescript",
+                      "sql",
+                      "vhdl",
+                      "verilog",
+                      "latex",
+                      "json",
+                      "yaml",
+                      "xml",
+                      "makefile",
+                      "diff",
+                      "text"
+                    ]
+                  },
+                  "source": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 6000
+                  },
+                  "filename": {
+                    "type": "string",
+                    "maxLength": 80
+                  }
+                },
+                "required": [
+                  "language",
+                  "source"
+                ]
+              },
+              "hint": {
+                "type": "string",
+                "maxLength": 600
+              },
+              "explanation": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8000
+              },
+              "difficulty": {
+                "default": 3,
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 5
+              },
+              "tags": {
+                "default": [],
+                "maxItems": 12,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 120,
+                  "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+                }
+              },
+              "formerIds": {
+                "default": [],
+                "maxItems": 10,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 120,
+                  "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+                }
+              },
+              "status": {
+                "default": "draft",
+                "type": "string",
+                "enum": [
+                  "draft",
+                  "reviewed"
+                ]
+              },
+              "type": {
+                "type": "string",
+                "const": "shortText"
+              },
+              "accept": {
+                "minItems": 1,
+                "maxItems": 20,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                }
+              },
+              "normalize": {
+                "default": {},
+                "type": "object",
+                "properties": {
+                  "caseInsensitive": {
+                    "default": true,
+                    "type": "boolean"
+                  },
+                  "stripDiacritics": {
+                    "default": true,
+                    "type": "boolean"
+                  },
+                  "trim": {
+                    "default": true,
+                    "type": "boolean"
+                  },
+                  "collapseWhitespace": {
+                    "default": true,
+                    "type": "boolean"
+                  },
+                  "stripPunctuation": {
+                    "default": false,
+                    "type": "boolean"
+                  }
+                }
+              },
+              "placeholder": {
+                "type": "string",
+                "maxLength": 60
+              }
+            },
+            "required": [
+              "id",
+              "prompt",
+              "type",
+              "accept"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 120,
+                "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+              },
+              "prompt": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8000
+              },
+              "figure": {
+                "type": "object",
+                "properties": {
+                  "src": {
+                    "type": "string",
+                    "pattern": "^\\/content\\/img\\/[a-z0-9/_-]+\\.(png|jpg|jpeg|svg|webp|avif)$"
+                  },
+                  "alt": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 300
+                  },
+                  "caption": {
+                    "type": "string",
+                    "maxLength": 300
+                  },
+                  "width": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 4000
+                  },
+                  "height": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 4000
+                  }
+                },
+                "required": [
+                  "src",
+                  "alt"
+                ]
+              },
+              "code": {
+                "type": "object",
+                "properties": {
+                  "language": {
+                    "type": "string",
+                    "enum": [
+                      "c",
+                      "cpp",
+                      "asm",
+                      "bash",
+                      "shell",
+                      "python",
+                      "javascript",
+                      "typescript",
+                      "sql",
+                      "vhdl",
+                      "verilog",
+                      "latex",
+                      "json",
+                      "yaml",
+                      "xml",
+                      "makefile",
+                      "diff",
+                      "text"
+                    ]
+                  },
+                  "source": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 6000
+                  },
+                  "filename": {
+                    "type": "string",
+                    "maxLength": 80
+                  }
+                },
+                "required": [
+                  "language",
+                  "source"
+                ]
+              },
+              "hint": {
+                "type": "string",
+                "maxLength": 600
+              },
+              "explanation": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8000
+              },
+              "difficulty": {
+                "default": 3,
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 5
+              },
+              "tags": {
+                "default": [],
+                "maxItems": 12,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 120,
+                  "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+                }
+              },
+              "formerIds": {
+                "default": [],
+                "maxItems": 10,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 120,
+                  "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+                }
+              },
+              "status": {
+                "default": "draft",
+                "type": "string",
+                "enum": [
+                  "draft",
+                  "reviewed"
+                ]
+              },
+              "type": {
+                "type": "string",
+                "const": "numeric"
+              },
+              "answer": {
+                "type": "number"
+              },
+              "tolerance": {
+                "default": {
+                  "kind": "absolute",
+                  "value": 0
+                },
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "absolute"
+                      },
+                      "value": {
+                        "type": "number",
+                        "minimum": 0
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "value"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "relative"
+                      },
+                      "value": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "value"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "decimals"
+                      },
+                      "value": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 10
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "value"
+                    ]
+                  }
+                ]
+              },
+              "unit": {
+                "default": null,
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 20
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "prompt",
+              "type",
+              "answer"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 120,
+                "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+              },
+              "prompt": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8000
+              },
+              "figure": {
+                "type": "object",
+                "properties": {
+                  "src": {
+                    "type": "string",
+                    "pattern": "^\\/content\\/img\\/[a-z0-9/_-]+\\.(png|jpg|jpeg|svg|webp|avif)$"
+                  },
+                  "alt": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 300
+                  },
+                  "caption": {
+                    "type": "string",
+                    "maxLength": 300
+                  },
+                  "width": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 4000
+                  },
+                  "height": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 4000
+                  }
+                },
+                "required": [
+                  "src",
+                  "alt"
+                ]
+              },
+              "code": {
+                "type": "object",
+                "properties": {
+                  "language": {
+                    "type": "string",
+                    "enum": [
+                      "c",
+                      "cpp",
+                      "asm",
+                      "bash",
+                      "shell",
+                      "python",
+                      "javascript",
+                      "typescript",
+                      "sql",
+                      "vhdl",
+                      "verilog",
+                      "latex",
+                      "json",
+                      "yaml",
+                      "xml",
+                      "makefile",
+                      "diff",
+                      "text"
+                    ]
+                  },
+                  "source": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 6000
+                  },
+                  "filename": {
+                    "type": "string",
+                    "maxLength": 80
+                  }
+                },
+                "required": [
+                  "language",
+                  "source"
+                ]
+              },
+              "hint": {
+                "type": "string",
+                "maxLength": 600
+              },
+              "explanation": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8000
+              },
+              "difficulty": {
+                "default": 3,
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 5
+              },
+              "tags": {
+                "default": [],
+                "maxItems": 12,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 120,
+                  "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+                }
+              },
+              "formerIds": {
+                "default": [],
+                "maxItems": 10,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 120,
+                  "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+                }
+              },
+              "status": {
+                "default": "draft",
+                "type": "string",
+                "enum": [
+                  "draft",
+                  "reviewed"
+                ]
+              },
+              "type": {
+                "type": "string",
+                "const": "ordering"
+              },
+              "items": {
+                "minItems": 3,
+                "maxItems": 8,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 40,
+                      "pattern": "^[a-z0-9_-]+$"
+                    },
+                    "text": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 8000
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "text"
+                  ]
+                }
+              },
+              "correctOrder": {
+                "minItems": 3,
+                "maxItems": 8,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 40,
+                  "pattern": "^[a-z0-9_-]+$"
+                }
+              }
+            },
+            "required": [
+              "id",
+              "prompt",
+              "type",
+              "items",
+              "correctOrder"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 120,
+                "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+              },
+              "prompt": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8000
+              },
+              "figure": {
+                "type": "object",
+                "properties": {
+                  "src": {
+                    "type": "string",
+                    "pattern": "^\\/content\\/img\\/[a-z0-9/_-]+\\.(png|jpg|jpeg|svg|webp|avif)$"
+                  },
+                  "alt": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 300
+                  },
+                  "caption": {
+                    "type": "string",
+                    "maxLength": 300
+                  },
+                  "width": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 4000
+                  },
+                  "height": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 4000
+                  }
+                },
+                "required": [
+                  "src",
+                  "alt"
+                ]
+              },
+              "code": {
+                "type": "object",
+                "properties": {
+                  "language": {
+                    "type": "string",
+                    "enum": [
+                      "c",
+                      "cpp",
+                      "asm",
+                      "bash",
+                      "shell",
+                      "python",
+                      "javascript",
+                      "typescript",
+                      "sql",
+                      "vhdl",
+                      "verilog",
+                      "latex",
+                      "json",
+                      "yaml",
+                      "xml",
+                      "makefile",
+                      "diff",
+                      "text"
+                    ]
+                  },
+                  "source": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 6000
+                  },
+                  "filename": {
+                    "type": "string",
+                    "maxLength": 80
+                  }
+                },
+                "required": [
+                  "language",
+                  "source"
+                ]
+              },
+              "hint": {
+                "type": "string",
+                "maxLength": 600
+              },
+              "explanation": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8000
+              },
+              "difficulty": {
+                "default": 3,
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 5
+              },
+              "tags": {
+                "default": [],
+                "maxItems": 12,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 120,
+                  "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+                }
+              },
+              "formerIds": {
+                "default": [],
+                "maxItems": 10,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 120,
+                  "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+                }
+              },
+              "status": {
+                "default": "draft",
+                "type": "string",
+                "enum": [
+                  "draft",
+                  "reviewed"
+                ]
+              },
+              "type": {
+                "type": "string",
+                "const": "matching"
+              },
+              "left": {
+                "minItems": 2,
+                "maxItems": 8,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 40,
+                      "pattern": "^[a-z0-9_-]+$"
+                    },
+                    "text": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 8000
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "text"
+                  ]
+                }
+              },
+              "right": {
+                "minItems": 2,
+                "maxItems": 10,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 40,
+                      "pattern": "^[a-z0-9_-]+$"
+                    },
+                    "text": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 8000
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "text"
+                  ]
+                }
+              },
+              "pairs": {
+                "minItems": 2,
+                "maxItems": 8,
+                "type": "array",
+                "items": {
+                  "type": "array",
+                  "prefixItems": [
+                    {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 40,
+                      "pattern": "^[a-z0-9_-]+$"
+                    },
+                    {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 40,
+                      "pattern": "^[a-z0-9_-]+$"
+                    }
+                  ],
+                  "items": false,
+                  "minItems": 2,
+                  "maxItems": 2
+                }
+              }
+            },
+            "required": [
+              "id",
+              "prompt",
+              "type",
+              "left",
+              "right",
+              "pairs"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 120,
+                "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+              },
+              "prompt": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8000
+              },
+              "figure": {
+                "type": "object",
+                "properties": {
+                  "src": {
+                    "type": "string",
+                    "pattern": "^\\/content\\/img\\/[a-z0-9/_-]+\\.(png|jpg|jpeg|svg|webp|avif)$"
+                  },
+                  "alt": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 300
+                  },
+                  "caption": {
+                    "type": "string",
+                    "maxLength": 300
+                  },
+                  "width": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 4000
+                  },
+                  "height": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 4000
+                  }
+                },
+                "required": [
+                  "src",
+                  "alt"
+                ]
+              },
+              "code": {
+                "type": "object",
+                "properties": {
+                  "language": {
+                    "type": "string",
+                    "enum": [
+                      "c",
+                      "cpp",
+                      "asm",
+                      "bash",
+                      "shell",
+                      "python",
+                      "javascript",
+                      "typescript",
+                      "sql",
+                      "vhdl",
+                      "verilog",
+                      "latex",
+                      "json",
+                      "yaml",
+                      "xml",
+                      "makefile",
+                      "diff",
+                      "text"
+                    ]
+                  },
+                  "source": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 6000
+                  },
+                  "filename": {
+                    "type": "string",
+                    "maxLength": 80
+                  }
+                },
+                "required": [
+                  "language",
+                  "source"
+                ]
+              },
+              "hint": {
+                "type": "string",
+                "maxLength": 600
+              },
+              "explanation": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8000
+              },
+              "difficulty": {
+                "default": 3,
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 5
+              },
+              "tags": {
+                "default": [],
+                "maxItems": 12,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 120,
+                  "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+                }
+              },
+              "formerIds": {
+                "default": [],
+                "maxItems": 10,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 120,
+                  "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+                }
+              },
+              "status": {
+                "default": "draft",
+                "type": "string",
+                "enum": [
+                  "draft",
+                  "reviewed"
+                ]
+              },
+              "type": {
+                "type": "string",
+                "const": "cloze"
+              },
+              "template": {
+                "type": "string",
+                "minLength": 5,
+                "maxLength": 2000,
+                "pattern": "\\{\\{\\d+\\}\\}"
+              },
+              "blanks": {
+                "type": "object",
+                "propertyNames": {
+                  "type": "string",
+                  "pattern": "^\\d+$"
+                },
+                "additionalProperties": {
+                  "type": "object",
+                  "properties": {
+                    "accept": {
+                      "minItems": 1,
+                      "maxItems": 15,
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200
+                      }
+                    },
+                    "normalize": {
+                      "default": {},
+                      "type": "object",
+                      "properties": {
+                        "caseInsensitive": {
+                          "default": true,
+                          "type": "boolean"
+                        },
+                        "stripDiacritics": {
+                          "default": true,
+                          "type": "boolean"
+                        },
+                        "trim": {
+                          "default": true,
+                          "type": "boolean"
+                        },
+                        "collapseWhitespace": {
+                          "default": true,
+                          "type": "boolean"
+                        },
+                        "stripPunctuation": {
+                          "default": false,
+                          "type": "boolean"
+                        }
+                      }
+                    },
+                    "placeholder": {
+                      "type": "string",
+                      "maxLength": 40
+                    }
+                  },
+                  "required": [
+                    "accept"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "id",
+              "prompt",
+              "type",
+              "template",
+              "blanks"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 120,
+                "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+              },
+              "prompt": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8000
+              },
+              "figure": {
+                "type": "object",
+                "properties": {
+                  "src": {
+                    "type": "string",
+                    "pattern": "^\\/content\\/img\\/[a-z0-9/_-]+\\.(png|jpg|jpeg|svg|webp|avif)$"
+                  },
+                  "alt": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 300
+                  },
+                  "caption": {
+                    "type": "string",
+                    "maxLength": 300
+                  },
+                  "width": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 4000
+                  },
+                  "height": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 4000
+                  }
+                },
+                "required": [
+                  "src",
+                  "alt"
+                ]
+              },
+              "code": {
+                "type": "object",
+                "properties": {
+                  "language": {
+                    "type": "string",
+                    "enum": [
+                      "c",
+                      "cpp",
+                      "asm",
+                      "bash",
+                      "shell",
+                      "python",
+                      "javascript",
+                      "typescript",
+                      "sql",
+                      "vhdl",
+                      "verilog",
+                      "latex",
+                      "json",
+                      "yaml",
+                      "xml",
+                      "makefile",
+                      "diff",
+                      "text"
+                    ]
+                  },
+                  "source": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 6000
+                  },
+                  "filename": {
+                    "type": "string",
+                    "maxLength": 80
+                  }
+                },
+                "required": [
+                  "language",
+                  "source"
+                ]
+              },
+              "hint": {
+                "type": "string",
+                "maxLength": 600
+              },
+              "explanation": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8000
+              },
+              "difficulty": {
+                "default": 3,
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 5
+              },
+              "tags": {
+                "default": [],
+                "maxItems": 12,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 120,
+                  "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+                }
+              },
+              "formerIds": {
+                "default": [],
+                "maxItems": 10,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 120,
+                  "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+                }
+              },
+              "status": {
+                "default": "draft",
+                "type": "string",
+                "enum": [
+                  "draft",
+                  "reviewed"
+                ]
+              },
+              "type": {
+                "type": "string",
+                "const": "codeOutput"
+              },
+              "language": {
+                "type": "string",
+                "enum": [
+                  "c",
+                  "cpp",
+                  "asm",
+                  "bash",
+                  "shell",
+                  "python",
+                  "javascript",
+                  "typescript",
+                  "sql",
+                  "vhdl",
+                  "verilog",
+                  "latex",
+                  "json",
+                  "yaml",
+                  "xml",
+                  "makefile",
+                  "diff",
+                  "text"
+                ]
+              },
+              "source": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 6000
+              },
+              "filename": {
+                "type": "string",
+                "maxLength": 80
+              },
+              "mode": {
+                "default": "exact",
+                "type": "string",
+                "enum": [
+                  "exact",
+                  "choice"
+                ]
+              },
+              "expected": {
+                "type": "string",
+                "maxLength": 2000
+              },
+              "choices": {
+                "minItems": 2,
+                "maxItems": 6,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 40,
+                      "pattern": "^[a-z0-9_-]+$"
+                    },
+                    "text": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 8000
+                    },
+                    "image": {
+                      "type": "object",
+                      "properties": {
+                        "src": {
+                          "type": "string",
+                          "pattern": "^\\/content\\/img\\/[a-z0-9/_-]+\\.(png|jpg|jpeg|svg|webp|avif)$"
+                        },
+                        "alt": {
+                          "type": "string",
+                          "minLength": 3,
+                          "maxLength": 300
+                        },
+                        "caption": {
+                          "type": "string",
+                          "maxLength": 300
+                        },
+                        "width": {
+                          "type": "integer",
+                          "exclusiveMinimum": 0,
+                          "maximum": 4000
+                        },
+                        "height": {
+                          "type": "integer",
+                          "exclusiveMinimum": 0,
+                          "maximum": 4000
+                        }
+                      },
+                      "required": [
+                        "src",
+                        "alt"
+                      ]
+                    },
+                    "feedback": {
+                      "type": "string",
+                      "maxLength": 1000
+                    },
+                    "pin": {
+                      "type": "string",
+                      "enum": [
+                        "first",
+                        "last"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "text"
+                  ]
+                }
+              },
+              "correct": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 40,
+                "pattern": "^[a-z0-9_-]+$"
+              },
+              "shuffleChoices": {
+                "default": true,
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "id",
+              "prompt",
+              "type",
+              "language",
+              "source"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "required": [
+    "id",
+    "title",
+    "course",
+    "schemaVersion",
+    "questions"
+  ]
+}

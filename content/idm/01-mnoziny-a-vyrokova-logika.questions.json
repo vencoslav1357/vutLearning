@@ -1,0 +1,189 @@
+{
+  "$schema": "../../schemas/question-set.schema.json",
+  "id": "01-mnoziny-a-vyrokova-logika",
+  "title": "Množiny a výroková logika",
+  "course": "idm",
+  "lecture": 1,
+  "description": "Pravdivostní tabulky, De Morganovy zákony, negace kvantifikátorů a základní počítání s množinami.",
+  "schemaVersion": 1,
+  "questions": [
+    {
+      "id": "idm-01-pravdivostni-tabulka-implikace",
+      "type": "single",
+      "prompt": "Která formule odpovídá následující pravdivostní tabulce?\n\n| $p$ | $q$ | $\\varphi$ |\n|:---:|:---:|:---------:|\n| 1 | 1 | 1 |\n| 1 | 0 | 0 |\n| 0 | 1 | 1 |\n| 0 | 0 | 1 |",
+      "choices": [
+        {
+          "id": "a",
+          "text": "$p \\wedge q$",
+          "feedback": "Konjunkce je pravdivá jen v prvním řádku. Tabulka má ale tři jedničky, takže konjunkce to není."
+        },
+        {
+          "id": "b",
+          "text": "$q \\Rightarrow p$",
+          "feedback": "Obrácená implikace – klasická záměna. Ta by byla nepravdivá ve třetím řádku ($p$ nepravda, $q$ pravda), zatímco tabulka tam má jedničku."
+        },
+        {
+          "id": "c",
+          "text": "$p \\Rightarrow q$"
+        },
+        {
+          "id": "d",
+          "text": "$p \\Leftrightarrow q$",
+          "feedback": "Ekvivalence je pravdivá jen tam, kde se $p$ a $q$ shodují, tedy v prvním a posledním řádku. Tabulka má jedničku i ve třetím."
+        }
+      ],
+      "correct": "c",
+      "hint": "Najdi jediný řádek s nulou a zjisti, která spojka je nepravdivá právě tam.",
+      "explanation": "Formule je nepravdivá jediný raz – když je $p$ pravda a $q$ nepravda. Přesně tak je definována implikace $p \\Rightarrow q$: „z pravdy nesmí plynout nepravda\". Ve zbývajících třech řádcích je pravdivá, včetně obou řádků s nepravdivým $p$ (tzv. pravdivost z nepravdivého předpokladu). Pozor na záměnu s obrácenou implikací $q \\Rightarrow p$.",
+      "difficulty": 3,
+      "tags": ["idm", "vyrokova-logika", "implikace", "pravdivostni-tabulka"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-01-de-morganovy-zakony",
+      "type": "single",
+      "prompt": "Které formuli je ekvivalentní $\\neg(p \\wedge q)$?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "$\\neg p \\wedge \\neg q$",
+          "feedback": "Nejčastější chyba: negace se rozdělí, ale spojka se nechá. Ověř si to na $p$ pravda, $q$ nepravda – vlevo vyjde pravda, vpravo nepravda."
+        },
+        {
+          "id": "b",
+          "text": "$\\neg p \\vee \\neg q$"
+        },
+        {
+          "id": "c",
+          "text": "$p \\vee q$",
+          "feedback": "Tady negace úplně zmizely. Pro $p$ i $q$ pravdivé je původní formule nepravdivá, zatímco $p \\vee q$ je pravdivá."
+        },
+        {
+          "id": "d",
+          "text": "$\\neg p \\Rightarrow q$",
+          "feedback": "Tahle formule je ekvivalentní $p \\vee q$, ne negaci konjunkce. Zkus dosadit $p$ i $q$ pravdivé."
+        }
+      ],
+      "correct": "b",
+      "hint": "Negace konjunkce mění i spojku, nejen členy.",
+      "explanation": "První De Morganův zákon zní $\\neg(p \\wedge q) \\equiv \\neg p \\vee \\neg q$ – při vnesení negace dovnitř se konjunkce mění na disjunkci. Slovy: „není pravda, že platí obojí\" znamená „aspoň jedno z toho neplatí\". Duálně $\\neg(p \\vee q) \\equiv \\neg p \\wedge \\neg q$. Zapamatovat si to, že se **mění spojka**, je to hlavní.",
+      "difficulty": 3,
+      "tags": ["idm", "vyrokova-logika", "de-morgan", "negace"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-01-mohutnost-potencni-mnoziny",
+      "type": "numeric",
+      "prompt": "Množina $A$ má 5 prvků. Kolik prvků má její potenční množina $\\mathcal{P}(A)$?",
+      "answer": 32,
+      "tolerance": { "kind": "absolute", "value": 0 },
+      "unit": null,
+      "hint": "Pro každý prvek se nezávisle rozhodujeme, jestli do podmnožiny patří, nebo ne.",
+      "explanation": "Potenční množina obsahuje **všechny** podmnožiny $A$. Každou podmnožinu lze popsat pětibitovým rozhodnutím „prvek je / není uvnitř\", takže jich je $2^{|A|} = 2^5 = 32$. Započítány jsou i prázdná množina a celá $A$. Častý omyl je odpověď 25 ($5^2$) nebo 10 ($2 \\cdot 5$).",
+      "difficulty": 2,
+      "tags": ["idm", "mnoziny", "potencni-mnozina", "mohutnost"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-01-distributivita-mnozinovych-operaci",
+      "type": "trueFalse",
+      "prompt": "Pro libovolné množiny $A$, $B$, $C$ platí $A \\cup (B \\cap C) = (A \\cup B) \\cap (A \\cup C)$.",
+      "answer": true,
+      "explanation": "Platí – jde o distributivitu sjednocení vůči průniku. Prvek patří do levé strany, právě když leží v $A$, nebo zároveň v $B$ i $C$; a přesně to znamená, že leží v $A \\cup B$ i v $A \\cup C$. Duálně platí i $A \\cap (B \\cup C) = (A \\cap B) \\cup (A \\cap C)$. Množinové operace se tedy chovají jako $\\vee$ a $\\wedge$, u nichž distributivita funguje na obě strany – na rozdíl od sčítání a násobení čísel.",
+      "difficulty": 3,
+      "tags": ["idm", "mnoziny", "distributivita", "mnozinove-operace"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-01-prazdna-mnozina-prvek-vs-podmnozina",
+      "type": "trueFalse",
+      "prompt": "Prázdná množina je prvkem každé množiny.",
+      "answer": false,
+      "explanation": "Není. Prázdná množina je **podmnožinou** každé množiny ($\\emptyset \\subseteq A$ platí vždy, protože podmínka „každý prvek $\\emptyset$ leží v $A$\" je splněna prázdně), ale jejím **prvkem** být nemusí. Například $A = \\{1, 2\\}$ má jen dva prvky a $\\emptyset$ mezi nimi není: $\\emptyset \\notin A$. Prvkem je jen u množin, do kterých ji výslovně dáme, třeba $\\{\\emptyset, 1\\}$. Rozlišovat $\\in$ a $\\subseteq$ je tady zásadní.",
+      "difficulty": 4,
+      "tags": ["idm", "mnoziny", "prazdna-mnozina", "podmnozina"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-01-princip-inkluze-a-exkluze",
+      "type": "numeric",
+      "prompt": "Platí $|A| = 12$, $|B| = 9$ a $|A \\cap B| = 4$. Kolik prvků má $A \\cup B$?",
+      "answer": 17,
+      "tolerance": { "kind": "absolute", "value": 0 },
+      "unit": null,
+      "hint": "Prvky průniku byste prostým sečtením započítali dvakrát.",
+      "explanation": "Podle principu inkluze a exkluze platí $|A \\cup B| = |A| + |B| - |A \\cap B| = 12 + 9 - 4 = 17$. Odečtení průniku je nutné proto, že prvky ležící v obou množinách by se v součtu $|A| + |B|$ počítaly dvakrát. Odpověď 21 vzniká právě zapomenutím tohoto odečtení.",
+      "difficulty": 2,
+      "tags": ["idm", "mnoziny", "inkluze-exkluze", "mohutnost"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-01-negace-kvantifikatoru",
+      "type": "single",
+      "prompt": "Jak zní negace výroku $\\forall x \\in M: P(x)$?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "$\\exists x \\in M: \\neg P(x)$"
+        },
+        {
+          "id": "b",
+          "text": "$\\forall x \\in M: \\neg P(x)$",
+          "feedback": "Tohle znamená „neplatí to pro žádné $x$\", což je mnohem silnější tvrzení. K vyvrácení „platí pro všechny\" stačí jediná výjimka."
+        },
+        {
+          "id": "c",
+          "text": "$\\neg \\exists x \\in M: P(x)$",
+          "feedback": "To říká „neexistuje $x$, pro které $P(x)$ platí\", tedy totéž co varianta s obráceným kvantifikátorem u všech prvků. Opět příliš silné."
+        },
+        {
+          "id": "d",
+          "text": "$\\exists x \\in M: P(x)$",
+          "feedback": "Negace se někam ztratila. Tenhle výrok naopak z původního plyne (je-li $M$ neprázdná), takže jeho negací být nemůže."
+        }
+      ],
+      "correct": "a",
+      "hint": "Co musíš ukázat, abys vyvrátil tvrzení „všichni studenti prošli\"?",
+      "explanation": "Při negaci se kvantifikátor obrací a negace přechází dovnitř: $\\neg\\,\\forall x\\, P(x) \\equiv \\exists x\\, \\neg P(x)$. K vyvrácení tvrzení „pro všechna $x$ platí $P$\" stačí najít **jediný protipříklad**. Duálně $\\neg\\,\\exists x\\, P(x) \\equiv \\forall x\\, \\neg P(x)$. Jde o kvantifikátorovou obdobu De Morganových zákonů.",
+      "difficulty": 3,
+      "tags": ["idm", "predikatova-logika", "kvantifikatory", "negace"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-01-tautologie",
+      "type": "multi",
+      "prompt": "Které z následujících formulí jsou tautologie, tedy pravdivé při každém ohodnocení proměnných?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "$p \\vee \\neg p$"
+        },
+        {
+          "id": "b",
+          "text": "$p \\wedge \\neg p$",
+          "feedback": "Naopak – tahle formule je nepravdivá při každém ohodnocení, je to kontradikce (spor). Snadno se plete se zákonem vyloučeného třetího."
+        },
+        {
+          "id": "c",
+          "text": "$(p \\Rightarrow q) \\Leftrightarrow (\\neg q \\Rightarrow \\neg p)$"
+        },
+        {
+          "id": "d",
+          "text": "$(p \\Rightarrow q) \\Leftrightarrow (q \\Rightarrow p)$",
+          "feedback": "Implikace a její obrácení ekvivalentní nejsou. Pro $p$ nepravdivé a $q$ pravdivé vyjde levá strana pravdivá a pravá nepravdivá."
+        },
+        {
+          "id": "e",
+          "text": "$p \\Rightarrow (q \\Rightarrow p)$"
+        }
+      ],
+      "correct": ["a", "c", "e"],
+      "partialCredit": true,
+      "hint": "U každé formule zkus najít ohodnocení, které ji vyvrátí. Když žádné neexistuje, je to tautologie.",
+      "explanation": "$p \\vee \\neg p$ je zákon vyloučeného třetího. Formule $(p \\Rightarrow q) \\Leftrightarrow (\\neg q \\Rightarrow \\neg p)$ je zákon kontrapozice – implikace je vždy ekvivalentní své obměně (na tom stojí nepřímý důkaz). Formule $p \\Rightarrow (q \\Rightarrow p)$ platí také: je-li $p$ pravdivé, je pravdivý i vnitřní závěr; je-li $p$ nepravdivé, je celá implikace pravdivá z nepravdivého předpokladu. Naproti tomu $p \\wedge \\neg p$ je kontradikce a implikace se svým obrácením ekvivalentní není.",
+      "difficulty": 4,
+      "tags": ["idm", "vyrokova-logika", "tautologie", "kontrapozice"],
+      "status": "draft"
+    }
+  ]
+}

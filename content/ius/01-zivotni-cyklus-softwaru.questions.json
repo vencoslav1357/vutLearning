@@ -1,0 +1,213 @@
+{
+  "$schema": "../../schemas/question-set.schema.json",
+  "id": "01-zivotni-cyklus-softwaru",
+  "title": "Životní cyklus softwaru",
+  "course": "ius",
+  "lecture": 2,
+  "description": "Etapy vývoje, vodopádový a spirálový model, funkční a nefunkční požadavky, verifikace a validace.",
+  "schemaVersion": 1,
+  "questions": [
+    {
+      "id": "ius-01-faze-vodopadoveho-modelu",
+      "type": "ordering",
+      "prompt": "Seřaďte etapy vodopádového modelu vývoje softwaru tak, jak po sobě následují.",
+      "items": [
+        { "id": "impl", "text": "Implementace (kódování)" },
+        { "id": "test", "text": "Testování a integrace" },
+        { "id": "spec", "text": "Specifikace požadavků" },
+        { "id": "udrz", "text": "Nasazení a údržba" },
+        { "id": "navrh", "text": "Analýza a návrh systému" }
+      ],
+      "correctOrder": ["spec", "navrh", "impl", "test", "udrz"],
+      "hint": "Vodopád začíná u toho, co má systém dělat, a končí tam, kde už běží u zákazníka.",
+      "explanation": "Klasický vodopádový model má pořadí: **specifikace požadavků** (co má systém umět) → **analýza a návrh** (jak toho dosáhneme, architektura) → **implementace** → **testování a integrace** → **nasazení a údržba**. Každá etapa v čisté podobě modelu začíná až po dokončení a schválení té předchozí, což je zároveň jeho hlavní slabina.",
+      "difficulty": 2,
+      "tags": ["ius", "zivotni-cyklus", "vodopadovy-model", "etapy-vyvoje"],
+      "status": "draft"
+    },
+    {
+      "id": "ius-01-nevyhoda-vodopadoveho-modelu",
+      "type": "single",
+      "prompt": "Co je hlavní nevýhodou vodopádového modelu vývoje?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Chyby v zadání se projeví až na konci, kdy je oprava nejdražší."
+        },
+        {
+          "id": "b",
+          "text": "Nelze v něm sepsat dokumentaci k jednotlivým etapám.",
+          "feedback": "Právě naopak – vodopád je na dokumentaci postavený, každá etapa končí schváleným dokumentem. To je spíš jeho silná stránka."
+        },
+        {
+          "id": "c",
+          "text": "Nedá se použít na projekty s více než deseti vývojáři.",
+          "feedback": "Velikost týmu s tím nesouvisí; vodopád se historicky používal právě na velkých zakázkách. Problém je v načasování zpětné vazby, ne v počtu lidí."
+        },
+        {
+          "id": "d",
+          "text": "Nepočítá s testováním, to se dělá až po nasazení.",
+          "feedback": "Testování je ve vodopádu samostatnou etapou před nasazením. Problematické je, že přichází pozdě – ne že by chybělo."
+        }
+      ],
+      "correct": "a",
+      "hint": "Kdy ve vodopádu poprvé uvidí zákazník něco spustitelného?",
+      "explanation": "Ve vodopádu vzniká spustitelný systém až v poslední třetině projektu, takže se nedorozumění v požadavcích odhalí velmi pozdě. Náklady na opravu chyby přitom s každou další etapou řádově rostou – chyba v zadání nalezená při testování znamená přepracovat návrh i kód. Iterativní a agilní přístupy tohle řeší tím, že dodávají spustitelné verze průběžně a zpětnou vazbu získávají po celou dobu.",
+      "difficulty": 3,
+      "tags": ["ius", "vodopadovy-model", "zivotni-cyklus", "rizika"],
+      "status": "draft"
+    },
+    {
+      "id": "ius-01-validace",
+      "type": "trueFalse",
+      "prompt": "Validace odpovídá na otázku, zda vyvíjíme správný produkt – tedy ten, který zákazník opravdu potřebuje.",
+      "answer": true,
+      "explanation": "Ano, tohle je klasické rozlišení: **validace** = „stavíme správný produkt?\" (porovnává systém s potřebami zákazníka), zatímco **verifikace** = „stavíme produkt správně?\" (porovnává výsledek se specifikací a návrhem). Systém může projít verifikací na výbornou – přesně odpovídá zadání – a přesto ve validaci propadnout, protože zadání samo bylo špatně pochopené.",
+      "difficulty": 3,
+      "tags": ["ius", "verifikace-validace", "testovani", "kvalita"],
+      "status": "draft"
+    },
+    {
+      "id": "ius-01-nefunkcni-pozadavky",
+      "type": "multi",
+      "prompt": "Které z následujících požadavků jsou **nefunkční**?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Systém odpoví na dotaz nejpozději do 200 ms."
+        },
+        {
+          "id": "b",
+          "text": "Uživatel může vytvořit novou objednávku.",
+          "feedback": "Tohle je typický funkční požadavek – popisuje konkrétní činnost, kterou systém uživateli umožní. Nefunkční požadavky naopak říkají, *jak dobře* má systém fungovat."
+        },
+        {
+          "id": "c",
+          "text": "Systém je dostupný aspoň 99,9 % času."
+        },
+        {
+          "id": "d",
+          "text": "Aplikace musí fungovat v prohlížečích Chrome i Firefox."
+        },
+        {
+          "id": "e",
+          "text": "Administrátor může zablokovat účet uživatele.",
+          "feedback": "Opět funkční požadavek: jde o konkrétní funkci dostupnou konkrétní roli. Že je určena jen administrátorovi, z ní nefunkční požadavek nedělá."
+        }
+      ],
+      "correct": ["a", "c", "d"],
+      "partialCredit": true,
+      "hint": "Funkční požadavek říká, *co* systém dělá. Nefunkční říká, *jak* to dělá.",
+      "explanation": "Funkční požadavky popisují chování systému – co umí, jaké funkce nabízí. Nefunkční požadavky popisují vlastnosti a omezení: výkon (odezva do 200 ms), spolehlivost a dostupnost (99,9 %), přenositelnost a kompatibilitu (běh ve dvou prohlížečích), dále bezpečnost, použitelnost či udržovatelnost. Dobrý nefunkční požadavek je měřitelný – „systém bude rychlý\" se ověřit nedá, „odpoví do 200 ms\" ano.",
+      "difficulty": 3,
+      "tags": ["ius", "pozadavky", "nefunkcni-pozadavky", "analyza"],
+      "status": "draft"
+    },
+    {
+      "id": "ius-01-ucel-prototypu",
+      "type": "single",
+      "prompt": "K čemu slouží prototyp při vývoji softwaru?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Nahrazuje testování hotového systému u zákazníka.",
+          "feedback": "Prototyp testování nenahrazuje – bývá nekompletní a často i jednorázový. Testování hotového systému musí proběhnout stejně."
+        },
+        {
+          "id": "b",
+          "text": "Je to první ostrá verze nasazená do provozu.",
+          "feedback": "Tomu se říká pilotní provoz nebo první vydání. Prototyp vzniká mnohem dřív a do ostrého provozu se zpravidla vůbec nedostane."
+        },
+        {
+          "id": "c",
+          "text": "Slouží k rychlému ověření požadavků se zákazníkem."
+        },
+        {
+          "id": "d",
+          "text": "Je to dokument popisující architekturu celého systému.",
+          "feedback": "Architekturu popisuje návrhová dokumentace. Síla prototypu je právě v tom, že to dokument není – zákazník si na něj může sáhnout."
+        }
+      ],
+      "correct": "c",
+      "hint": "Co se zákazníkovi hodnotí snáz: stostránkovou specifikaci, nebo něco, co si může vyzkoušet?",
+      "explanation": "Prototyp je levný a rychle vyrobený model systému (často jen náčrt obrazovek), který slouží k **ověření a upřesnění požadavků** se zákazníkem. Nad něčím konkrétním se zadavatel vyjadřuje mnohem přesněji než nad textovou specifikací, takže se nedorozumění odhalí včas a lacino. U tzv. zahazovaných (throw-away) prototypů se výsledek po ověření nepoužije a systém se napíše načisto.",
+      "difficulty": 2,
+      "tags": ["ius", "prototyp", "pozadavky", "zivotni-cyklus"],
+      "status": "draft"
+    },
+    {
+      "id": "ius-01-agilni-pristup",
+      "type": "trueFalse",
+      "prompt": "Agilní přístup k vývoji upřednostňuje reakci na změnu před striktním dodržováním původního plánu.",
+      "answer": true,
+      "explanation": "Přesně tak zní jedna ze čtyř hodnot Agilního manifestu: *reagování na změnu před dodržováním plánu*. Zbylé tři upřednostňují jednotlivce a interakce před procesy a nástroji, fungující software před vyčerpávající dokumentací a spolupráci se zákazníkem před vyjednáváním o smlouvě. Manifest zároveň zdůrazňuje, že položky vpravo mají svou hodnotu – jen ty vlevo mají větší.",
+      "difficulty": 2,
+      "tags": ["ius", "agilni-vyvoj", "zivotni-cyklus", "metodiky"],
+      "status": "draft"
+    },
+    {
+      "id": "ius-01-nejnakladnejsi-etapa",
+      "type": "single",
+      "prompt": "Která etapa životního cyklu softwaru obvykle spotřebuje největší díl celkových nákladů?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "specifikace požadavků",
+          "feedback": "Bývá časově krátká a levná, přestože chyby v ní jsou nejdražší na opravu. To jsou dvě různé věci."
+        },
+        {
+          "id": "b",
+          "text": "implementace",
+          "feedback": "Psaní kódu je vidět nejvíc, ale na celkových nákladech se podílí typicky jen kolem 20 %. Software se totiž píše jednou, kdežto upravuje léta."
+        },
+        {
+          "id": "c",
+          "text": "testování",
+          "feedback": "Testování je nákladné – často podobně jako implementace –, ale pořád jde o jednorázovou položku ohraničenou koncem projektu."
+        },
+        {
+          "id": "d",
+          "text": "údržba"
+        }
+      ],
+      "correct": "d",
+      "hint": "Která etapa trvá nejdéle – měsíce, nebo roky?",
+      "explanation": "Údržba spotřebuje typicky 60 až 80 % celkových nákladů na software. Důvod je prostý: vývoj trvá měsíce, ale provoz roky, a po celou tu dobu se opravují chyby, systém se přizpůsobuje měnícímu se okolí a přibývají nové požadavky. Proto se investice do čitelného kódu, dokumentace a testů vyplatí – šetří tu nejdražší etapu.",
+      "difficulty": 3,
+      "tags": ["ius", "udrzba", "zivotni-cyklus", "naklady"],
+      "status": "draft"
+    },
+    {
+      "id": "ius-01-spiralovy-model",
+      "type": "single",
+      "prompt": "Co je charakteristické pro spirálový model vývoje?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Každý cyklus obsahuje analýzu a vyhodnocení rizik."
+        },
+        {
+          "id": "b",
+          "text": "Etapy na sebe navazují a nikdy se neopakují.",
+          "feedback": "To je popis vodopádu. Spirála je naopak iterativní – stejné činnosti se opakují v každém závitu, jen nad stále rozsáhlejším systémem."
+        },
+        {
+          "id": "c",
+          "text": "Nevzniká při něm žádná průběžná dokumentace.",
+          "feedback": "Spirálový model je poměrně formální a dokumentaci i plánování naopak vyžaduje. Odlehčení dokumentace je téma agilních metodik."
+        },
+        {
+          "id": "d",
+          "text": "Používá se výhradně při údržbě hotových systémů.",
+          "feedback": "Je to model pro celý vývoj, hodí se především na velké a rizikové projekty s nejasným zadáním."
+        }
+      ],
+      "correct": "a",
+      "hint": "Čím se Boehmův model liší od prostého opakování vodopádu?",
+      "explanation": "Boehmův spirálový model je iterativní a jeho poznávacím znamením je, že každý závit spirály obsahuje čtyři činnosti: stanovení cílů, **analýzu rizik**, vývoj a ověření dané verze a plánování dalšího cyklu. Právě explicitní práce s riziky ho odlišuje od ostatních modelů – nejrizikovější části systému se řeší jako první. Hodí se proto na rozsáhlé projekty s nejistým zadáním, kde je ale režie modelu únosná.",
+      "difficulty": 3,
+      "tags": ["ius", "spiralovy-model", "zivotni-cyklus", "rizika"],
+      "status": "draft"
+    }
+  ]
+}
