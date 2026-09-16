@@ -267,18 +267,33 @@ function Marker({
     );
   }
 
+  // Kolečko = jedna odpověď, čtvereček = víc odpovědí. Je to jediná
+  // konvence, kterou zná každý z běžných formulářů, tak ji drž zřetelnou:
+  // `rounded-chip` se posunulo tak vysoko, že na políčku 24 px vycházelo
+  // taky jako kolečko a rozdíl zmizel. Proto je tu poloměr natvrdo.
+  const zaskrtavaci = role === "checkbox";
+
   return (
     <span
       className={cn(
         "mt-0.5 grid size-6 shrink-0 place-items-center border text-xs font-medium tabular-nums",
-        role === "radio" ? "rounded-full" : "rounded-chip",
+        zaskrtavaci ? "rounded-[6px]" : "rounded-full",
         selected
           ? "border-accent bg-accent text-accent-text"
           : "border-border-strong text-text-faint group-hover:text-text-muted",
       )}
       aria-hidden
     >
-      {index < 9 ? index + 1 : ""}
+      {/* Vybraný čtvereček dostane fajfku – u výběru více možností je to
+          nejsilnější signál, že jich jde zaškrtnout víc. Kolečko si drží
+          číslo, aby šlo dál vybírat klávesnicí. */}
+      {zaskrtavaci && selected ? (
+        <Check className="size-3.5" aria-hidden />
+      ) : index < 9 ? (
+        index + 1
+      ) : (
+        ""
+      )}
     </span>
   );
 }

@@ -44,7 +44,10 @@ export function MultiChoice({
 
   return (
     <div>
-      <p className="mb-2 text-sm text-text-muted">
+      <p className="mb-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-text-muted">
+        <span className="rounded-chip bg-accent-soft px-2 py-0.5 text-[0.6875rem] font-semibold tracking-wide text-accent uppercase">
+          Více odpovědí
+        </span>
         {question.partialCredit
           ? "Vyber všechny správné možnosti. Počítá se i částečná odpověď."
           : "Vyber všechny správné možnosti. Uznává se jen úplně přesný výběr."}
