@@ -20,17 +20,33 @@ import { useNow } from "@/lib/useNow";
  * Stejná komponenta obsluhuje všechny tři režimy (procvičování, chyby, trénink) –
  * liší se jen tím, jaké otázky dostane a co se stane na konci.
  */
-export function QuizRunner({ config }: { config: SessionConfig }) {
+export function QuizRunner({
+  config,
+  onRestart,
+}: {
+  config: SessionConfig;
+  /**
+   * Když je zadané, přebírá tlačítko „Znovu" volající – typicky proto, aby
+   * pro další běh vybral rovnou jiné otázky (trénink, chyby). Bez něj si
+   * runner zopakuje tutéž sadu, jen v novém pořadí.
+   */
+  onRestart?: () => void;
+}) {
   const store = useProgress();
   const prefs = usePrefs();
 
-  // Seed míchání se odvozuje z času připojení: v prohlížeči je konstantní po
-  // celou session, takže možnosti nepřeskakují, a při dalším spuštění kvízu
+  // Pořadové číslo běhu. Sám čas připojení nestačí: „Znovu" komponentu
+  // neodpojí, takže by se seed nezměnil a druhý běh by přehrál identickou
+  // sérii otázek i možností.
+  const [run, setRun] = useState(0);
+
+  // Seed míchání se odvozuje z času připojení a čísla běhu: v prohlížeči je
+  // konstantní po celý běh, takže možnosti nepřeskakují, a při dalším běhu
   // vyjde jiný. `Math.random()` ani `Date.now()` v těle komponenty být nesmí –
   // na serveru by vyšly jinak a hydratace by přeskládala možnosti pod rukama.
   // Než seed dorazí (`null`), se karta s otázkou nevykresluje vůbec.
   const now = useNow();
-  const seed = now === null ? null : makeSeed(now);
+  const seed = now === null ? null : makeSeed(now, run);
 
   const questions = useMemo(() => {
     const shouldShuffle = config.shuffleQuestions && (prefs?.shuffleQuestions ?? true);
@@ -147,6 +163,22 @@ export function QuizRunner({ config }: { config: SessionConfig }) {
     setIndex((i) => i + 1);
   }, [isLast]);
 
+  const restart = () => {
+    // Režimy, které si otázky vybírají samy, chtějí do dalšího běhu jiný výběr –
+    // ne jen přeházet ten předchozí.
+    if (onRestart) {
+      onRestart();
+      return;
+    }
+    setRun((r) => r + 1);
+    setIndex(0);
+    setResults([]);
+    setFinished(false);
+    // Nový běh může začít toutéž otázkou jako skončil ten minulý; bez tohohle
+    // by se u ní ukázala stará odpověď i s vyhodnocením.
+    setShownQuestionId(null);
+  };
+
   // Enter posouvá dopředu: nejdřív odešle, podruhé přejde na další otázku.
   // Bez tohohle se u dlouhé série musí pořád sahat po myši.
   useEffect(() => {
@@ -180,11 +212,7 @@ export function QuizRunner({ config }: { config: SessionConfig }) {
         config={config}
         questions={questions}
         results={results}
-        onRestart={() => {
-          setIndex(0);
-          setResults([]);
-          setFinished(false);
-        }}
+        onRestart={restart}
       />
     );
   }

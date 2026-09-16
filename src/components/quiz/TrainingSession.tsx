@@ -1,10 +1,11 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useLiveQuery } from "dexie-react-hooks";
 import { Sparkles, AlertCircle } from "lucide-react";
 import { QuizRunner } from "./QuizRunner";
 import { useProgress, usePrefs } from "@/lib/progress/context";
+import { makeSeed } from "@/lib/quiz/shuffle";
 import { selectForTraining, selectMistakes } from "@/lib/srs/select";
 import type { SessionConfig, SessionQuestion } from "@/lib/session/types";
 import type { StudyMode } from "@/lib/progress/types";
@@ -33,7 +34,10 @@ export function TrainingSession({
   const store = useProgress();
   const prefs = usePrefs();
   const [course, setCourse] = useState<string | null>(null);
-  const [running, setRunning] = useState<SessionConfig | null>(null);
+  // Otázky běhu jsou schválně otisk k okamžiku spuštění: `states` se během
+  // odpovídání živě mění a bez otisku by se session přeskládala pod rukama.
+  const [running, setRunning] = useState<SessionQuestion[] | null>(null);
+  const [attempt, setAttempt] = useState(0);
 
   const states = useLiveQuery(() => store?.getAllStates() ?? Promise.resolve([]), [store]);
   // Výběr podle splatnosti potřebuje čas; ten je znám až v prohlížeči.
@@ -44,36 +48,69 @@ export function TrainingSession({
     [pool, course],
   );
 
-  const picked = useMemo(() => {
-    // `null` = ještě nevíme (chybí stavy nebo čas) – karta drží načítání.
-    if (!states || now === null) return null;
-    const ids = available.map((q) => q.question.id);
-    const size = prefs?.sessionSize ?? 15;
+  const pick = useCallback(
+    (seed: number): SessionQuestion[] | null => {
+      // `null` = ještě nevíme (chybí stavy nebo čas) – karta drží načítání.
+      if (!states || now === null) return null;
+      const ids = available.map((q) => q.question.id);
+      const size = prefs?.sessionSize ?? 15;
 
-    const chosen =
-      mode === "trenink"
-        ? selectForTraining({
-            states,
-            allQuestionIds: ids,
-            size,
-            now,
-            course: course ?? undefined,
-            seed: 1,
-          })
-        : selectMistakes({ states, limit: size, course: course ?? undefined }).map(
-            (s) => s.questionId,
-          );
+      const chosen =
+        mode === "trenink"
+          ? selectForTraining({
+              states,
+              allQuestionIds: ids,
+              size,
+              now,
+              course: course ?? undefined,
+              seed,
+            })
+          : selectMistakes({ states, limit: size, course: course ?? undefined }).map(
+              (s) => s.questionId,
+            );
 
-    const byId = new Map(available.map((q) => [q.question.id, q]));
-    return chosen.map((id) => byId.get(id)).filter((q): q is SessionQuestion => !!q);
-  }, [states, available, mode, course, prefs?.sessionSize, now]);
+      const byId = new Map(available.map((q) => [q.question.id, q]));
+      return chosen.map((id) => byId.get(id)).filter((q): q is SessionQuestion => !!q);
+    },
+    [states, available, mode, course, prefs?.sessionSize, now],
+  );
 
-  if (running) {
-    return <QuizRunner config={running} />;
-  }
+  // Seed se váže na čas otevření stránky a pořadí běhu – jinak by trénink
+  // nabídl pokaždé tutéž patnáctku ve stejném pořadí.
+  const seedFor = (nth: number) => (now === null ? null : makeSeed(now, nth));
+
+  const previewSeed = seedFor(0);
+  const picked = useMemo(
+    () => (previewSeed === null ? null : pick(previewSeed)),
+    [pick, previewSeed],
+  );
 
   const label = mode === "trenink" ? "Trénink" : "Chyby";
   const courseAbbr = courses.find((c) => c.code === course)?.abbr;
+
+  const restart = () => {
+    const nth = attempt + 1;
+    const seed = seedFor(nth);
+    const next = seed === null ? null : pick(seed);
+    setAttempt(nth);
+    // Prázdný výběr znamená, že už není co opakovat – úvodní karta to umí říct
+    // líp než běh bez otázek.
+    setRunning(next && next.length > 0 ? next : null);
+  };
+
+  if (running) {
+    const config: SessionConfig = {
+      mode,
+      title: courseAbbr ? `${label} · ${courseAbbr}` : label,
+      backHref: mode === "trenink" ? "/trenink" : "/chyby",
+      // Trénink má pořadí z výběru (kde se taky míchá); chyby chodí seřazené
+      // podle závažnosti, takže je promíchá až runner.
+      shuffleQuestions: mode === "chyby",
+      questions: running,
+    };
+    // `key` vynutí nové připojení – runner tím dostane i nový seed možností.
+    return <QuizRunner key={attempt} config={config} onRestart={restart} />;
+  }
 
   return (
     <div className="mx-auto w-full max-w-2xl px-4 py-12">
@@ -136,15 +173,10 @@ export function TrainingSession({
               className="mt-5 w-full sm:w-auto"
               variant="primary"
               size="lg"
-              onClick={() =>
-                setRunning({
-                  mode,
-                  title: courseAbbr ? `${label} · ${courseAbbr}` : label,
-                  backHref: mode === "trenink" ? "/trenink" : "/chyby",
-                  shuffleQuestions: mode === "chyby",
-                  questions: picked,
-                })
-              }
+              onClick={() => {
+                setAttempt(0);
+                setRunning(picked);
+              }}
             >
               Začít
             </Button>

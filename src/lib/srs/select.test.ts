@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import { SHARE_DUE, SHARE_FRESH, SHARE_WEAK, selectForTraining, selectMistakes } from "./select";
+import { makeSeed } from "@/lib/quiz/shuffle";
 import { createQuestionState } from "./scheduler";
 import type { QuestionState } from "@/lib/progress/types";
 
@@ -143,6 +144,24 @@ describe("selectForTraining", () => {
     expect(selectForTraining({ ...args, seed: "a" })).not.toEqual(
       selectForTraining({ ...args, seed: "b" }),
     );
+  });
+
+  it("další běh ze stejného připojení vybere jinou session", () => {
+    // Přesně tak si seed skládá TrainingSession: čas otevření + pořadí běhu.
+    const args = { states, allQuestionIds, size: 15, now: NOW };
+    const runs = [0, 1, 2, 3].map((run) =>
+      selectForTraining({ ...args, seed: makeSeed(NOW, run) }).join(","),
+    );
+
+    expect(new Set(runs).size).toBe(runs.length);
+    // A nejde jen o pořadí – mění se i to, které otázky padnou.
+    const sets = runs.map((run) => [...run.split(",")].sort().join(","));
+    expect(new Set(sets).size).toBeGreaterThan(1);
+  });
+
+  it("stejný běh vrátí stejnou session i po přepočtu", () => {
+    const args = { states, allQuestionIds, size: 15, now: NOW, seed: makeSeed(NOW, 2) };
+    expect(selectForTraining(args)).toEqual(selectForTraining(args));
   });
 
   it("nemíchá po blocích – skupiny jsou promíchané", () => {

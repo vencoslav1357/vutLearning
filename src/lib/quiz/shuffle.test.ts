@@ -131,6 +131,91 @@ describe("shuffleQuestions", () => {
   });
 });
 
+/**
+ * Seed jednoho běhu vzniká jako `makeSeed(čas připojení, pořadí běhu)`.
+ * Tohle je přesně ta vlastnost, která chyběla, když „Znovu" přehrálo
+ * identickou sérii: druhý běh z téhož připojení musí zamíchat jinak.
+ */
+describe("seed běhu", () => {
+  const START = 1_758_000_000_000;
+  const runSeed = (now: number, run: number) => makeSeed(now, run);
+  const six = ["a", "b", "c", "d", "e", "f"];
+
+  it("stejný čas i pořadí běhu → stejné pořadí", () => {
+    expect(seededShuffle(ids, runSeed(START, 2))).toEqual(seededShuffle(ids, runSeed(START, 2)));
+  });
+
+  it("každý další běh z téhož připojení zamíchá jinak", () => {
+    let repeated = 0;
+    let compared = 0;
+    // Rozházené časy startu, ať se netestuje jeden šťastný případ.
+    for (let t = 0; t < 200; t++) {
+      const now = START + t * 7919;
+      const orders = [0, 1, 2, 3].map((run) => seededShuffle(ids, runSeed(now, run)).join(""));
+      for (let i = 1; i < orders.length; i++) {
+        compared++;
+        if (orders[i] === orders[i - 1]) repeated++;
+      }
+    }
+    expect(compared).toBe(600);
+    expect(repeated).toBe(0);
+  });
+
+  it("i u šesti prvků se sousední běhy liší", () => {
+    let repeated = 0;
+    for (let run = 0; run < 200; run++) {
+      const a = seededShuffle(six, runSeed(START, run)).join("");
+      const b = seededShuffle(six, runSeed(START, run + 1)).join("");
+      if (a === b) repeated++;
+    }
+    // 6 prvků má 720 permutací – pár náhodných shod je v normě, série ne.
+    expect(repeated).toBeLessThan(5);
+  });
+
+  it("dvě spuštění v sousedních milisekundách zamíchají jinak", () => {
+    let repeated = 0;
+    for (let t = 0; t < 200; t++) {
+      const a = seededShuffle(ids, runSeed(START + t, 0)).join("");
+      const b = seededShuffle(ids, runSeed(START + t + 1, 0)).join("");
+      if (a === b) repeated++;
+    }
+    expect(repeated).toBe(0);
+  });
+
+  it("mezi běhy se přeskládají i možnosti jedné otázky", () => {
+    const choices = six.map((id) => ({ id }));
+    const variants = new Set<string>();
+    for (let run = 0; run < 40; run++) {
+      // Stejně jako v QuizRunneru: seed otázky = id otázky + seed běhu.
+      const seed = makeSeed("idm-01-tautologie", runSeed(START, run));
+      variants.add(
+        shuffleChoices(choices, seed)
+          .map((c) => c.id)
+          .join(""),
+      );
+    }
+    expect(variants.size).toBeGreaterThan(20);
+  });
+
+  it("připnuté možnosti drží kraj i při novém běhu", () => {
+    const choices = [
+      { id: "a" },
+      { id: "b" },
+      { id: "c" },
+      { id: "d" },
+      { id: "vsechny", pin: "first" as const },
+      { id: "zadna", pin: "last" as const },
+    ];
+    for (let run = 0; run < 50; run++) {
+      const seed = makeSeed("q", runSeed(START, run));
+      const out = shuffleChoices(choices, seed).map((c) => c.id);
+      expect(out[0]).toBe("vsechny");
+      expect(out[out.length - 1]).toBe("zadna");
+      expect(out).toHaveLength(choices.length);
+    }
+  });
+});
+
 describe("shuffleAwayFrom", () => {
   it("nikdy nevrátí rovnou správné pořadí", () => {
     const items = ["a", "b", "c"];
