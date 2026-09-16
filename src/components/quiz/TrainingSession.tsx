@@ -109,7 +109,12 @@ export function TrainingSession({
       questions: running,
     };
     // `key` vynutí nové připojení – runner tím dostane i nový seed možností.
-    return <QuizRunner key={attempt} config={config} onRestart={restart} />;
+    return <QuizRunner
+        key={attempt}
+        config={config}
+        onRestart={restart}
+        onExit={() => setRunning(null)}
+      />;
   }
 
   return (

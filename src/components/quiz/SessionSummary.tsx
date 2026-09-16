@@ -13,11 +13,14 @@ export function SessionSummary({
   questions,
   results,
   onRestart,
+  onExit,
 }: {
   config: SessionConfig;
   questions: SessionQuestion[];
   results: SessionResult[];
   onRestart: () => void;
+  /** Když běh nemá vlastní adresu, odchod řeší volající, ne odkaz. */
+  onExit?: () => void;
 }) {
   const total = results.length || 1;
   const correct = results.filter((r) => r.outcome === "correct").length;
@@ -63,10 +66,17 @@ export function SessionSummary({
               <RotateCcw className="size-4" aria-hidden />
               Znovu
             </Button>
-            <ButtonLink href={config.backHref} variant="primary">
-              <ArrowLeft className="size-4" aria-hidden />
-              Hotovo
-            </ButtonLink>
+            {onExit ? (
+              <Button onClick={onExit} variant="primary">
+                <ArrowLeft className="size-4" aria-hidden />
+                Hotovo
+              </Button>
+            ) : (
+              <ButtonLink href={config.backHref} variant="primary">
+                <ArrowLeft className="size-4" aria-hidden />
+                Hotovo
+              </ButtonLink>
+            )}
           </div>
         </Card>
       </motion.div>

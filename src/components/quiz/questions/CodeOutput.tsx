@@ -143,12 +143,13 @@ function OutputChoice({
   evaluation,
   disabled,
   seed,
+  allowShuffle,
   html,
 }: QuestionInput<"codeOutput">) {
   const choices = useMemo(() => {
     const all = question.choices ?? [];
-    return question.shuffleChoices ? shuffleChoices(all, seed) : all;
-  }, [question.choices, question.shuffleChoices, seed]);
+    return question.shuffleChoices && allowShuffle ? shuffleChoices(all, seed) : all;
+  }, [question.choices, question.shuffleChoices, allowShuffle, seed]);
 
   const { active, setActive, onKeyDown, register } = useRovingList(choices.length);
   const evaluated = evaluation !== null;

@@ -32,6 +32,8 @@ export interface QuestionCardProps {
   evaluation: Evaluation | null;
   disabled: boolean;
   seed: number;
+  /** Smí se míchat pořadí možností? Přání uživatele z Nastavení. */
+  allowShuffle: boolean;
   /** Markdown přeložený na HTML už na serveru. */
   html: RenderedQuestion;
   /** Nápověda se počítá jako slabší znalost – runner si to zapíše k pokusu. */
@@ -45,6 +47,7 @@ export function QuestionCard({
   evaluation,
   disabled,
   seed,
+  allowShuffle,
   html,
   onHintUsed,
 }: QuestionCardProps) {
@@ -79,6 +82,7 @@ export function QuestionCard({
           evaluation={evaluation}
           disabled={disabled}
           seed={seed}
+          allowShuffle={allowShuffle}
           html={html}
         />
       </div>
@@ -138,6 +142,7 @@ function QuestionInputSwitch({
   evaluation,
   disabled,
   seed,
+  allowShuffle,
   html,
 }: {
   question: Question;
@@ -146,9 +151,10 @@ function QuestionInputSwitch({
   evaluation: Evaluation | null;
   disabled: boolean;
   seed: number;
+  allowShuffle: boolean;
   html: RenderedQuestion;
 }) {
-  const shared = { evaluation, disabled, seed, html, onChange };
+  const shared = { evaluation, disabled, seed, allowShuffle, html, onChange };
 
   switch (question.type) {
     case "single":

@@ -14,12 +14,16 @@ export function SingleChoice({
   evaluation,
   disabled,
   seed,
+  allowShuffle,
   html,
 }: QuestionInput<"single">) {
   // Pořadí se počítá jen ze seedu, takže překreslení možnostmi nezamává.
   const choices = useMemo(
-    () => (question.shuffleChoices ? shuffleChoices(question.choices, seed) : question.choices),
-    [question.choices, question.shuffleChoices, seed],
+    () =>
+      question.shuffleChoices && allowShuffle
+        ? shuffleChoices(question.choices, seed)
+        : question.choices,
+    [question.choices, question.shuffleChoices, allowShuffle, seed],
   );
 
   const { active, setActive, onKeyDown, register } = useRovingList(choices.length);

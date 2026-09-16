@@ -14,11 +14,15 @@ export function MultiChoice({
   evaluation,
   disabled,
   seed,
+  allowShuffle,
   html,
 }: QuestionInput<"multi">) {
   const choices = useMemo(
-    () => (question.shuffleChoices ? shuffleChoices(question.choices, seed) : question.choices),
-    [question.choices, question.shuffleChoices, seed],
+    () =>
+      question.shuffleChoices && allowShuffle
+        ? shuffleChoices(question.choices, seed)
+        : question.choices,
+    [question.choices, question.shuffleChoices, allowShuffle, seed],
   );
 
   const { active, setActive, onKeyDown, register } = useRovingList(choices.length);

@@ -24,6 +24,12 @@ export interface QuestionInputProps<Q, A> {
   /** Seed pro míchání možností v této session. */
   seed: number;
   /**
+   * Smí se pořadí možností míchat? Otázka to může zakázat sama
+   * (`shuffleChoices: false` v obsahu), tohle je navíc přání uživatele
+   * z Nastavení. Míchá se jen když souhlasí obojí.
+   */
+  allowShuffle: boolean;
+  /**
    * Markdown přeložený na HTML už na serveru. Komponenta je klientská,
    * takže si KaTeX ani Shiki spustit nemůže – dostane hotový výsledek.
    */

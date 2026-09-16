@@ -23,6 +23,7 @@ import { useNow } from "@/lib/useNow";
 export function QuizRunner({
   config,
   onRestart,
+  onExit,
 }: {
   config: SessionConfig;
   /**
@@ -31,6 +32,12 @@ export function QuizRunner({
    * runner zopakuje tutéž sadu, jen v novém pořadí.
    */
   onRestart?: () => void;
+  /**
+   * Odchod ze série. Zadej ho tam, kde běh nemá vlastní adresu (Trénink,
+   * Chyby) – odkaz na `backHref` by vedl na stránku, kde uživatel právě je,
+   * komponenta by se neodpojila a zůstal by viset v rozehrané sérii.
+   */
+  onExit?: () => void;
 }) {
   const store = useProgress();
   const prefs = usePrefs();
@@ -199,9 +206,15 @@ export function QuizRunner({
     return (
       <div className="mx-auto max-w-2xl px-4 py-16 text-center">
         <p className="text-text-muted">V téhle sadě zatím nejsou žádné otázky.</p>
+        {onExit ? (
+          <Button className="mt-6" onClick={onExit} variant="secondary">
+            Zpět
+          </Button>
+        ) : (
         <ButtonLink className="mt-6" href={config.backHref} variant="secondary">
           Zpět
         </ButtonLink>
+        )}
       </div>
     );
   }
@@ -213,6 +226,7 @@ export function QuizRunner({
         questions={questions}
         results={results}
         onRestart={restart}
+        onExit={onExit}
       />
     );
   }
@@ -223,6 +237,16 @@ export function QuizRunner({
     <div className="mx-auto w-full max-w-3xl px-4 pb-24 pt-6 sm:pt-10">
       <header className="mb-6">
         <div className="mb-3 flex items-center justify-between gap-4">
+          {onExit ? (
+            <button
+              type="button"
+              onClick={onExit}
+              className="inline-flex items-center gap-1.5 text-sm text-text-muted transition-colors hover:text-text"
+            >
+              <ArrowLeft className="size-4" aria-hidden />
+              {config.title}
+            </button>
+          ) : (
           <Link
             href={config.backHref}
             className="inline-flex items-center gap-1.5 text-sm text-text-muted transition-colors hover:text-text"
@@ -230,6 +254,7 @@ export function QuizRunner({
             <ArrowLeft className="size-4" aria-hidden />
             {config.title}
           </Link>
+          )}
           <span className="tabular-nums text-sm text-text-faint">
             {index + 1} / {questions.length}
           </span>
@@ -258,6 +283,7 @@ export function QuizRunner({
               disabled={evaluation !== null}
               seed={questionSeed}
               html={current.html}
+            allowShuffle={prefs?.shuffleChoices ?? true}
               onHintUsed={() => {
                 usedHint.current = true;
               }}

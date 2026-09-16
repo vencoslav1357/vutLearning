@@ -15,11 +15,15 @@ export function Matching({
   evaluation,
   disabled,
   seed,
+  allowShuffle,
   html,
 }: QuestionInput<"matching">) {
   // Pravý sloupec se míchá vždycky – v souboru je skoro jistě zapsaný
   // ve stejném pořadí jako ten levý a bez zamíchání by šlo jen "první k prvnímu".
-  const right = useMemo(() => shuffleChoices(question.right, seed), [question.right, seed]);
+  const right = useMemo(
+    () => (allowShuffle ? shuffleChoices(question.right, seed) : question.right),
+    [question.right, allowShuffle, seed],
+  );
   const rightText = useMemo(() => new Map(right.map((item) => [item.id, item.text])), [right]);
 
   const assigned = useMemo(() => new Map(value.pairs), [value.pairs]);
