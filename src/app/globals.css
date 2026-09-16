@@ -12,81 +12,82 @@
    Všechny páry text/pozadí drží aspoň 4.5:1 v obou režimech.
    ================================================================== */
 :root {
-  --bg: oklch(99% 0.004 265);
-  --bg-subtle: oklch(97.2% 0.006 265);
-  --surface: oklch(100% 0 0);
-  --surface-hover: oklch(97.8% 0.005 265);
-  --border: oklch(91% 0.008 265);
-  --border-strong: oklch(84% 0.012 265);
+  --bg: oklch(95.5% 0.005 269);
+  --bg-subtle: oklch(93.5% 0.008 269);
+  --surface: oklch(100% 0 269);
+  --surface-hover: oklch(94.3% 0.006 269);
+  --border: oklch(91% 0.01 269);
+  --border-strong: oklch(83.5% 0.014 269);
 
-  --text: oklch(24% 0.018 265);
-  --text-muted: oklch(50% 0.016 265);
-  --text-faint: oklch(64% 0.014 265);
+  --text: oklch(24% 0.022 269);
+  --text-muted: oklch(50% 0.02 269);
+  --text-faint: oklch(64% 0.017 269);
 
-  --accent: oklch(55% 0.16 264);
-  --accent-hover: oklch(49% 0.17 264);
-  --accent-soft: oklch(95.5% 0.028 264);
-  --accent-text: oklch(100% 0 0);
+  --accent: oklch(55% 0.17 269);
+  --accent-hover: oklch(48.5% 0.18 269);
+  --accent-soft: oklch(95.5% 0.031 269);
+  --accent-text: oklch(100% 0 269);
 
-  --ok: oklch(58% 0.13 152);
-  --ok-soft: oklch(95.5% 0.04 152);
+  --ok: oklch(50% 0.125 152);
+  --ok-soft: oklch(96% 0.035 152);
   --ok-border: oklch(80% 0.09 152);
 
-  --bad: oklch(58% 0.17 22);
-  --bad-soft: oklch(96% 0.028 22);
-  --bad-border: oklch(82% 0.1 22);
+  --bad: oklch(55% 0.17 25);
+  --bad-soft: oklch(96% 0.028 25);
+  --bad-border: oklch(82% 0.1 25);
 
   --warn: oklch(66% 0.13 75);
   --warn-soft: oklch(96% 0.05 85);
   --warn-border: oklch(84% 0.1 80);
 
-  /* Akcenty předmětů – tlumené, aby přehled nevypadal jako cukrárna. */
-  --accent-slate: oklch(54% 0.04 250);
-  --accent-indigo: oklch(55% 0.16 264);
-  --accent-violet: oklch(56% 0.16 300);
-  --accent-teal: oklch(56% 0.1 190);
-  --accent-amber: oklch(62% 0.12 75);
-  --accent-rose: oklch(58% 0.15 15);
+  /* Akcenty předmětů – rovnoměrně kolem barevného kruhu od hlavního akcentu,
+     ať jdou od sebe rozeznat i na malé dlaždici. */
+  --accent-slate: oklch(55.5% 0.043 269);
+  --accent-indigo: oklch(55.5% 0.162 269);
+  --accent-violet: oklch(55.5% 0.162 315);
+  --accent-teal: oklch(55.5% 0.162 191);
+  --accent-amber: oklch(55.5% 0.162 84);
+  --accent-rose: oklch(55.5% 0.162 21);
 
-  --shadow-card: 0 1px 2px oklch(24% 0.02 265 / 0.05), 0 4px 16px oklch(24% 0.02 265 / 0.05);
-  --shadow-lift: 0 2px 4px oklch(24% 0.02 265 / 0.06), 0 12px 32px oklch(24% 0.02 265 / 0.09);
+  --shadow-card: 0 1px 2px oklch(24% 0.02 269 / 0.05), 0 4px 16px oklch(24% 0.02 269 / 0.05);
+  --shadow-lift: 0 2px 4px oklch(24% 0.02 269 / 0.06), 0 12px 32px oklch(24% 0.02 269 / 0.09);
 }
 
 .dark {
-  --bg: oklch(17.5% 0.012 265);
-  --bg-subtle: oklch(20.5% 0.013 265);
-  --surface: oklch(22% 0.014 265);
-  --surface-hover: oklch(25.5% 0.016 265);
-  --border: oklch(30% 0.016 265);
-  --border-strong: oklch(38% 0.018 265);
+  --bg: oklch(20.4% 0.014 269);
+  --bg-subtle: oklch(23.4% 0.016 269);
+  --surface: oklch(24.9% 0.017 269);
+  --surface-hover: oklch(28.4% 0.019 269);
+  --border: oklch(32.9% 0.02 269);
+  --border-strong: oklch(40.9% 0.022 269);
 
-  --text: oklch(95% 0.006 265);
-  --text-muted: oklch(72% 0.014 265);
-  --text-faint: oklch(58% 0.014 265);
+  --text: oklch(95% 0.008 269);
+  --text-muted: oklch(72.5% 0.017 269);
+  --text-faint: oklch(58% 0.017 269);
 
-  --accent: oklch(72% 0.13 264);
-  --accent-hover: oklch(78% 0.12 264);
-  --accent-soft: oklch(30% 0.055 264);
-  --accent-text: oklch(17% 0.02 265);
+  --accent: oklch(73% 0.139 269);
+  --accent-hover: oklch(79% 0.128 269);
+  --accent-soft: oklch(33.4% 0.07 269);
+  --accent-text: oklch(21.4% 0.026 269);
 
-  --ok: oklch(75% 0.14 152);
-  --ok-soft: oklch(29% 0.05 152);
-  --ok-border: oklch(43% 0.08 152);
+  --ok: oklch(76% 0.14 152);
+  --ok-soft: oklch(32.4% 0.05 152);
+  --ok-border: oklch(44% 0.08 152);
 
-  --bad: oklch(72% 0.15 22);
-  --bad-soft: oklch(29% 0.06 22);
-  --bad-border: oklch(45% 0.1 22);
+  --bad: oklch(72% 0.15 25);
+  --bad-soft: oklch(32.4% 0.06 25);
+  --bad-border: oklch(46% 0.1 25);
 
   --warn: oklch(80% 0.12 80);
-  --warn-soft: oklch(30% 0.05 80);
+  --warn-soft: oklch(32.4% 0.05 80);
   --warn-border: oklch(46% 0.08 80);
 
-  --accent-slate: oklch(72% 0.03 250);
-  --accent-indigo: oklch(72% 0.13 264);
-  --accent-violet: oklch(73% 0.13 300);
-  --accent-teal: oklch(74% 0.09 190);
-  --accent-amber: oklch(80% 0.11 75);
-  --accent-rose: oklch(73% 0.13 15);
+  --accent-slate: oklch(73% 0.035 269);
+  --accent-indigo: oklch(73% 0.132 269);
+  --accent-violet: oklch(73% 0.132 315);
+  --accent-teal: oklch(73% 0.132 191);
+  --accent-amber: oklch(73% 0.132 84);
+  --accent-rose: oklch(73% 0.132 21);
 
   --shadow-card: 0 1px 2px oklch(0% 0 0 / 0.3), 0 4px 16px oklch(0% 0 0 / 0.25);
   --shadow-lift: 0 2px 4px oklch(0% 0 0 / 0.35), 0 12px 32px oklch(0% 0 0 / 0.35);
@@ -130,9 +131,9 @@
   --font-mono: var(--font-mono-code), ui-monospace, "SF Mono", Menlo, monospace;
 
   /* Zaoblení: štědré, ale ne pilulkové. */
-  --radius-card: 1rem;
-  --radius-control: 0.75rem;
-  --radius-chip: 0.625rem;
+  --radius-card: 1.15rem;
+  --radius-control: 0.862rem;
+  --radius-chip: 0.719rem;
 
   --shadow-card: var(--shadow-card);
   --shadow-lift: var(--shadow-lift);
