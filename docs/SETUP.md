@@ -116,6 +116,10 @@ Na Vercelu ho přidej v **Settings → Environment Variables**:
 | `BETTER_AUTH_SECRET` | vygenerovaný řetězec | Vždy, když je nastavená `DATABASE_URL` |
 | `NEXT_PUBLIC_AUTH_ENABLED` | `true` | Aby prohlížeč vůbec nabídl odkaz na přihlášení |
 | `BETTER_AUTH_URL` | `https://kvizy.example.cz` | Jen u vlastní domény |
+| `NEXT_PUBLIC_BETTER_AUTH_URL` | totéž co `BETTER_AUTH_URL` | Jen u vlastní domény — tuhle čte prohlížeč |
+
+`NEXT_PUBLIC_BETTER_AUTH_URL` je tatáž adresa, ale ve variantě, kterou vidí prohlížeč —
+serverová `BETTER_AUTH_URL` se do klienta nedostane. U vlastní domény nastav obě.
 
 `BETTER_AUTH_URL` je veřejná adresa webu, ze které se skládají odkazy v e-mailech.
 Na Vercelu se bere z `VERCEL_URL`, takže na `*.vercel.app` ji nastavovat nemusíš.
