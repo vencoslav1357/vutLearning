@@ -1,0 +1,648 @@
+{
+  "$schema": "../../schemas/question-set.schema.json",
+  "id": "03-jazyk-matematiky",
+  "title": "Jazyk matematiky: výroky, formule a kvantifikátory",
+  "course": "idm",
+  "lecture": 2,
+  "description": "Přesný zápis matematických tvrzení: rozdíl mezi prvkem a podmnožinou, stavba výrokových formulí, termy, kvantifikátory a obor pravdivosti.",
+  "source": {
+    "kind": "textbook",
+    "ref": "Diskrétní matematika – studijní text, kap. 1 Množiny a logika",
+    "pages": [1, 2, 3, 4, 5, 6, 7, 8],
+    "note": "Sekce 1.1–1.4: úvod, teorie množin, výrokový počet, predikátový počet. Text je slovensky, otázky jsou přeložené do češtiny."
+  },
+  "schemaVersion": 1,
+  "questions": [
+    {
+      "id": "idm-03-co-je-vyrok",
+      "type": "single",
+      "prompt": "Co se ve výrokovém počtu rozumí **výrokem**?",
+      "choices": [
+        {
+          "id": "zapis-symboly",
+          "text": "Každý zápis složený výhradně z matematických symbolů a proměnných.",
+          "feedback": "Použité symboly o ničem nerozhodují. Term $(x + y) \\cdot z$ je poctivě matematický zápis, a přesto se u něj nedá ptát na pravdivost."
+        },
+        {
+          "id": "oznam",
+          "text": "Oznam, u kterého má smysl ptát se na pravdivost, a nastává právě jedna možnost."
+        },
+        {
+          "id": "jen-pravdive",
+          "text": "Tvrzení, o kterém už víme, že je pravdivé, a umíme to dokázat.",
+          "feedback": "Nepravdivý oznam je výrok úplně stejně – jen má pravdivostní hodnotu $0$. Výrokový počet se navíc pravdivostí jednotlivých výroků vůbec nezabývá."
+        },
+        {
+          "id": "volna-promenna",
+          "text": "Formule predikátového počtu, která má aspoň jednu volnou proměnnou.",
+          "feedback": "To je definice výrokové formy. Ta výrok teprve dá – až za volnou proměnnou něco dosadíš."
+        }
+      ],
+      "correct": "oznam",
+      "explanation": "Výrok je primitivní pojem, tedy se nedefinuje. Rozumí se jím **každý oznam, u kterého má smysl mluvit o tom, zda je, nebo není pravdivý, přičemž nastává právě jedna z těchto možností**. Podstatná jsou obě části: musí mít smysl se ptát, a zároveň nesmí platit obojí ani nic z toho. Právě druhá podmínka je důvod, proč se matematika vyhýbá sebevztažným oznamům, tedy takovým, které mluví o vlastní pravdivosti – u nich totiž vznikají paradoxy.",
+      "difficulty": 1,
+      "tags": ["idm", "logika", "vyrok"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-implikace-nepravdivost",
+      "type": "single",
+      "prompt": "Kdy je implikace $A \\Rightarrow B$ nepravdivá?",
+      "choices": [
+        {
+          "id": "a-plati-b-ne",
+          "text": "Jedině když $A$ platí a $B$ neplatí."
+        },
+        {
+          "id": "a-ne-b-plati",
+          "text": "Jedině když $A$ neplatí a $B$ platí.",
+          "feedback": "To je právě ten řádek tabulky, kde implikace **pravdivá je**. Z nepravdivého předpokladu plyne cokoli."
+        },
+        {
+          "id": "nesouvisi",
+          "text": "Vždy, když spolu $A$ a $B$ obsahově nesouvisí.",
+          "feedback": "Tvoření složených výroků nepodmiňujeme ani obsahovou, ani formální souvislostí složek. Souvislost do pravdivostní tabulky nevstupuje."
+        },
+        {
+          "id": "stejna-hodnota",
+          "text": "Vždy, když mají oba výroky stejnou pravdivostní hodnotu.",
+          "feedback": "Shoda pravdivostních hodnot rozhoduje o ekvivalenci $A \\Leftrightarrow B$. U implikace naopak platí, že jsou-li oba výroky pravdivé, je pravdivá i ona."
+        }
+      ],
+      "correct": "a-plati-b-ne",
+      "hint": "Projdi si čtyři řádky pravdivostní tabulky a hledej ten jediný s nulou.",
+      "explanation": "Implikace $A \\Rightarrow B$ s předpokladem $A$ a tvrzením $B$ je nepravdivá **jedině tehdy, když $A$ platí a $B$ neplatí**. Ve zbylých třech řádcích tabulky je pravdivá – včetně obou řádků, kde předpoklad neplatí. Odtud plyne, že z nepravdivého předpokladu se dá korektně odvodit cokoli.",
+      "difficulty": 2,
+      "tags": ["idm", "logika", "implikace"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-implikace-bez-obsahove-souvislosti",
+      "type": "trueFalse",
+      "prompt": "Výrok „Když $2 + 2 = 5$, pak existuje trojúhelník, jehož všechny vnitřní úhly jsou pravé“ je korektně utvořený a navíc pravdivý.",
+      "answer": true,
+      "explanation": "Obojí sedí. Tvoření složených výroků **nepodmiňujeme obsahovou ani formální souvislostí** jejich složek, takže spojit dva libovolné výroky implikací je korektní. A protože je implikace nepravdivá jedině tehdy, když předpoklad platí a tvrzení neplatí, stačí si všimnout, že předpoklad $2 + 2 = 5$ neplatí – celá implikace je proto pravdivá. Přesně tahle vlastnost působí zpočátku nepřirozeně: pravdivost tu nemá nic společného s tím, že spolu obě věty nijak nesouvisí.",
+      "difficulty": 4,
+      "tags": ["idm", "logika", "implikace"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-prvek-versus-podmnozina",
+      "type": "multi",
+      "prompt": "Nechť $A = \\{1, 2, 3\\}$. Které z následujících zápisů jsou pravdivé?",
+      "choices": [
+        {
+          "id": "jednoprvkova-podmnozina",
+          "text": "$\\{1\\} \\subseteq A$"
+        },
+        {
+          "id": "prvek-tri",
+          "text": "$3 \\in A$"
+        },
+        {
+          "id": "jednoprvkova-jako-prvek",
+          "text": "$\\{1\\} \\in A$",
+          "feedback": "Prvky množiny $A$ jsou čísla $1$, $2$, $3$ – jednoprvková množina $\\{1\\}$ mezi nimi není. Je rozdíl, jestli napíšeš $1$, nebo $\\{1\\}$: jsou to dva různé objekty."
+        },
+        {
+          "id": "prazdna-podmnozina",
+          "text": "$\\emptyset \\subseteq A$"
+        },
+        {
+          "id": "prvek-jako-podmnozina",
+          "text": "$2 \\subseteq A$",
+          "feedback": "Zaměněné $\\in$ a $\\subseteq$, jen opačným směrem. Podmnožinou je až $\\{2\\}$; samotná dvojka je prvek, tedy $2 \\in A$."
+        },
+        {
+          "id": "sama-sebe",
+          "text": "$A \\subseteq A$"
+        }
+      ],
+      "correct": ["jednoprvkova-podmnozina", "prvek-tri", "prazdna-podmnozina", "sama-sebe"],
+      "partialCredit": true,
+      "explanation": "Rozdíl mezi $\\in$ a $\\subseteq$ je tady celá pointa. Vlevo od $\\in$ stojí **prvek**, vlevo od $\\subseteq$ stojí **množina**:\n\n- $3 \\in A$ – trojka je jeden z vyjmenovaných prvků.\n- $\\{1\\} \\subseteq A$ – každý prvek množiny $\\{1\\}$ leží v $A$.\n- $\\{1\\} \\in A$ **neplatí** – prvkem $A$ je číslo $1$, ne množina $\\{1\\}$.\n- $2 \\subseteq A$ **neplatí** – dvojka není množina.\n\nZbylé dva zápisy platí pro každou množinu $A$: $\\emptyset \\subseteq A$ a $A \\subseteq A$.",
+      "difficulty": 4,
+      "tags": ["idm", "mnoziny", "inkluze"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-mohutnost-mnoziny-s-mnozinou",
+      "type": "numeric",
+      "prompt": "Kolik prvků má množina $M = \\{1, \\{\\star, \\circ\\}\\}$, tedy jaká je hodnota $|M|$?",
+      "answer": 2,
+      "unit": null,
+      "hint": "Spočítej objekty oddělené čárkou na nejvyšší úrovni složených závorek.",
+      "explanation": "Prvky jsou dva: číslo $1$ a **množina** $\\{\\star, \\circ\\}$, která se tu chová jako jediný objekt. Proto $|M| = 2$. Srovnej s $|\\{1, \\star, \\circ\\}| = 3$ – tam jsou hvězdička a kolečko dva samostatné prvky. Stejným způsobem se liší $\\emptyset$ a $\\{\\emptyset\\}$: první má nula prvků, druhá jeden.",
+      "difficulty": 3,
+      "tags": ["idm", "mnoziny", "mohutnost"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-pocet-radku-pravdivostni-tabulky",
+      "type": "numeric",
+      "prompt": "Kolik řádků (bez záhlaví) má tabulka pravdivostních hodnot formule se čtyřmi výrokovými proměnnými?",
+      "answer": 16,
+      "unit": null,
+      "explanation": "Pod proměnné se vypisují všechny $n$-tice utvořené z pravdivostních hodnot $0$ a $1$. Těch je $2^n$, takže pro $n = 4$ vyjde $2^4 = 16$ řádků. Aby se žádná $n$-tice nevynechala ani nezopakovala, střídají se hodnoty systematicky: pod poslední proměnnou v každém řádku, pod předposlední v každém druhém, pak v každém čtvrtém a tak dál.",
+      "difficulty": 2,
+      "tags": ["idm", "logika", "pravdivostni-tabulka"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-kontradikce",
+      "type": "shortText",
+      "prompt": "Jak se nazývá výroková formule, která má v posledním sloupci tabulky pravdivostních hodnot samé nuly?",
+      "accept": ["kontradikce", "kontradikcí", "kontradikci"],
+      "placeholder": "jedno slovo",
+      "explanation": "Je to **kontradikce** – formule nepravdivá při každém ohodnocení proměnných. Opačný případ, tedy samé jedničky v posledním sloupci, je **tautologie**: ta je pravdivá po dosazení libovolných výroků za proměnné. Tautologie se pak používají jako stavební kámen dalších pojmů: když je $\\Psi \\Leftrightarrow \\Phi$ tautologie, jsou formule ekvivalentní, a když je tautologií $\\Psi \\Rightarrow \\Phi$, je $\\Phi$ logickým důsledkem $\\Psi$.",
+      "difficulty": 2,
+      "tags": ["idm", "logika", "tautologie"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-obmenene-tvrzeni",
+      "type": "single",
+      "prompt": "Která implikace je obměněným tvrzením k implikaci $A \\Rightarrow B$, tedy vyjadřuje princip kontrapozice?",
+      "choices": [
+        {
+          "id": "negace-obou-stran",
+          "text": "$\\neg A \\Rightarrow \\neg B$",
+          "feedback": "Obě strany se sice znegovaly, ale zůstaly ve stejném pořadí. Obměna musí strany i prohodit, jinak ekvivalence s původní implikací neplatí."
+        },
+        {
+          "id": "obracena",
+          "text": "$B \\Rightarrow A$",
+          "feedback": "Obrácená implikace. Teprve spolu s původní dává ekvivalenci: $(A \\Leftrightarrow B) \\Leftrightarrow (A \\Rightarrow B) \\wedge (B \\Rightarrow A)$."
+        },
+        {
+          "id": "kontrapozice",
+          "text": "$\\neg B \\Rightarrow \\neg A$"
+        },
+        {
+          "id": "negace-implikace",
+          "text": "$A \\wedge \\neg B$",
+          "feedback": "To je **negace** implikace: $\\neg(A \\Rightarrow B) \\Leftrightarrow (A \\wedge \\neg B)$. Negace má ale opačnou pravdivostní hodnotu než původní výrok, takže obměna to být nemůže."
+        }
+      ],
+      "correct": "kontrapozice",
+      "explanation": "Princip kontrapozice říká, že $(A \\Rightarrow B) \\Leftrightarrow (\\neg B \\Rightarrow \\neg A)$. Obě strany se negují **a zároveň prohodí**. Text ji označuje za obzvlášť důležitou. Ekvivalence z tohoto seznamu se používají například při důkazech rovnosti množin a při negování složených výroků.",
+      "difficulty": 3,
+      "tags": ["idm", "logika", "kontrapozice"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-ekvivalentni-formule",
+      "type": "matching",
+      "prompt": "Přiřaď ke každé formuli vlevo formuli, která je s ní ekvivalentní. Jedna možnost vpravo zbude.",
+      "left": [
+        { "id": "neg-konjunkce", "text": "$\\neg(A \\wedge B)$" },
+        { "id": "neg-disjunkce", "text": "$\\neg(A \\vee B)$" },
+        { "id": "neg-implikace", "text": "$\\neg(A \\Rightarrow B)$" },
+        { "id": "ekvivalence", "text": "$A \\Leftrightarrow B$" }
+      ],
+      "right": [
+        { "id": "disjunkce-negaci", "text": "$\\neg A \\vee \\neg B$" },
+        { "id": "konjunkce-negaci", "text": "$\\neg A \\wedge \\neg B$" },
+        { "id": "konjunkce-s-negaci", "text": "$A \\wedge \\neg B$" },
+        { "id": "dve-implikace", "text": "$(A \\Rightarrow B) \\wedge (B \\Rightarrow A)$" },
+        { "id": "obmena", "text": "$\\neg B \\Rightarrow \\neg A$" }
+      ],
+      "pairs": [
+        ["neg-konjunkce", "disjunkce-negaci"],
+        ["neg-disjunkce", "konjunkce-negaci"],
+        ["neg-implikace", "konjunkce-s-negaci"],
+        ["ekvivalence", "dve-implikace"]
+      ],
+      "explanation": "Negace konjunkce a disjunkce mění spojku a negují obě složky: $\\neg(A \\wedge B) \\Leftrightarrow (\\neg A \\vee \\neg B)$ a $\\neg(A \\vee B) \\Leftrightarrow (\\neg A \\wedge \\neg B)$. Negace implikace spojku naopak ztratí docela: $\\neg(A \\Rightarrow B) \\Leftrightarrow (A \\wedge \\neg B)$ – implikace neplatí právě tehdy, když předpoklad platí a tvrzení ne. Ekvivalence se rozpadá na dvě implikace. Zbylá možnost $\\neg B \\Rightarrow \\neg A$ je obměna implikace $A \\Rightarrow B$, která se ale vlevo nevyskytuje.",
+      "difficulty": 3,
+      "tags": ["idm", "logika", "negace"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-ekvivalence-formuli-definice",
+      "type": "single",
+      "prompt": "Kdy o výrokových formulích $\\Psi$ a $\\Phi$ říkáme, že jsou ekvivalentní, a píšeme $\\Psi \\equiv \\Phi$?",
+      "choices": [
+        {
+          "id": "stejny-pocet-promennych",
+          "text": "Když obsahují stejný počet výrokových proměnných.",
+          "feedback": "Počet proměnných nic neříká o pravdivosti. Formule $A \\wedge B$ a $A \\vee B$ mají obě dvě proměnné, a ekvivalentní nejsou."
+        },
+        {
+          "id": "implikace-tautologie",
+          "text": "Když je formule $\\Psi \\Rightarrow \\Phi$ tautologie.",
+          "feedback": "Tehdy je $\\Phi$ **logickým důsledkem** $\\Psi$. To je slabší vztah – ekvivalence potřebuje tautologii v obou směrech."
+        },
+        {
+          "id": "stejna-posloupnost",
+          "text": "Když obě vzniknou ze stejné vytvářející posloupnosti.",
+          "feedback": "Vytvářející posloupnost popisuje, jak je formule poskládaná, ne jak se chová. Ekvivalentní bývají naopak formule poskládané úplně jinak."
+        },
+        {
+          "id": "ekvivalence-tautologie",
+          "text": "Když je formule $\\Psi \\Leftrightarrow \\Phi$ tautologie."
+        }
+      ],
+      "correct": "ekvivalence-tautologie",
+      "explanation": "Formule jsou ekvivalentní právě tehdy, když je $\\Psi \\Leftrightarrow \\Phi$ **tautologie**, tedy když mají při každém ohodnocení proměnných stejnou pravdivostní hodnotu. Rozliš to od logického důsledku: ten odpovídá tautologii $\\Psi \\Rightarrow \\Phi$ a platí jen jedním směrem.",
+      "difficulty": 3,
+      "tags": ["idm", "logika", "tautologie"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-kvantifikatory-cteni",
+      "type": "cloze",
+      "prompt": "Doplň názvy a čtení obou kvantifikátorů.",
+      "template": "Zápis $\\exists x$ čteme „{{1}} $x$“; symbol $\\exists$ se nazývá {{2}} kvantifikátor a použijeme ho, když chceme říct, že aspoň jeden prvek splňuje formuli za kvantifikátorem. Zápis $\\forall x$ čteme „{{3}} $x$“ a znamená, že ji splňují všechny prvky.",
+      "blanks": {
+        "1": { "accept": ["existuje"], "placeholder": "sloveso" },
+        "2": { "accept": ["existenční", "existencni"] },
+        "3": { "accept": ["pro každé", "pro kazde", "pro kazde x", "pro každé x"] }
+      },
+      "explanation": "$\\exists$ je **existenční** kvantifikátor: říká, že v množině, nad kterou pracujeme, existuje aspoň jeden prvek, pro který formule za kvantifikátorem platí. $\\forall$ je **obecný** (všeobecný) kvantifikátor: formule platí pro všechny prvky. V běžném jazyce obecný kvantifikátor často „vypadne“ – věta „druhá mocnina reálného čísla je nezáporná“ znamená totéž co $\\forall x \\in \\mathbb{R} : x^2 \\geq 0$.",
+      "difficulty": 1,
+      "tags": ["idm", "logika", "kvantifikatory"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-term-nad-realnymi-cisly",
+      "type": "single",
+      "prompt": "Nechť $x, y, z$ jsou reálné proměnné. Který z následujících zápisů je **term** nad $\\mathbb{R}$?",
+      "choices": [
+        {
+          "id": "nerovnost",
+          "text": "$x > 5$",
+          "feedback": "Symbol $>$ není ani proměnná, ani symbol prvku z $\\mathbb{R}$, ani operace – term z něj tedy postavit nejde. Je to atomická formule."
+        },
+        {
+          "id": "soucin",
+          "text": "$(x + y) \\cdot z \\cdot (x - z)$"
+        },
+        {
+          "id": "kvantifikovana",
+          "text": "$\\exists x : (x^2 - 1 = 0)$",
+          "feedback": "Zápis s kvantifikátorem je formule predikátového počtu. Termy kvantifikátor nikdy neobsahují."
+        },
+        {
+          "id": "rovnice",
+          "text": "$4 - x = \\dfrac{3}{x}$",
+          "feedback": "Rovnice je atomická formule, a tedy i výroková forma. Termem je až samotný výraz na jedné její straně, třeba $4 - x$."
+        }
+      ],
+      "correct": "soucin",
+      "explanation": "Term nad $A$ vzniká jen třemi způsoby: je to proměnná s oborem $A$, symbol prvku z $A$, nebo $f(t_1, \\dots, t_n)$ pro operaci $f$ a termy $t_1, \\dots, t_n$. Zápis $(x + y) \\cdot z \\cdot (x - z)$ se z těchto pravidel poskládat dá: nejdřív proměnné, pak $x + y$ a $x - z$, pak $(x+y) \\cdot z$ a nakonec celý součin. Praktické pravidlo: **každý korektně zapsaný algebraický výraz je term** – jakmile se ale objeví relace ($=$, $<$, $>$) nebo kvantifikátor, o term už nejde.",
+      "difficulty": 3,
+      "tags": ["idm", "predikatovy-pocet", "term"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-prazdna-mnozina-zapis",
+      "type": "single",
+      "prompt": "Kterým zápisem se označuje prázdná množina?",
+      "choices": [
+        {
+          "id": "mnozina-s-nulou",
+          "text": "$\\{0\\}$",
+          "feedback": "Jednoprvková množina obsahující číslo $0$. Prázdná množina nemá žádný prvek, ani nulu."
+        },
+        {
+          "id": "mohutnost",
+          "text": "$|\\emptyset|$",
+          "feedback": "Svislé čáry označují mohutnost, tedy počet prvků. $|\\emptyset| = 0$ je číslo, ne množina."
+        },
+        {
+          "id": "spravny-zapis",
+          "text": "$\\emptyset$ nebo $\\{\\}$"
+        },
+        {
+          "id": "mnozina-s-prazdnou",
+          "text": "$\\{\\emptyset\\}$",
+          "feedback": "Klasický omyl. Tohle je **jednoprvková** množina, jejímž jediným prvkem je prázdná množina – platí tedy $|\\{\\emptyset\\}| = 1$."
+        }
+      ],
+      "correct": "spravny-zapis",
+      "explanation": "Prázdná množina, tedy množina bez jediného prvku, se značí $\\emptyset$ nebo $\\{\\}$. Zápis $\\{\\emptyset\\}$ je něco jiného: složené závorky kolem ní udělají jednoprvkovou množinu, jejímž prvkem je prázdná množina. Rozdíl je stejného druhu jako mezi $1$ a $\\{1\\}$.",
+      "difficulty": 2,
+      "tags": ["idm", "mnoziny", "prazdna-mnozina"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-vytvarejici-posloupnost",
+      "type": "ordering",
+      "prompt": "Seřaď členy vytvářející posloupnosti formule $(A \\Leftrightarrow B) \\Rightarrow (A \\wedge C) \\Leftrightarrow (B \\wedge C)$ tak, aby každý krok vznikl až z toho, co je k dispozici před ním.",
+      "items": [
+        { "id": "ekvivalence-konjunkci", "text": "$(A \\wedge C) \\Leftrightarrow (B \\wedge C)$" },
+        { "id": "promenne", "text": "$A$, $B$, $C$" },
+        { "id": "cela-formule", "text": "$(A \\Leftrightarrow B) \\Rightarrow (A \\wedge C) \\Leftrightarrow (B \\wedge C)$" },
+        { "id": "dvojice", "text": "$A \\Leftrightarrow B$, $A \\wedge C$, $B \\wedge C$" }
+      ],
+      "correctOrder": ["promenne", "dvojice", "ekvivalence-konjunkci", "cela-formule"],
+      "explanation": "Vytvářející posloupnost ukazuje, že zápis opravdu **je** výroková formule – každý člen musí být buď výroková proměnná, nebo vzniknout z dřívějších členů pomocí logické spojky. Nejdřív tedy stojí samotné proměnné $A$, $B$, $C$. Z nich se jedním krokem postaví $A \\Leftrightarrow B$, $A \\wedge C$ i $B \\wedge C$. Z posledních dvou vznikne $(A \\wedge C) \\Leftrightarrow (B \\wedge C)$ a teprve z toho a z $A \\Leftrightarrow B$ celá formule.",
+      "difficulty": 3,
+      "tags": ["idm", "logika", "vyrokove-formule"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-dosah-kvantifikatoru",
+      "type": "single",
+      "prompt": "Ve formuli\n\n$$\\forall x : (\\exists y : x \\leq y) \\wedge \\forall x : (x < 0 \\Rightarrow x < x^2)$$\n\nco je dosahem **prvního** výskytu kvantifikátoru $\\forall x$?",
+      "choices": [
+        {
+          "id": "jen-nerovnost",
+          "text": "$x \\leq y$",
+          "feedback": "To je dosah kvantifikátoru $\\exists y$, který leží uvnitř. Dosah prvního $\\forall x$ je o kus větší."
+        },
+        {
+          "id": "druha-cast",
+          "text": "$x < 0 \\Rightarrow x < x^2$",
+          "feedback": "To je dosah **druhého** výskytu $\\forall x$, tedy toho za spojkou $\\wedge$."
+        },
+        {
+          "id": "cela-formule",
+          "text": "celá formule",
+          "feedback": "Dosah končí uzavřením závorky, která za kvantifikátorem následuje – tedy ještě před spojkou $\\wedge$. Jinak by druhý $\\forall x$ ležel uvnitř dosahu prvního."
+        },
+        {
+          "id": "spravny-dosah",
+          "text": "$\\exists y : x \\leq y$"
+        }
+      ],
+      "correct": "spravny-dosah",
+      "explanation": "Dosah kvantifikátoru je ta podformule $V$, na kterou se kvantifikátor v zápisu $\\forall x : (V)$ vztahuje. Formule má tři kvantifikátory a každý svůj dosah: první $\\forall x$ má dosah $\\exists y : x \\leq y$, vnořený $\\exists y$ má dosah $x \\leq y$ a druhý $\\forall x$ má dosah $x < 0 \\Rightarrow x < x^2$. Všimni si, že stejné písmeno $x$ je tu kvantifikované dvakrát nezávisle na sobě – každý výskyt patří k tomu kvantifikátoru, v jehož dosahu leží.",
+      "difficulty": 4,
+      "tags": ["idm", "predikatovy-pocet", "kvantifikatory"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-vlastni-podmnozina",
+      "type": "single",
+      "prompt": "Kdy píšeme $A \\subset B$ a říkáme, že $A$ je vlastní podmnožina množiny $B$?",
+      "choices": [
+        {
+          "id": "inkluze-a-ruznost",
+          "text": "Když $A \\subseteq B$ a zároveň $A \\neq B$."
+        },
+        {
+          "id": "obe-inkluze",
+          "text": "Když $A \\subseteq B$ a zároveň $B \\subseteq A$.",
+          "feedback": "Obě inkluze zároveň znamenají, že se množiny **rovnají** – a to je přesně případ, který vlastní podmnožina vylučuje."
+        },
+        {
+          "id": "mene-prvku",
+          "text": "Když má $A$ méně prvků než $B$.",
+          "feedback": "Počet prvků tu nerozhoduje. Podstatné je, že každý prvek $A$ leží i v $B$ – množiny $\\{1\\}$ a $\\{2\\}$ mají po jednom prvku, a podmnožinou jedna druhé nejsou."
+        },
+        {
+          "id": "disjunktni",
+          "text": "Když $A$ a $B$ nemají žádný společný prvek.",
+          "feedback": "To je opačná situace, než jakou inkluze popisuje: $A \\subseteq B$ naopak říká, že každý prvek $A$ leží i v $B$."
+        }
+      ],
+      "correct": "inkluze-a-ruznost",
+      "explanation": "Zápis $A \\subseteq B$ znamená, že každý prvek $A$ je prvkem $B$. Když chceme zdůraznit, že navíc $A \\neq B$, píšeme $A \\subset B$ a mluvíme o **vlastní** podmnožině. Pro každou množinu proto platí $A \\subseteq A$, ale nikdy $A \\subset A$.",
+      "difficulty": 2,
+      "tags": ["idm", "mnoziny", "inkluze"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-dosazeni-do-vyrokove-formy",
+      "type": "trueFalse",
+      "prompt": "Dosadíme-li do výrokové formy nad $\\mathbb{R}$ za volnou proměnnou libovolný prvek z $\\mathbb{R}$, vždy dostaneme výrok.",
+      "answer": false,
+      "explanation": "Můžeme, ale nemusíme. Ukázkový protipříklad je forma $4 - x = \\dfrac{3}{x}$ nad $\\mathbb{R}$: po dosazení $1$ vyjde pravdivý výrok, po dosazení $2$ nepravdivý – ale po dosazení $0$ vznikne na pravé straně zápis $\\dfrac{3}{0}$, který nereprezentuje žádné reálné číslo. Nevznikne tedy ani pravdivý, ani nepravdivý výrok, prostě žádný. Právě proto se u výrokových forem sleduje **obor pravdivosti**: množina prvků, po jejichž dosazení pravdivý výrok skutečně dostaneme.",
+      "difficulty": 4,
+      "tags": ["idm", "predikatovy-pocet", "vyrokova-forma"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-obor-pravdivosti",
+      "type": "shortText",
+      "prompt": "Jak se nazývá množina všech prvků, po jejichž dosazení do výrokové formy dostaneme pravdivý výrok?",
+      "accept": ["obor pravdivosti", "obor pravdivosti výrokové formy", "obor pravdivosti vyrokove formy"],
+      "placeholder": "dvě slova",
+      "explanation": "Je to **obor pravdivosti** výrokové formy. Díky němu se dají množiny zadávat i jinak než vyjmenováním prvků – zápisem $M = \\{x \\in A : V(x)\\}$, který znamená „všechny prvky $x$ množiny $A$, pro které je $V(x)$ pravdivý výrok“. Typickou výrokovou formou je právě rovnice nebo nerovnice.",
+      "difficulty": 2,
+      "tags": ["idm", "predikatovy-pocet", "vyrokova-forma"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-interval-jako-obor-pravdivosti",
+      "type": "single",
+      "prompt": "Kterým zápisem se dá interval $\\langle 1, 3)$ vyjádřit jako obor pravdivosti výrokové formy?",
+      "choices": [
+        {
+          "id": "obe-ostre",
+          "text": "$M = \\{x \\in \\mathbb{R} : 1 < x < 3\\}$",
+          "feedback": "To je otevřený interval $(1, 3)$. Jednička do $\\langle 1, 3)$ patří, takže u ní musí být neostrá nerovnost."
+        },
+        {
+          "id": "prohozene",
+          "text": "$M = \\{x \\in \\mathbb{R} : 1 < x \\leq 3\\}$",
+          "feedback": "Ostrá a neostrá nerovnost jsou prohozené – tenhle zápis popisuje interval $(1, 3\\rangle$."
+        },
+        {
+          "id": "spravny-zapis",
+          "text": "$M = \\{x \\in \\mathbb{R} : 1 \\leq x < 3\\}$"
+        },
+        {
+          "id": "obe-neostre",
+          "text": "$M = \\{x \\in \\mathbb{R} : 1 \\leq x \\leq 3\\}$",
+          "feedback": "To je uzavřený interval $\\langle 1, 3 \\rangle$. Trojka do $\\langle 1, 3)$ nepatří."
+        }
+      ],
+      "correct": "spravny-zapis",
+      "explanation": "Zápis $M = \\{x \\in A : V(x)\\}$ čteme jako „všechna $x$ z $A$, pro která platí $V(x)$“. U intervalu $\\langle 1, 3)$ značí kulatá závorka vyloučený krajní bod a ostrá špička bod zahrnutý, takže podmínka zní $1 \\leq x < 3$. Levý krajní bod do intervalu patří, pravý ne.",
+      "difficulty": 2,
+      "tags": ["idm", "mnoziny", "vyrokova-forma"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-poradi-kvantifikatoru",
+      "type": "multi",
+      "prompt": "Která z následujících tvrzení o reálných číslech jsou pravdivá?",
+      "choices": [
+        {
+          "id": "druha-mocnina",
+          "text": "$\\forall x \\in \\mathbb{R} : x^2 \\geq 0$"
+        },
+        {
+          "id": "asociativita",
+          "text": "$\\forall x, y, z \\in \\mathbb{R} : x + (y + z) = (x + y) + z$"
+        },
+        {
+          "id": "ke-kazdemu-existuje",
+          "text": "$\\forall x \\in \\mathbb{R}\\ \\exists y \\in \\mathbb{R} : x + y = 1$"
+        },
+        {
+          "id": "existuje-pro-vsechna",
+          "text": "$\\exists y \\in \\mathbb{R}\\ \\forall x \\in \\mathbb{R} : x + y = 1$",
+          "feedback": "Tady se nejdřív pevně zvolí jedno $y$ a teprve pak se tvrdí něco o všech $x$. Kdyby třeba $y = 5$, muselo by pro každé reálné $x$ platit $x + 5 = 1$ – z toho ale vyjde jediné $x = -4$. Takové $y$ neexistuje."
+        }
+      ],
+      "correct": ["druha-mocnina", "asociativita", "ke-kazdemu-existuje"],
+      "partialCredit": true,
+      "hint": "U posledních dvou tvrzení si všimni, v jakém pořadí jsou kvantifikátory.",
+      "explanation": "První dvě tvrzení jsou jen zápisy známých faktů: druhá mocnina reálného čísla je nezáporná a sčítání je na $\\mathbb{R}$ asociativní.\n\nZajímavá je poslední dvojice, která se liší **jen pořadím kvantifikátorů**. Tvrzení $\\forall x\\ \\exists y : x + y = 1$ je pravdivé: ať dostaneš jakékoli $x$, stačí zvolit $y = 1 - x$, což je zase reálné číslo. Tvrzení $\\exists y\\ \\forall x : x + y = 1$ pravdivé není: žádalo by jedno pevné $y$, ke kterému lze přičíst cokoli a pořád vyjde $1$.\n\nPořadí různých kvantifikátorů tedy **nejde libovolně zaměňovat** – záměna mění smysl tvrzení.",
+      "difficulty": 5,
+      "tags": ["idm", "predikatovy-pocet", "kvantifikatory"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-volny-a-vazany-vyskyt",
+      "type": "cloze",
+      "prompt": "Doplň pojmy, kterými se popisuje, jak se proměnná chová ve formuli.",
+      "template": "Výskyt proměnné $x$ ve formuli se nazývá {{1}}, pokud leží v dosahu kvantifikátoru $\\forall x$ nebo $\\exists x$; v opačném případě se nazývá {{2}}. Formuli, jejíž všechny proměnné jsou vázané, říkáme {{3}} formule.",
+      "blanks": {
+        "1": { "accept": ["vázaný", "vazany", "vázaným", "vazanym"], "placeholder": "přídavné jméno" },
+        "2": { "accept": ["volný", "volny", "volným", "volnym"] },
+        "3": { "accept": ["uzavřená", "uzavrena", "uzavřenou", "uzavrenou"] }
+      },
+      "explanation": "Pojmy jsou dva a snadno se pletou. **Výskyt** proměnné je vázaný, když leží v dosahu kvantifikátoru přes tutéž proměnnou, jinak je volný. Od výskytů se pak odvozuje vlastnost celé **proměnné**: proměnná je ve formuli volná, má-li aspoň jeden volný výskyt, a vázaná, jsou-li všechny její výskyty vázané. Formule, kde jsou vázané všechny proměnné, je **uzavřená** – ta už je výrokem. Formule s aspoň jednou volnou proměnnou je naopak **výroková forma**.",
+      "difficulty": 3,
+      "tags": ["idm", "predikatovy-pocet", "promenne"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-podformule",
+      "type": "trueFalse",
+      "prompt": "Formule $x + 2 < 6$ je podformulí formule $(x + 2 < 6) \\Rightarrow (x^2 + 1 > 7)$.",
+      "answer": true,
+      "explanation": "Podformuli získáme vynecháním několika symbolů na začátku a na konci formule, přičemž „několik“ může být i nula. Když z $(x + 2 < 6) \\Rightarrow (x^2 + 1 > 7)$ odebereme zleva úvodní závorku a zprava všechno od uzavírací závorky dál, zbude přesně $x + 2 < 6$. Z téže definice mimochodem plyne, že každá formule je podformulí sama sebe.",
+      "difficulty": 2,
+      "tags": ["idm", "predikatovy-pocet", "podformule"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-kartezsky-soucin-definice",
+      "type": "single",
+      "prompt": "Co je kartézský součin $A \\times B$ množin $A$ a $B$?",
+      "choices": [
+        {
+          "id": "spolecne-prvky",
+          "text": "Množina všech dvojic prvků, které leží v $A$ i v $B$ zároveň.",
+          "feedback": "Společné prvky obou množin dává průnik. Kartézský součin naopak kombinuje každý prvek $A$ s každým prvkem $B$."
+        },
+        {
+          "id": "usporadane-dvojice",
+          "text": "Množina všech uspořádaných dvojic, jejichž první složka je z $A$ a druhá z $B$."
+        },
+        {
+          "id": "podmnoziny",
+          "text": "Množina všech podmnožin, které vzniknou spojením $A$ a $B$.",
+          "feedback": "Systém podmnožin je něco jiného než součin. Prvky $A \\times B$ nejsou množiny, ale uspořádané dvojice."
+        },
+        {
+          "id": "neusporadane",
+          "text": "Množina dvojic prvků z $A$ a $B$, u nichž na pořadí složek nezáleží.",
+          "feedback": "U uspořádané dvojice je první a druhá složka pevně daná – na pořadí právě záleží. Proto se $A \\times B$ a $B \\times A$ obecně liší."
+        }
+      ],
+      "correct": "usporadane-dvojice",
+      "explanation": "Kartézský součin $A \\times B$ je množina všech uspořádaných dvojic, jejichž první složka je z $A$ a druhá z $B$. Klíčové slovo je **uspořádaná**: dvojice $[a, b]$ má pevně danou první a druhou složku. Stejným způsobem se definuje součin více množin $A_1 \\times A_2 \\times \\dots \\times A_n$ jako množina uspořádaných $n$-tic.",
+      "difficulty": 2,
+      "tags": ["idm", "mnoziny", "kartezsky-soucin"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-druha-mocnina-mnoziny",
+      "type": "shortText",
+      "prompt": "Jak se zkráceně zapisuje kartézský součin $A \\times A$?",
+      "accept": ["A^2", "A2", "A²", "$A^2$", "A na druhou"],
+      "placeholder": "např. B^3",
+      "explanation": "Píše se $A^2$. Stejná zkratka funguje i pro víc činitelů: je-li $A_1 = A_2 = \\dots = A_n$, zapisuje se jejich kartézský součin jako $A^n$. Zápis $A^n$ se pak hodí třeba v definici termu, kde se u $n$-ární operace $f$ požaduje $D(f) \\subseteq A^n$.",
+      "difficulty": 1,
+      "tags": ["idm", "mnoziny", "kartezsky-soucin"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-pojmy-predikatoveho-poctu",
+      "type": "matching",
+      "prompt": "Přiřaď k pojmům predikátového počtu jejich význam. Jedna možnost vpravo zbude.",
+      "left": [
+        { "id": "term", "text": "term nad $A$" },
+        { "id": "atomicka-formule", "text": "atomická formule nad $A$" },
+        { "id": "uzavrena-formule", "text": "uzavřená formule" },
+        { "id": "vyrokova-forma", "text": "výroková forma" }
+      ],
+      "right": [
+        { "id": "algebraicky-vyraz", "text": "korektně zapsaný algebraický výraz, třeba $(x + y) \\cdot z$" },
+        { "id": "dva-termy-relace", "text": "dva termy spojené relací, tedy rovnice nebo nerovnice" },
+        { "id": "vse-vazane", "text": "formule, jejíž všechny proměnné jsou vázané" },
+        { "id": "aspon-jedna-volna", "text": "formule, která má aspoň jednu volnou proměnnou" },
+        { "id": "vynechani-symbolu", "text": "část formule vzniklá vynecháním symbolů na začátku a na konci" }
+      ],
+      "pairs": [
+        ["term", "algebraicky-vyraz"],
+        ["atomicka-formule", "dva-termy-relace"],
+        ["uzavrena-formule", "vse-vazane"],
+        ["vyrokova-forma", "aspon-jedna-volna"]
+      ],
+      "explanation": "Stavba jazyka predikátového počtu jde zdola nahoru: z proměnných, prvků a operací vznikají **termy**, dva termy spojené relací dávají **atomickou formuli** a z formulí se logickými spojkami a kvantifikátory skládají formule složené. Podle toho, jak dopadnou proměnné, je pak formule buď **uzavřená** (všechny vázané, formule je výrokem), nebo **výroková forma** (aspoň jedna volná, výrok vznikne teprve dosazením). Zbylá možnost popisuje **podformuli** – ta se týká vztahu dvou formulí, ne proměnných.",
+      "difficulty": 3,
+      "tags": ["idm", "predikatovy-pocet", "formule"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-rovnost-mnozin",
+      "type": "single",
+      "prompt": "Podle definice se množiny $A$ a $B$ rovnají právě tehdy, když platí:",
+      "choices": [
+        {
+          "id": "jedna-inkluze",
+          "text": "$A \\subseteq B$ nebo $B \\subseteq A$",
+          "feedback": "Jedna inkluze stačit nemůže: platí $\\{1\\} \\subseteq \\{1, 2\\}$, a rovné si ty množiny rozhodně nejsou."
+        },
+        {
+          "id": "stejna-mohutnost",
+          "text": "$|A| = |B|$",
+          "feedback": "Stejný počet prvků nestačí. Množiny $\\{1, 2\\}$ a $\\{3, 4\\}$ mají po dvou prvcích a společný nemají ani jeden."
+        },
+        {
+          "id": "vzajemne-prvky",
+          "text": "$A \\in B$ a zároveň $B \\in A$",
+          "feedback": "Zaměněné $\\in$ a $\\subseteq$. Rovnost množin se definuje přes inkluzi, ne přes to, že by jedna byla prvkem druhé."
+        },
+        {
+          "id": "obe-inkluze",
+          "text": "$A \\subseteq B$ a zároveň $B \\subseteq A$"
+        }
+      ],
+      "correct": "obe-inkluze",
+      "explanation": "Dvě množiny se rovnají, právě když obsahují tytéž prvky – a přesně to se dá vyjádřit dvojicí inkluzí $A \\subseteq B$ a $B \\subseteq A$. Tenhle rozklad je zároveň nejběžnější postup, jak se rovnost množin dokazuje: jednou se ukáže, že každý prvek $A$ leží v $B$, podruhé opačná inkluze.",
+      "difficulty": 2,
+      "tags": ["idm", "mnoziny", "rovnost"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-binarni-relace-versus-operace",
+      "type": "single",
+      "prompt": "Jak se v matematice chápe binární relace?",
+      "choices": [
+        {
+          "id": "mnozina-dvojic",
+          "text": "Jako množina uspořádaných dvojic."
+        },
+        {
+          "id": "operace",
+          "text": "Jako předpis, který dvěma operandům jednoznačně přiřadí výsledek.",
+          "feedback": "To je binární **operace** – třeba sčítání, kde dvojici $3$ a $5$ odpovídá jediný výsledek $8$. Relace nic nepřiřazuje, jen říká, které dvojice spolu souvisí."
+        },
+        {
+          "id": "mnozina-termu",
+          "text": "Jako množina všech termů nad danou množinou.",
+          "feedback": "Termy jsou stavební kameny výrazů. Relace se v predikátovém počtu naopak používá k tomu, aby z dvojice termů vznikla atomická formule."
+        },
+        {
+          "id": "formule",
+          "text": "Jako formule, která má právě dvě volné proměnné.",
+          "feedback": "Počet volných proměnných rozhoduje o tom, jestli je formule výrokovou formou, ne o tom, co je relace. Relace je množinový objekt, ne zápis."
+        }
+      ],
+      "correct": "mnozina-dvojic",
+      "explanation": "Binární relace se chápe jako **množina uspořádaných dvojic**. Je-li $R$ relace a dvojice $[a, b]$ je jejím prvkem, píše se $[a, b] \\in R$, ale často i $aRb$. Takhle se dají popsat i vztahy, se kterými se běžně pracuje bez přemýšlení: $<$ na přirozených číslech, kolmost $\\perp$ nebo rovnoběžnost $\\parallel$ v geometrii. Od operace se relace liší tím, že nic nepočítá – jen vymezuje, které dvojice do ní patří.",
+      "difficulty": 2,
+      "tags": ["idm", "relace", "operace"],
+      "status": "draft"
+    }
+  ]
+}

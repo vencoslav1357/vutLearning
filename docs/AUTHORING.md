@@ -12,7 +12,8 @@ Nikdy neměň `src/content/schema.ts`, abys prosadil svoje pole.
 ## 1. Rychlý start
 
 1. Zjisti, o který předmět jde: `izp`, `ilg`, `idm`, `iel`, `ius`.
-2. Zjisti číslo přednášky (`NN`, dvojciferně: `01`, `07`, `12`).
+2. Zvol pořadové číslo sady (`NN`, dvojciferně: `01`, `07`, `12`) — o jedna vyšší,
+   než je nejvyšší `NN` v `content/<predmet>/`.
 3. Vytvoř soubor `content/<predmet>/<NN>-<slug>.questions.json`.
 4. Napiš otázky (viz katalog typů níže). Všechny se `"status": "draft"`.
 5. Ověř:
@@ -108,17 +109,25 @@ matematika), `iel` (Elektronika pro IT), `ius` (Úvod do softwarového inženýr
 
 ### Pojmenování
 
-**Soubor:** `<NN>-<slug>.questions.json` — `NN` je číslo přednášky, `slug` je krátké
-kebab-case téma. Příklady: `content/idm/03-relace.questions.json`,
+**Soubor:** `<NN>-<slug>.questions.json` — `NN` je **pořadové číslo sady v rámci předmětu**,
+`slug` je krátké kebab-case téma. Příklady: `content/idm/03-relace.questions.json`,
 `content/izp/07-ukazatele.questions.json`, `content/iel/01-zakladni-veliciny.questions.json`.
+
+`NN` **není** číslo přednášky. Číslo přednášky patří do pole `lecture`, řídí jen pořadí
+sad na stránce předmětu a s názvem souboru se klidně rozchází — třeba
+`content/idm/02-relace-a-zobrazeni.questions.json` má `"lecture": 4`. Důvod je prostý:
+`NN` je součástí `id` otázek, a to se nesmí nikdy měnit (sekce 7), kdežto přednášky
+se mezi ročníky přečíslovávají.
 
 **`id` sady** se musí **přesně shodovat s názvem souboru** bez přípony
 `.questions.json`. Soubor `content/idm/03-relace.questions.json` → `"id": "03-relace"`.
 Prefix předmětu tu nepatří — předmět je v poli `course` a v názvu adresáře.
 
-**`id` otázky:** `<predmet>-<cislo-prednasky>-<koncept>`, kebab-case, **globálně unikátní
-v celém repu**. Například `idm-03-relace-tranzitivita`. Nikdy do něj nedávej pořadové
-číslo v souboru ani hash obsahu — viz sekce 7.
+**`id` otázky:** `<predmet>-<NN>-<koncept>`, kebab-case, **globálně unikátní
+v celém repu**. `NN` je totéž pořadové číslo sady jako v názvu souboru, takže otázky
+ze souboru `content/idm/03-relace.questions.json` začínají `idm-03-`. Například
+`idm-03-relace-tranzitivita`. Nikdy do `id` nedávej pořadové číslo otázky v souboru
+ani hash obsahu — viz sekce 7.
 
 **`id` uvnitř otázky** (možnosti, položky) jsou lokální. Používej mluvící názvy
 (`akter-neni-clovek`), ne `a`/`b`/`c`, u kterých se snadno splete pořadí. Bez diakritiky.
