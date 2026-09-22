@@ -1,0 +1,676 @@
+{
+  "$schema": "../../schemas/question-set.schema.json",
+  "id": "03-mnozinove-operace-a-dukazy",
+  "title": "Množinové operace a důkazy",
+  "course": "idm",
+  "lecture": 2,
+  "description": "Sjednocení, průnik, rozdíl, symetrický rozdíl, doplněk a kartézský součin. Důkaz rovnosti množin dvěma inkluzemi, přímý a nepřímý důkaz a důkaz sporem.",
+  "source": {
+    "kind": "textbook",
+    "ref": "Skripta IDM – kap. 1.5 Množinové operace a kap. 2 Důkazy",
+    "pages": [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+  },
+  "schemaVersion": 1,
+  "questions": [
+    {
+      "id": "idm-03-mnozina-zadana-podminkou",
+      "type": "single",
+      "prompt": "Které prvky má množina $M = \\{n \\in \\mathbb{N}: 5 \\le n < 10\\}$?",
+      "choices": [
+        {
+          "id": "s-desitkou",
+          "text": "$\\{5, 6, 7, 8, 9, 10\\}$",
+          "feedback": "Pravá nerovnost je ostrá ($n < 10$), takže desítka už do množiny nepatří."
+        },
+        {
+          "id": "bez-petky",
+          "text": "$\\{6, 7, 8, 9\\}$",
+          "feedback": "Levá nerovnost je neostrá ($5 \\le n$), takže pětka do množiny patří."
+        },
+        { "id": "bez-desitky", "text": "$\\{5, 6, 7, 8, 9\\}$" },
+        {
+          "id": "realna",
+          "text": "Všechna reálná čísla mezi 5 a 10.",
+          "feedback": "Zápis $n \\in \\mathbb{N}$ omezuje prvky na přirozená čísla, žádné desetinné mezi ně nepatří."
+        }
+      ],
+      "correct": "bez-desitky",
+      "explanation": "Zápis $\\{n \\in \\mathbb{N}: \\dots\\}$ se čte „všechna přirozená $n$, pro která platí…“. Obě podmínky musí platit zároveň: $n$ je přirozené a $5 \\le n < 10$. Levá nerovnost je neostrá, takže pětka dovnitř patří, pravá je ostrá, takže desítka už ne. Zbývá $M = \\{5, 6, 7, 8, 9\\}$.",
+      "difficulty": 1,
+      "tags": ["idm", "mnoziny", "zapis-mnozin"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-typy-intervalu",
+      "type": "cloze",
+      "prompt": "Doplň názvy intervalů na množině reálných čísel.",
+      "template": "Interval $\\langle a, b \\rangle = \\{x: a \\le x \\le b\\}$ je {{1}}. Interval $(a, b) = \\{x: a < x < b\\}$ je {{2}}. U obou zápisů navíc vždy musí platit, že $a$ je {{3}} než $b$.",
+      "blanks": {
+        "1": {
+          "accept": ["uzavřený", "uzavreny", "uzavřený interval", "uzavreny interval"],
+          "placeholder": "jaký interval?"
+        },
+        "2": {
+          "accept": ["otevřený", "otevreny", "otevřený interval", "otevreny interval"],
+          "placeholder": "jaký interval?"
+        },
+        "3": {
+          "accept": ["menší", "mensi", "menší než", "mensi nez", "ostře menší", "ostre mensi"],
+          "placeholder": "vztah mezi mezemi"
+        }
+      },
+      "explanation": "Špičatá závorka znamená, že krajní bod do intervalu patří, kulatá že nepatří. Smíšené zápisy $(a, b\\rangle$ a $\\langle a, b)$ jsou zleva otevřený a zprava uzavřený, resp. naopak. Požadavek $a < b$ není formalita: $\\langle 5, -1 \\rangle$ je podle definice prázdná množina a $\\langle 1, 1 \\rangle$ je jednoprvková množina $\\{1\\}$ – pro obě existuje srozumitelnější zápis.",
+      "difficulty": 2,
+      "tags": ["idm", "mnoziny", "intervaly"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-interval-s-prohozenymi-mezemi",
+      "type": "single",
+      "prompt": "Co podle definice intervalu znamená zápis $\\langle 5, -1 \\rangle$?",
+      "choices": [
+        { "id": "prazdna", "text": "Je to prázdná množina." },
+        {
+          "id": "otoceny",
+          "text": "Totéž co $\\langle -1, 5 \\rangle$.",
+          "feedback": "Meze se v zápisu samy neprohazují. Dosazením do definice vyjde $\\{x: 5 \\le x \\le -1\\}$ a takové $x$ neexistuje."
+        },
+        {
+          "id": "dvouprvkova",
+          "text": "Dvouprvkovou množinu $\\{5, -1\\}$.",
+          "feedback": "Dvouprvkovou množinu zapisuješ složenými závorkami. Špičaté závorky znamenají uzavřený interval."
+        },
+        {
+          "id": "usporadana-dvojice",
+          "text": "Uspořádanou dvojici čísel 5 a $-1$.",
+          "feedback": "Uspořádaná dvojice se píše $[5, -1]$. Špičatá závorka je vyhrazená intervalu."
+        }
+      ],
+      "correct": "prazdna",
+      "explanation": "$\\langle 5, -1 \\rangle$ je podle definice $\\{x: 5 \\le x \\le -1\\}$ a žádné takové $x$ neexistuje – jde tedy o prázdnou množinu. Přesně proto se u intervalu vždy požaduje $a < b$: pro prázdnou množinu máme zápis $\\emptyset$ a pro jednoprvkovou $\\{1\\}$ místo $\\langle 1, 1 \\rangle$.",
+      "difficulty": 3,
+      "tags": ["idm", "mnoziny", "intervaly"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-vysledky-mnozinovych-operaci",
+      "type": "matching",
+      "prompt": "Máš množiny $A = \\{1, 2, 3, 13\\}$, $B = \\{2, 4, 6, 13\\}$ a $C = \\{1, 3, 6, 13\\}$. Přiřaď ke každé operaci její výsledek. Dva výsledky zbudou.",
+      "left": [
+        { "id": "prunik-ab", "text": "$A \\cap B$" },
+        { "id": "sjednoceni-bc", "text": "$B \\cup C$" },
+        { "id": "rozdil-ca", "text": "$C \\setminus A$" },
+        { "id": "symetricky-ab", "text": "$A \\,\\Delta\\, B$" }
+      ],
+      "right": [
+        { "id": "vysl-2-13", "text": "$\\{2, 13\\}$" },
+        { "id": "vysl-vse", "text": "$\\{1, 2, 3, 4, 6, 13\\}$" },
+        { "id": "vysl-6", "text": "$\\{6\\}$" },
+        { "id": "vysl-1-3-4-6", "text": "$\\{1, 3, 4, 6\\}$" },
+        { "id": "vysl-1-3", "text": "$\\{1, 3\\}$" },
+        { "id": "vysl-2-4", "text": "$\\{2, 4\\}$" }
+      ],
+      "pairs": [
+        ["prunik-ab", "vysl-2-13"],
+        ["sjednoceni-bc", "vysl-vse"],
+        ["rozdil-ca", "vysl-6"],
+        ["symetricky-ab", "vysl-1-3-4-6"]
+      ],
+      "hint": "Symetrický rozdíl jsou ty prvky, které obě množiny **nemají** společné.",
+      "explanation": "Do průniku patří společné prvky, tedy $A \\cap B = \\{2, 13\\}$. Sjednocení obsahuje všechno z obou množin, každý prvek jen jednou: $B \\cup C = \\{1, 2, 3, 4, 6, 13\\}$. Rozdíl $C \\setminus A$ vznikne vyhozením prvků 1, 3 a 13, zbude $\\{6\\}$. Symetrický rozdíl je $A \\,\\Delta\\, B = (A \\setminus B) \\cup (B \\setminus A) = \\{1, 3\\} \\cup \\{4, 6\\}$. Zbylé dva výsledky nejsou náhodné: $\\{1, 3\\}$ je $A \\setminus B$ a $\\{2, 4\\}$ je $B \\setminus C$.",
+      "difficulty": 3,
+      "tags": ["idm", "mnoziny", "mnozinove-operace"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-symetricky-rozdil-tri-mnozin",
+      "type": "single",
+      "prompt": "Pro $A = \\{1, 2, 3, 13\\}$, $B = \\{2, 4, 6, 13\\}$ a $C = \\{1, 3, 6, 13\\}$ urči $A \\,\\Delta\\, (B \\,\\Delta\\, C)$.",
+      "choices": [
+        {
+          "id": "vysl-1-2-3-4",
+          "text": "$\\{1, 2, 3, 4\\}$",
+          "feedback": "To je samotné $B \\,\\Delta\\, C$. Zbývá udělat ještě symetrický rozdíl s $A$."
+        },
+        {
+          "id": "vysl-13",
+          "text": "$\\{13\\}$",
+          "feedback": "Třináctka leží ve všech třech množinách, jenže do symetrického rozdílu tří množin patří i prvky, které leží právě v jedné z nich."
+        },
+        {
+          "id": "vysl-prazdna",
+          "text": "$\\emptyset$",
+          "feedback": "Prázdný výsledek by znamenal $A = B \\,\\Delta\\, C$. Spočítej si nejdřív $B \\,\\Delta\\, C$ a porovnej to s $A$."
+        },
+        { "id": "vysl-4-13", "text": "$\\{4, 13\\}$" }
+      ],
+      "correct": "vysl-4-13",
+      "hint": "Symetrický rozdíl je asociativní, takže postupuj zevnitř: nejdřív $B \\,\\Delta\\, C$.",
+      "explanation": "$B \\,\\Delta\\, C = (B \\setminus C) \\cup (C \\setminus B) = \\{2, 4\\} \\cup \\{1, 3\\} = \\{1, 2, 3, 4\\}$. Pak $A \\,\\Delta\\, \\{1, 2, 3, 4\\} = \\{13\\} \\cup \\{4\\} = \\{4, 13\\}$. Výsledek potvrzuje obecné pravidlo: v $A \\,\\Delta\\, B \\,\\Delta\\, C$ zůstanou právě ty prvky, které leží ve všech třech množinách (třináctka), nebo právě v jedné z nich (čtyřka).",
+      "difficulty": 4,
+      "tags": ["idm", "mnoziny", "symetricky-rozdil"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-doplnek-zavisi-na-zakladni-mnozine",
+      "type": "trueFalse",
+      "prompt": "Doplněk množiny $A$ je určený jednoznačně už tím, že známe $A$ – na tom, vůči jaké množině ho bereme, nezáleží.",
+      "answer": false,
+      "explanation": "Záleží, a hodně. Doplněk je definovaný jako $A'_M = M \\setminus A$, takže se vždy musí říct, vůči jaké základní množině ho bereš. Pro $A = \\{1, 2\\}$ vyjde $A'_M = \\{3\\}$ při $M = \\{1, 2, 3\\}$, ale $A'_P = \\{3, 4\\}$ při $P = \\{1, 2, 3, 4\\}$. Proto se základní množina píše do indexu – je součástí zápisu, ne dekorace.",
+      "difficulty": 2,
+      "tags": ["idm", "mnoziny", "doplnek"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-doplnek-rozdilu",
+      "type": "single",
+      "prompt": "Nechť $A, B \\subseteq M$. Čemu se rovná $(A \\setminus B)'_M$?",
+      "choices": [
+        {
+          "id": "prunik-doplnku",
+          "text": "$A'_M \\cap B'_M$",
+          "feedback": "To je $(A \\cup B)'_M$. De Morganův zákon se tu uplatní, ale vycházíš z rozdílu, ne ze sjednocení."
+        },
+        { "id": "doplnek-sjednoceni-b", "text": "$A'_M \\cup B$" },
+        {
+          "id": "doplnek-minus-b",
+          "text": "$A'_M \\setminus B$",
+          "feedback": "Doplněk rozdílu není rozdíl doplňků. Rozepiš si $A \\setminus B$ jako $x \\in A \\wedge x \\notin B$ a znegoj celou konjunkci."
+        },
+        {
+          "id": "b-minus-a",
+          "text": "$B \\setminus A$",
+          "feedback": "$B \\setminus A$ obsahuje jen prvky z $B$. Do doplňku ale patří i všechno, co leží mimo $A$ i mimo $B$."
+        }
+      ],
+      "correct": "doplnek-sjednoceni-b",
+      "hint": "Negace konjunkce je disjunkce negací.",
+      "explanation": "Do $A \\setminus B$ patří právě ta $x$, pro která platí $x \\in A \\wedge x \\notin B$. Doplněk je negace téhle podmínky v rámci $M$, tedy $x \\notin A \\vee x \\in B$ – a to je přesně $A'_M \\cup B$. Rychlá zkouška krajním případem: pro $B = \\emptyset$ je $(A \\setminus \\emptyset)'_M = A'_M$ a vzorec dá $A'_M \\cup \\emptyset = A'_M$, sedí.",
+      "difficulty": 4,
+      "tags": ["idm", "mnoziny", "doplnek", "de-morgan"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-platne-mnozinove-rovnosti",
+      "type": "multi",
+      "prompt": "Které z následujících rovností platí pro **libovolné** množiny $A$, $B$, $C$?",
+      "choices": [
+        {
+          "id": "komutativita-delta",
+          "text": "$A \\,\\Delta\\, B = B \\,\\Delta\\, A$"
+        },
+        {
+          "id": "komutativita-rozdilu",
+          "text": "$A \\setminus B = B \\setminus A$",
+          "feedback": "Rozdíl komutativní není. Pro $A = \\{1\\}$ a $B = \\{2\\}$ vyjde vlevo $\\{1\\}$ a vpravo $\\{2\\}$."
+        },
+        {
+          "id": "asociativita-delta",
+          "text": "$A \\,\\Delta\\, (B \\,\\Delta\\, C) = (A \\,\\Delta\\, B) \\,\\Delta\\, C$"
+        },
+        {
+          "id": "asociativita-rozdilu",
+          "text": "$A \\setminus (B \\setminus C) = (A \\setminus B) \\setminus C$",
+          "feedback": "Rozdíl není ani asociativní. Pro $A = B = C = \\{1\\}$ vyjde vlevo $\\{1\\}$, ale vpravo $\\emptyset$."
+        },
+        {
+          "id": "distributivita-prunik-delta",
+          "text": "$A \\cap (B \\,\\Delta\\, C) = (A \\cap B) \\,\\Delta\\, (A \\cap C)$"
+        }
+      ],
+      "correct": ["komutativita-delta", "asociativita-delta", "distributivita-prunik-delta"],
+      "partialCredit": true,
+      "explanation": "Symetrický rozdíl se chová jako logické „buď, anebo“: je komutativní, asociativní a průnik se vůči němu chová distributivně. Rozdíl množin odpovídá konjunkci s negací a ta komutativní není – $A \\setminus B$ a $B \\setminus A$ jsou dokonce disjunktní a jejich sjednocení je právě $A \\,\\Delta\\, B$. U neplatné rovnosti stačí k vyvrácení jediný protipříklad.",
+      "difficulty": 4,
+      "tags": ["idm", "mnoziny", "mnozinove-operace"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-pojem-disjunktni-mnoziny",
+      "type": "shortText",
+      "prompt": "Jak se nazývají dvě množiny, jejichž průnik je prázdný?",
+      "accept": [
+        "disjunktní",
+        "disjunktni",
+        "disjunktní množiny",
+        "disjunktni mnoziny",
+        "jsou disjunktní",
+        "jsou disjunktni"
+      ],
+      "placeholder": "jedno slovo",
+      "explanation": "Množiny $A$, $B$, pro které platí $A \\cap B = \\emptyset$, se nazývají **disjunktní** – nemají jediný společný prvek. Je to vlastnost dvojice, ne jedné množiny. Typickým příkladem disjunktní dvojice jsou $A \\setminus B$ a $B \\setminus A$; jejich sjednocením je symetrický rozdíl.",
+      "difficulty": 1,
+      "tags": ["idm", "mnoziny", "disjunktnost"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-usporadana-dvojice-a-kartezsky-soucin",
+      "type": "multi",
+      "prompt": "Která tvrzení o uspořádaných dvojicích a kartézském součinu platí?",
+      "choices": [
+        {
+          "id": "rovnost-dvojic",
+          "text": "$[a, b] = [c, d]$ právě tehdy, když $a = c$ a zároveň $b = d$."
+        },
+        {
+          "id": "komutativita-soucinu",
+          "text": "$A \\times B = B \\times A$ platí pro libovolné množiny $A$, $B$.",
+          "feedback": "Pro $A = \\{1\\}$ a $B = \\{\\circ\\}$ je $A \\times B = \\{[1, \\circ]\\}$, kdežto $B \\times A = \\{[\\circ, 1]\\}$. Rovnost nastane jen při $A = B$ nebo když je jedna z nich prázdná."
+        },
+        {
+          "id": "soucin-s-prazdnou",
+          "text": "$A \\times \\emptyset = \\emptyset$ pro každou množinu $A$."
+        },
+        {
+          "id": "dvojice-je-mnozina",
+          "text": "Uspořádaná dvojice $[a, b]$ je totéž co dvouprvková množina $\\{a, b\\}$.",
+          "feedback": "U množiny na pořadí nezáleží, takže $\\{a, b\\} = \\{b, a\\}$ a $\\{a, a\\}$ je jednoprvková. U uspořádané dvojice je pořadí pevné a $[a, a]$ je zcela v pořádku."
+        }
+      ],
+      "correct": ["rovnost-dvojic", "soucin-s-prazdnou"],
+      "partialCredit": true,
+      "explanation": "Charakteristickou vlastností uspořádané dvojice je $[a, b] = [c, d] \\Leftrightarrow a = c \\wedge b = d$ – záleží na pořadí složek, na rozdíl od dvouprvkové množiny. Součin s prázdnou množinou je prázdný, protože není z čeho brát druhou složku. Kartézský součin komutativní není: $A \\times B$ a $B \\times A$ mají sice stejný počet prvků, ale jde o jiné dvojice. Pro $A = B$ se místo $A \\times A$ píše $A^2$.",
+      "difficulty": 3,
+      "tags": ["idm", "mnoziny", "kartezsky-soucin", "usporadana-dvojice"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-pojem-kartezsky-soucin",
+      "type": "shortText",
+      "prompt": "Jak se nazývá množina všech uspořádaných dvojic $[x, y]$, kde $x \\in A$ a $y \\in B$?",
+      "accept": [
+        "kartézský součin",
+        "kartezsky soucin",
+        "kartézský součin množin",
+        "kartezsky soucin mnozin",
+        "kartézský součin A a B",
+        "kartezsky soucin A a B",
+        "cartesian product"
+      ],
+      "placeholder": "dvě slova",
+      "explanation": "Jde o **kartézský součin** $A \\times B = \\{[x, y]: x \\in A \\wedge y \\in B\\}$. Jeho mohutnost je $|A| \\cdot |B|$, protože první složku vybíráš nezávisle na druhé. Při součinu $n$ množin $A_1 \\times A_2 \\times \\cdots \\times A_n$ vzniká množina uspořádaných $n$-tic; pro stejné množiny se píše $A^n$.",
+      "difficulty": 1,
+      "tags": ["idm", "mnoziny", "kartezsky-soucin"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-vennuv-diagram-pocet-oblasti",
+      "type": "numeric",
+      "prompt": "Na kolik oblastí rozdělí rovinu Vennův diagram tří množin? Počítej i oblast vně všech tří kružnic.",
+      "answer": 8,
+      "tolerance": { "kind": "absolute", "value": 0 },
+      "unit": null,
+      "hint": "Pro každou množinu se u prvku nezávisle rozhoduje, jestli do ní patří, nebo ne.",
+      "explanation": "Každá oblast diagramu odpovídá jedné kombinaci odpovědí na otázky „patří prvek do $A$?“, „patří do $B$?“, „patří do $C$?“. Ty jsou nezávislé, takže oblastí je $2^3 = 8$ – sedm uvnitř kružnic a jedna vně. Pro dvě množiny to jsou $2^2 = 4$ oblasti, přesně ta čtyři políčka, na kterých se princip Vennova diagramu vysvětluje.",
+      "difficulty": 3,
+      "tags": ["idm", "mnoziny", "vennovy-diagramy"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-inkluze-jako-implikace",
+      "type": "trueFalse",
+      "prompt": "Inkluze $A \\subseteq B$ znamená, že pro každé $x$ platí implikace $x \\in A \\Rightarrow x \\in B$.",
+      "answer": true,
+      "explanation": "Přesně tak je inkluze definovaná: $A \\subseteq B \\Leftrightarrow \\forall x: x \\in A \\Rightarrow x \\in B$. Z toho plyne i postup důkazu – vybereš jeden prvek $x$, o kterém nevíš nic než to, že leží v $A$, a odvodíš, že leží i v $B$. Protože o $x$ nic dalšího nepředpokládáš, platí závěr pro všechny prvky naráz, i když je jich nekonečně mnoho.",
+      "difficulty": 2,
+      "tags": ["idm", "mnoziny", "inkluze", "dukazy"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-rovnost-mnozin-dve-inkluze",
+      "type": "single",
+      "prompt": "Co je potřeba dokázat, když dokazuješ rovnost množin $A = B$?",
+      "choices": [
+        {
+          "id": "jedna-inkluze",
+          "text": "Stačí jedna inkluze, třeba $A \\subseteq B$.",
+          "feedback": "Z $A \\subseteq B$ plyne jen to, že $B$ je aspoň tak bohatá. Rovnost dostaneš, až když dokážeš i opačnou inkluzi."
+        },
+        {
+          "id": "stejny-pocet",
+          "text": "Že obě množiny mají stejný počet prvků.",
+          "feedback": "Stejná mohutnost rovnost nedává: $\\{1, 2\\}$ a $\\{3, 4\\}$ mají po dvou prvcích a rovné si nejsou."
+        },
+        {
+          "id": "obe-inkluze",
+          "text": "Obě inkluze: $A \\subseteq B$ i $B \\subseteq A$."
+        },
+        {
+          "id": "vennuv-diagram",
+          "text": "Že Vennovy diagramy obou stran vyjdou stejně.",
+          "feedback": "Diagram je dobrá nápověda, kam důkaz nasměrovat, ale sám o sobě důkazem není."
+        }
+      ],
+      "correct": "obe-inkluze",
+      "explanation": "Podle definice platí $A = B \\Leftrightarrow (A \\subseteq B \\wedge B \\subseteq A)$, takže důkaz má vždy dvě části. Každou inkluzi pak dokazuješ přes obecný prvek: vezmeš $x$ z levé množiny a řetězcem implikací ukážeš, že leží i v pravé. Obě části bývají podobné, ale nedají se odbýt slovem „analogicky“ – u druhé inkluze je často potřeba jiný krok.",
+      "difficulty": 2,
+      "tags": ["idm", "dukazy", "rovnost-mnozin"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-vennuv-diagram-neni-dukaz",
+      "type": "trueFalse",
+      "prompt": "Když u rovnosti množin nakreslíš Vennovy diagramy obou stran a vyjdou stejně, je rovnost tím dokázaná.",
+      "answer": false,
+      "explanation": "Diagram je pomůcka, ne důkaz – ukáže ti, jestli má smysl rovnost dokazovat, nebo spíš hledat protipříklad. Samotný důkaz pak stojí na dvou inkluzích a obecném prvku $x$. Opačným směrem je ale diagram velmi užitečný: když se obě strany rozejdou, vidíš rovnou, jak protipříklad sestrojit.",
+      "difficulty": 2,
+      "tags": ["idm", "dukazy", "rovnost-mnozin", "vennovy-diagramy"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-retez-implikaci-rovnost-mnozin",
+      "type": "ordering",
+      "prompt": "Seřaď kroky důkazu inkluze $A \\setminus (A \\setminus B) \\subseteq A \\cap B$ tak, jak jdou po sobě. Každý krok plyne z předchozího.",
+      "items": [
+        {
+          "id": "distributivita",
+          "text": "$(x \\in A \\wedge x \\notin A) \\vee (x \\in A \\wedge x \\in B)$"
+        },
+        { "id": "zaver", "text": "$x \\in A \\cap B$" },
+        { "id": "zacatek", "text": "$x \\in A \\setminus (A \\setminus B)$" },
+        {
+          "id": "negace-vnitrniho-rozdilu",
+          "text": "$x \\in A \\wedge (x \\notin A \\vee x \\in B)$"
+        },
+        {
+          "id": "vnejsi-rozdil",
+          "text": "$x \\in A \\wedge x \\notin A \\setminus B$"
+        }
+      ],
+      "correctOrder": ["zacatek", "vnejsi-rozdil", "negace-vnitrniho-rozdilu", "distributivita", "zaver"],
+      "explanation": "Postup je mechanický – rozepisuješ definice zvenčí dovnitř. Nejdřív vnější rozdíl ($x$ leží v $A$ a neleží v $A \\setminus B$), pak negaci vnitřního rozdílu (negace konjunkce je disjunkce negací), pak distributivitu konjunkce vůči disjunkci. První člen $(x \\in A \\wedge x \\notin A)$ je vždy nepravdivý, takže musí platit druhý – a ten říká $x \\in A \\cap B$. Opačná inkluze se dokazuje stejným řetězcem pozpátku, jen se do něj ten nepravdivý člen musí uměle přidat.",
+      "difficulty": 4,
+      "tags": ["idm", "dukazy", "rovnost-mnozin", "primy-dukaz"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-protipriklad-k-rovnosti-mnozin",
+      "type": "single",
+      "prompt": "Chceš ukázat, že rovnost $A \\setminus (B \\setminus A) = A \\cap B$ neplatí pro libovolné množiny. Která dvojice to dokládá?",
+      "choices": [
+        {
+          "id": "podmnozina",
+          "text": "$A = \\{1\\}$, $B = \\{1, 2\\}$",
+          "feedback": "Obě strany vyjdou $\\{1\\}$. Pro $A \\subseteq B$ rovnost platí, protipříklad musíš hledat jinde."
+        },
+        {
+          "id": "stejne",
+          "text": "$A = B = \\{1, 2\\}$",
+          "feedback": "Pro $A = B$ je $B \\setminus A = \\emptyset$ a obě strany dají $A$. Rovnost tu platí."
+        },
+        {
+          "id": "prazdna-a",
+          "text": "$A = \\emptyset$, $B = \\{1\\}$",
+          "feedback": "S prázdnou $A$ vyjdou obě strany prázdné. Rovnost platí."
+        },
+        {
+          "id": "disjunktni",
+          "text": "$A = \\{\\star, \\Delta\\}$, $B = \\{\\circ\\}$"
+        }
+      ],
+      "correct": "disjunktni",
+      "hint": "Zkus množiny, které nemají žádný společný prvek.",
+      "explanation": "Pro disjunktní množiny je $B \\setminus A = \\{\\circ\\}$, takže levá strana dá $\\{\\star, \\Delta\\}$, kdežto $A \\cap B = \\emptyset$. K vyvrácení tvrzení s „pro všechny“ stačí jediný protipříklad. Levá strana je mimochodem vždycky rovna $A$ – množina $B \\setminus A$ nemá s $A$ nic společného, takže jejím odečtením se nic nezmění. Rovnost proto platí právě tehdy, když $A = A \\cap B$, tedy když $A \\subseteq B$.",
+      "difficulty": 3,
+      "tags": ["idm", "dukazy", "protipriklad", "rovnost-mnozin"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-typy-dukazu",
+      "type": "matching",
+      "prompt": "Přiřaď ke každému postupu to, co se při něm doopravdy dokazuje. Dva popisy zbudou.",
+      "left": [
+        { "id": "primy", "text": "Přímý důkaz implikace $A \\Rightarrow B$" },
+        {
+          "id": "neprimy",
+          "text": "Nepřímý důkaz implikace $A \\Rightarrow B$"
+        },
+        { "id": "sporem", "text": "Důkaz sporem tvrzení $V$" },
+        {
+          "id": "vyvraceni",
+          "text": "Vyvrácení tvrzení tvaru $\\forall x: P(x)$"
+        }
+      ],
+      "right": [
+        {
+          "id": "retez",
+          "text": "Sestrojíme řetězec implikací od předpokladu $A$ k závěru $B$."
+        },
+        {
+          "id": "obmena",
+          "text": "Dokážeme obměněnou implikaci $\\neg B \\Rightarrow \\neg A$."
+        },
+        {
+          "id": "negace-a-spor",
+          "text": "Předpokládáme, že tvrzení $V$ neplatí, a odvodíme z toho spor."
+        },
+        {
+          "id": "jeden-protipriklad",
+          "text": "Najdeme jediné konkrétní $x$, pro které $P(x)$ neplatí."
+        },
+        {
+          "id": "obracena",
+          "text": "Dokážeme obrácenou implikaci $B \\Rightarrow A$."
+        },
+        {
+          "id": "indukce",
+          "text": "Ověříme tvrzení pro $n = 1$ a pak krok od $n$ k $n + 1$."
+        }
+      ],
+      "pairs": [
+        ["primy", "retez"],
+        ["neprimy", "obmena"],
+        ["sporem", "negace-a-spor"],
+        ["vyvraceni", "jeden-protipriklad"]
+      ],
+      "explanation": "Základní typy důkazů jsou přímý, nepřímý, sporem a matematickou indukcí; vyvracení protipříkladem stojí stranou – k popření obecného tvrzení stačí jediný případ, ale k jeho dokázání nepomůže žádný počet příkladů. Zbylé dva popisy: krok od $n$ k $n + 1$ patří k důkazu indukcí a obrácená implikace $B \\Rightarrow A$ **není** totéž co obměněná $\\neg B \\Rightarrow \\neg A$ – tahle záměna je nejčastější chybou vůbec.",
+      "difficulty": 3,
+      "tags": ["idm", "dukazy", "dukazove-techniky"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-neprimy-dukaz-obmena",
+      "type": "cloze",
+      "prompt": "Doplň, na čem stojí nepřímý důkaz.",
+      "template": "Místo implikace $A \\Rightarrow B$ dokazujeme {{1}} implikaci $\\neg B \\Rightarrow \\neg A$. Obě mají při každém ohodnocení stejnou pravdivostní hodnotu, čemuž se říká princip {{2}}.",
+      "blanks": {
+        "1": {
+          "accept": ["obměněnou", "obmenenou", "obměněná", "obmenena", "obměnou", "obmenou"],
+          "placeholder": "jakou implikaci?"
+        },
+        "2": {
+          "accept": ["kontrapozice", "kontrapozici", "obměny", "obmeny"],
+          "placeholder": "název principu"
+        }
+      },
+      "explanation": "Obměna implikace $A \\Rightarrow B$ je $\\neg B \\Rightarrow \\neg A$ – obě strany se znegují a prohodí. Méně formálně: místo „platí-li předpoklady, platí závěr“ dokazuješ „neplatí-li závěr, neplatí aspoň jeden z předpokladů“. Pozor na záměnu s **obrácenou** implikací $B \\Rightarrow A$, která s původní ekvivalentní není.",
+      "difficulty": 2,
+      "tags": ["idm", "dukazy", "neprimy-dukaz", "kontrapozice"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-obmena-tvrzeni-o-prvocisle",
+      "type": "single",
+      "prompt": "Tvrzení zní: je-li $p$ prvočíslo větší než 2, pak je $p$ liché. Jak zní jeho obměna?",
+      "choices": [
+        {
+          "id": "disjunkce",
+          "text": "Je-li $p$ sudé, pak $p$ není prvočíslo **nebo** $p$ není větší než 2."
+        },
+        {
+          "id": "konjunkce",
+          "text": "Je-li $p$ sudé, pak $p$ není prvočíslo **a zároveň** $p$ není větší než 2.",
+          "feedback": "Negace konjunkce předpokladů je disjunkce negací, ne konjunkce. Pro $p = 2$ by tenhle tvar neplatil – dvojka prvočíslo je."
+        },
+        {
+          "id": "obracena",
+          "text": "Je-li $p$ liché, pak je $p$ prvočíslo větší než 2.",
+          "feedback": "To je obrácená implikace, ne obměna. Navíc neplatí: devítka je lichá a prvočíslo to není."
+        },
+        {
+          "id": "jen-jeden-predpoklad",
+          "text": "Je-li $p$ sudé, pak $p$ není prvočíslo.",
+          "feedback": "Tahle implikace je nepravdivá, protože dvojka je sudé prvočíslo. V obměně musí vystupovat oba negované předpoklady."
+        }
+      ],
+      "correct": "disjunkce",
+      "hint": "Tvrzení má dva předpoklady spojené konjunkcí. Co udělá negace s konjunkcí?",
+      "explanation": "Předpoklady jsou dva: $p$ je prvočíslo $\\wedge$ $p > 2$. Obměna neguje závěr a celou konjunkci předpokladů, přičemž $\\neg(X \\wedge Y)$ je $\\neg X \\vee \\neg Y$. Důkaz obměny je pak snadný: je-li $p$ sudé, je $p = 2k$ pro nějaké přirozené $k$. Pro $k \\le 1$ není $p$ větší než 2, pro $k > 1$ má $p$ dělitele 2 i $k$, takže prvočíslo není.",
+      "difficulty": 5,
+      "tags": ["idm", "dukazy", "neprimy-dukaz", "negace"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-dukaz-sporem-implikace",
+      "type": "single",
+      "prompt": "Tvrzení tvaru $A \\Rightarrow B$ chceš dokázat sporem. Z čeho v důkazu vyjdeš?",
+      "choices": [
+        {
+          "id": "nonA-a-B",
+          "text": "Z předpokladu, že neplatí $A$ a platí $B$.",
+          "feedback": "Tohle je negace obrácené implikace $B \\Rightarrow A$. Negace původní implikace vypadá jinak."
+        },
+        {
+          "id": "A-a-nonB",
+          "text": "Z předpokladu, že platí $A$ a zároveň neplatí $B$."
+        },
+        {
+          "id": "nonB-vede-na-nonA",
+          "text": "Z předpokladu $\\neg B$, ze kterého odvodíš $\\neg A$.",
+          "feedback": "Popsal jsi nepřímý důkaz. U sporu se negace závěru bere jako další předpoklad, ne jako začátek nové implikace."
+        },
+        {
+          "id": "nonA-nebo-B",
+          "text": "Z předpokladu, že neplatí $A$ nebo platí $B$.",
+          "feedback": "To není negace implikace, ale samotná implikace přepsaná jako disjunkce: $A \\Rightarrow B$ je ekvivalentní $\\neg A \\vee B$."
+        }
+      ],
+      "correct": "A-a-nonB",
+      "explanation": "Negace implikace $A \\Rightarrow B$ je $A \\wedge \\neg B$ – implikaci porušíš jedině tak, že předpoklad platí a závěr ne. V důkazu sporem tedy přibereš obojí jako předpoklad a odvozuješ, dokud nedojdeš k tvrzení, které je evidentně nepravdivé nebo si protiřečí s předpoklady. Při negaci nezapomeň na kvantifikátory: $\\forall$ se mění na $\\exists$ a naopak.",
+      "difficulty": 3,
+      "tags": ["idm", "dukazy", "dukaz-sporem", "negace"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-euklidovo-cislo-hodnota",
+      "type": "numeric",
+      "prompt": "V Euklidově důkazu se z prvočísel $p_1, \\dots, p_n$ tvoří číslo $s = p_1 \\cdot p_2 \\cdots p_n + 1$. Jakou hodnotu má $s$ pro prvních šest prvočísel, tedy pro 2, 3, 5, 7, 11 a 13?",
+      "answer": 30031,
+      "tolerance": { "kind": "absolute", "value": 0 },
+      "unit": null,
+      "hint": "Nejdřív vynásob všech šest čísel, teprve pak přičti jedničku.",
+      "explanation": "$2 \\cdot 3 \\cdot 5 \\cdot 7 \\cdot 11 \\cdot 13 = 30\\,030$, takže $s = 30\\,031$. Zajímavé je, co to číslo je: $30\\,031 = 59 \\cdot 509$, tedy **složené**. Euklidův důkaz totiž netvrdí, že $s$ je prvočíslo – tvrdí jen, že $s$ není dělitelné žádným z $p_1, \\dots, p_n$, takže jeho prvočíselný dělitel (tady 59) v seznamu chybí. A to je přesně ten spor.",
+      "difficulty": 3,
+      "tags": ["idm", "dukazy", "dukaz-sporem", "prvocisla"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-euklidovo-cislo-vlastnosti",
+      "type": "multi",
+      "prompt": "V důkazu, že prvočísel je nekonečně mnoho, předpokládáme, že $p_1, \\dots, p_n$ jsou **všechna** prvočísla, a sestrojíme $s = p_1 \\cdot p_2 \\cdots p_n + 1$. Co o čísle $s$ z toho plyne?",
+      "choices": [
+        {
+          "id": "vetsi",
+          "text": "$s$ je větší než každé z čísel $p_1, \\dots, p_n$."
+        },
+        {
+          "id": "je-prvocislo",
+          "text": "$s$ je nutně prvočíslo.",
+          "feedback": "Nemusí být: $2 \\cdot 3 \\cdot 5 \\cdot 7 \\cdot 11 \\cdot 13 + 1 = 30\\,031 = 59 \\cdot 509$. Důkaz funguje i tak, protože dělitel 59 v seznamu chybí."
+        },
+        {
+          "id": "nedelitelne",
+          "text": "Žádné z čísel $p_1, \\dots, p_n$ nedělí $s$."
+        },
+        {
+          "id": "je-slozene",
+          "text": "$s$ je nutně složené číslo.",
+          "feedback": "Taky nemusí: $2 \\cdot 3 + 1 = 7$ je prvočíslo. Právě proto se v důkazu rozebírají obě možnosti zvlášť."
+        },
+        {
+          "id": "je-soucet",
+          "text": "$s$ je součet prvočísel $p_1, \\dots, p_n$ zvětšený o jedničku.",
+          "feedback": "Je to **součin**, ne součet. Se součtem by důkaz nefungoval, o jeho dělitelnosti nic podobného neplatí."
+        }
+      ],
+      "correct": ["vetsi", "nedelitelne"],
+      "partialCredit": true,
+      "explanation": "Ze součinu je vidět obojí: $s$ je větší než každý činitel a dělení kterýmkoli $p_i$ dá zbytek 1. Pak ale nastane spor v obou možných případech – je-li $s$ prvočíslo, je to prvočíslo mimo seznam; je-li složené, má prvočíselného dělitele, který v seznamu také není. Třetí možnost neexistuje, takže předpoklad konečného seznamu padá.",
+      "difficulty": 4,
+      "tags": ["idm", "dukazy", "dukaz-sporem", "prvocisla"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-iracionalita-sedme-odmocniny",
+      "type": "single",
+      "prompt": "V důkazu sporem, že $\\sqrt[7]{7}$ není racionální číslo, se vyjde ze zápisu $\\sqrt[7]{7} = \\frac{p}{q}$ s nesoudělnými celými $p$, $q$ a odvodí se $7q^7 = p^7$. V čem spočívá spor?",
+      "choices": [
+        {
+          "id": "q-nula",
+          "text": "Vyjde, že $q = 0$, což je u zlomku zakázané.",
+          "feedback": "Jmenovatel z rovnice nevypadne a nulový být nemůže. Spor se týká předpokladu o nesoudělnosti."
+        },
+        {
+          "id": "p-neni-cele",
+          "text": "Vyjde, že $p$ není celé číslo, i když mělo být.",
+          "feedback": "Celočíselnost se v důkazu neporuší – všechny úpravy zůstávají v celých číslech."
+        },
+        {
+          "id": "oba-delitelne",
+          "text": "Sedmičkou je dělitelné $p$ i $q$, ačkoli měla být nesoudělná."
+        },
+        {
+          "id": "sedm-neni-prvocislo",
+          "text": "Vyjde, že 7 není prvočíslo.",
+          "feedback": "Naopak, prvočíselnost sedmičky je v důkazu použitá jako nástroj: z $7 \\mid p^7$ plyne $7 \\mid p$ právě proto, že 7 je prvočíslo."
+        }
+      ],
+      "correct": "oba-delitelne",
+      "explanation": "Z $7q^7 = p^7$ plyne $7 \\mid p^7$, a protože 7 je prvočíslo, i $7 \\mid p$. Pak ale $7^7 \\mid p^7$, takže po dosazení $p^7 = 7^7 k$ vyjde $q^7 = 7^6 k$, a tedy i $7 \\mid q$. Sedmička dělí $p$ i $q$ – to je spor s předpokladem, že zlomek byl v základním tvaru. Negované tvrzení je tím vyvrácené, takže platí to původní.",
+      "difficulty": 4,
+      "tags": ["idm", "dukazy", "dukaz-sporem", "iracionalni-cisla"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-volba-parametru-v-primem-dukazu",
+      "type": "single",
+      "prompt": "Student dokazuje, že součet dvou lichých čísel je sudý, a začne takto: nechť $m = 2k + 1$ a $n = 2k + 1$, kde $k \\in \\mathbb{Z}$. Co je na tom špatně?",
+      "choices": [
+        {
+          "id": "stejny-parametr",
+          "text": "Se stejným $k$ nutně vyjde $m = n$."
+        },
+        {
+          "id": "nic",
+          "text": "Nic, zápis je správný a důkaz může pokračovat.",
+          "feedback": "Zápis mlčky přidává předpoklad navíc. Tvrzení ale mluví o libovolných dvou lichých číslech, ne o dvou stejných."
+        },
+        {
+          "id": "prirozena",
+          "text": "$k$ musí být přirozené číslo, ne celé.",
+          "feedback": "Celá čísla jsou tu správně – i $-3$ je liché a dostaneš ho volbou $k = -2$."
+        },
+        {
+          "id": "tvar-lichych",
+          "text": "Lichá čísla se zapisují jako $2k - 1$, ne jako $2k + 1$.",
+          "feedback": "Oba tvary popisují tatáž lichá čísla, jen s posunutým $k$. Na správnosti důkazu to nic nemění."
+        }
+      ],
+      "correct": "stejny-parametr",
+      "explanation": "Předpoklad zní „$m$ a $n$ jsou lichá“, nikoli „$m$ a $n$ jsou totéž liché číslo“. Každé z nich proto potřebuje vlastní parametr: $m = 2k + 1$ a $n = 2l + 1$ pro nějaká $k, l \\in \\mathbb{Z}$. Pak $m + n = 2k + 2l + 2 = 2(k + l + 1)$, a protože $k + l + 1$ je celé číslo, je součet sudý. Se společným $k$ bys dokázal jen $m + m = 4k + 2$, což o obecných lichých číslech nic neříká.",
+      "difficulty": 5,
+      "tags": ["idm", "dukazy", "primy-dukaz", "parita"],
+      "status": "draft"
+    },
+    {
+      "id": "idm-03-lichost-druhe-mocniny",
+      "type": "trueFalse",
+      "prompt": "Pro každé celé číslo $n$ platí: $n$ je liché právě tehdy, když je liché $n^2$.",
+      "answer": true,
+      "explanation": "Jde o ekvivalenci, takže se dokazují dvě implikace. Zleva doprava přímo: z $n = 2k + 1$ plyne $n^2 = 4k^2 + 4k + 1 = 2(2k^2 + 2k) + 1$, což je liché číslo. Zprava doleva se vyplatí obměna – místo „je-li $n^2$ liché, je liché $n$“ dokážeš „je-li $n$ sudé, je sudé $n^2$“: z $n = 2k$ plyne $n^2 = 4k^2 = 2 \\cdot (2k^2)$. Tím je ekvivalence hotová.",
+      "difficulty": 3,
+      "tags": ["idm", "dukazy", "neprimy-dukaz", "parita"],
+      "status": "draft"
+    }
+  ]
+}
