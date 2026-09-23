@@ -1,0 +1,1086 @@
+{
+  "$schema": "../../schemas/question-set.schema.json",
+  "id": "04-mnozinove-zakony",
+  "title": "Množinové zákony pro důkazy",
+  "course": "idm",
+  "lecture": 2,
+  "description": "Přepis množinových operací do výrokové logiky, De Morganovy zákony, distributivita, absorpce a pravidla pro rozdíl a doplněk – všechno, čím se odůvodňují kroky v důkazech rovnosti množin.",
+  "source": {
+    "kind": "notes",
+    "ref": "Zápisky z přednášky IDM – sjednocení, průnik, rozdíl, symetrický rozdíl, doplněk, kartézský součin, přímé důkazy rovnosti množin"
+  },
+  "schemaVersion": 1,
+  "questions": [
+    {
+      "id": "idm-04-prevod-nalezeni-na-logiku",
+      "type": "matching",
+      "prompt": "Nechť $A, B \\subseteq M$. Přiřaď ke každému tvrzení o prvku $x$ jeho přepis do výrokové logiky. Dva přepisy zbudou.",
+      "left": [
+        {
+          "id": "sjednoceni",
+          "text": "$x \\in A \\cup B$"
+        },
+        {
+          "id": "prunik",
+          "text": "$x \\in A \\cap B$"
+        },
+        {
+          "id": "rozdil",
+          "text": "$x \\in A \\setminus B$"
+        },
+        {
+          "id": "doplnek",
+          "text": "$x \\in A'_M$"
+        },
+        {
+          "id": "symetricky",
+          "text": "$x \\in A \\,\\Delta\\, B$"
+        }
+      ],
+      "right": [
+        {
+          "id": "nebo",
+          "text": "$x \\in A \\vee x \\in B$"
+        },
+        {
+          "id": "a-zaroven",
+          "text": "$x \\in A \\wedge x \\in B$"
+        },
+        {
+          "id": "a-ne-b",
+          "text": "$x \\in A \\wedge x \\notin B$"
+        },
+        {
+          "id": "m-ne-a",
+          "text": "$x \\in M \\wedge x \\notin A$"
+        },
+        {
+          "id": "prave-jedna",
+          "text": "$(x \\in A \\wedge x \\notin B) \\vee (x \\in B \\wedge x \\notin A)$"
+        },
+        {
+          "id": "ne-a-b",
+          "text": "$x \\notin A \\wedge x \\in B$"
+        },
+        {
+          "id": "m-nebo-ne-a",
+          "text": "$x \\in M \\vee x \\notin A$"
+        }
+      ],
+      "pairs": [
+        [
+          "sjednoceni",
+          "nebo"
+        ],
+        [
+          "prunik",
+          "a-zaroven"
+        ],
+        [
+          "rozdil",
+          "a-ne-b"
+        ],
+        [
+          "doplnek",
+          "m-ne-a"
+        ],
+        [
+          "symetricky",
+          "prave-jedna"
+        ]
+      ],
+      "explanation": "Tohle je základní slovník každého důkazu s množinami: **sjednocení = disjunkce, průnik = konjunkce, rozdíl = „a zároveň ne“, doplněk = „je v $M$ a není v $A$“**. Symetrický rozdíl je $(A \\setminus B) \\cup (B \\setminus A)$, tedy $x$ leží v právě jedné z množin. Zbylé přepisy: $x \\notin A \\wedge x \\in B$ je $B \\setminus A$ (prohozené pořadí u rozdílu) a $x \\in M \\vee x \\notin A$ je nesmysl, který vznikne záměnou $\\wedge$ za $\\vee$.",
+      "difficulty": 1,
+      "tags": [
+        "idm",
+        "mnoziny",
+        "mnozinove-zakony",
+        "prevod-na-logiku"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "idm-04-negace-nalezeni",
+      "type": "matching",
+      "prompt": "Přiřaď ke každému tvrzení jeho ekvivalentní přepis. Dva přepisy zbudou.",
+      "left": [
+        {
+          "id": "ne-sjednoceni",
+          "text": "$x \\notin A \\cup B$"
+        },
+        {
+          "id": "ne-prunik",
+          "text": "$x \\notin A \\cap B$"
+        },
+        {
+          "id": "ne-rozdil",
+          "text": "$x \\notin A \\setminus B$"
+        },
+        {
+          "id": "ne-soucin",
+          "text": "$[x, y] \\notin A \\times B$"
+        }
+      ],
+      "right": [
+        {
+          "id": "oba-ne",
+          "text": "$x \\notin A \\wedge x \\notin B$"
+        },
+        {
+          "id": "aspon-jeden-ne",
+          "text": "$x \\notin A \\vee x \\notin B$"
+        },
+        {
+          "id": "ne-a-nebo-b",
+          "text": "$x \\notin A \\vee x \\in B$"
+        },
+        {
+          "id": "slozka-ne",
+          "text": "$x \\notin A \\vee y \\notin B$"
+        },
+        {
+          "id": "ne-a-a-b",
+          "text": "$x \\notin A \\wedge x \\in B$"
+        },
+        {
+          "id": "obe-slozky-ne",
+          "text": "$x \\notin A \\wedge y \\notin B$"
+        }
+      ],
+      "pairs": [
+        [
+          "ne-sjednoceni",
+          "oba-ne"
+        ],
+        [
+          "ne-prunik",
+          "aspon-jeden-ne"
+        ],
+        [
+          "ne-rozdil",
+          "ne-a-nebo-b"
+        ],
+        [
+          "ne-soucin",
+          "slozka-ne"
+        ]
+      ],
+      "hint": "Negace konjunkce je disjunkce negací a naopak.",
+      "explanation": "Všechno jsou De Morganovy zákony použité na definici. $x \\in A \\setminus B$ je $x \\in A \\wedge x \\notin B$, negace dá $x \\notin A \\vee x \\in B$ – **obě části se znegují a $\\wedge$ se změní na $\\vee$**. U kartézského součinu stejně: $[x, y] \\in A \\times B \\Leftrightarrow x \\in A \\wedge y \\in B$, takže dvojice v součinu chybí, jakmile selže **aspoň jedna** složka. Zbylé přepisy vzniknou, když se zapomene otočit spojka: $x \\notin A \\wedge x \\in B$ popisuje jen část prvků mimo $A \\setminus B$.",
+      "difficulty": 3,
+      "tags": [
+        "idm",
+        "mnoziny",
+        "mnozinove-zakony",
+        "prevod-na-logiku",
+        "de-morgan"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "idm-04-ekvivalentni-podoby-inkluze",
+      "type": "multi",
+      "prompt": "Která tvrzení jsou pro libovolné množiny $A$, $B$ ekvivalentní s inkluzí $A \\subseteq B$?",
+      "choices": [
+        {
+          "id": "prunik-je-a",
+          "text": "$A \\cap B = A$"
+        },
+        {
+          "id": "b-minus-a",
+          "text": "$B \\setminus A = \\emptyset$",
+          "feedback": "Prázdné $B \\setminus A$ znamená, že v $B$ není nic mimo $A$, tedy $B \\subseteq A$ – opačná inkluze."
+        },
+        {
+          "id": "sjednoceni-je-b",
+          "text": "$A \\cup B = B$"
+        },
+        {
+          "id": "disjunktni",
+          "text": "$A \\cap B = \\emptyset$",
+          "feedback": "To říká, že $A$ a $B$ jsou disjunktní. Pro neprázdné $A \\subseteq B$ je naopak $A \\cap B = A \\neq \\emptyset$."
+        },
+        {
+          "id": "a-minus-b",
+          "text": "$A \\setminus B = \\emptyset$"
+        },
+        {
+          "id": "sjednoceni-je-a",
+          "text": "$A \\cup B = A$",
+          "feedback": "Sjednocení se rovná $A$, když $B$ nepřidá nic nového – to je $B \\subseteq A$."
+        }
+      ],
+      "correct": [
+        "prunik-je-a",
+        "sjednoceni-je-b",
+        "a-minus-b"
+      ],
+      "partialCredit": true,
+      "explanation": "Když $A \\subseteq B$, pak průnik s $B$ nic z $A$ neubere ($A \\cap B = A$), sjednocení s $A$ nic k $B$ nepřidá ($A \\cup B = B$) a v $A$ nezbude nic mimo $B$ ($A \\setminus B = \\emptyset$). Platí to i obráceně, takže v důkazu si můžeš vybrat tu podobu, se kterou se ti pracuje nejlíp. Chybné možnosti popisují opačnou inkluzi $B \\subseteq A$ nebo disjunktnost.",
+      "difficulty": 3,
+      "tags": [
+        "idm",
+        "mnoziny",
+        "mnozinove-zakony",
+        "inkluze"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "idm-04-nazvy-mnozinovych-zakonu",
+      "type": "cloze",
+      "prompt": "Doplň názvy zákonů pro množiny $A, B, C \\subseteq M$.",
+      "template": "Rovnost $A \\cup (B \\cap C) = (A \\cup B) \\cap (A \\cup C)$ je {{1}} zákon. Rovnost $A \\cup (A \\cap B) = A$ je zákon {{2}}. Rovnost $(A \\cup B)'_M = A'_M \\cap B'_M$ je {{3}} zákon.",
+      "blanks": {
+        "1": {
+          "accept": [
+            "distributivní",
+            "distributivni"
+          ],
+          "placeholder": "jaký zákon?"
+        },
+        "2": {
+          "accept": [
+            "absorpce",
+            "absorpční",
+            "absorpcni",
+            "pohlcení",
+            "pohlceni"
+          ],
+          "placeholder": "zákon čeho?"
+        },
+        "3": {
+          "accept": [
+            "De Morganův",
+            "De Morganuv",
+            "demorganův",
+            "demorganuv",
+            "de-morganův",
+            "de-morganuv"
+          ],
+          "placeholder": "čí zákon?"
+        }
+      },
+      "explanation": "Názvy se hodí, protože jimi v důkazu odůvodňuješ kroky. **Distributivita**: sjednocení se „roznásobí“ přes průnik a průnik přes sjednocení. **Absorpce** (pohlcení): $A \\cup (A \\cap B) = A$ i $A \\cap (A \\cup B) = A$ – menší množina se ve větší ztratí. **De Morganovy zákony**: doplněk sjednocení je průnik doplňků a doplněk průniku je sjednocení doplňků. Všechny tři mají přesný protějšek ve výrokové logice.",
+      "difficulty": 2,
+      "tags": [
+        "idm",
+        "mnoziny",
+        "mnozinove-zakony",
+        "nazvy-zakonu"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "idm-04-absorpce",
+      "type": "single",
+      "prompt": "Čemu se pro libovolné množiny $A$, $B$ rovná $A \\cap (A \\cup B)$?",
+      "choices": [
+        {
+          "id": "a-prunik-b",
+          "text": "$A \\cap B$",
+          "feedback": "Průnik s $A \\cup B$ z množiny $A$ nic neubere, protože $A \\subseteq A \\cup B$. Prvky z $A$ mimo $B$ tedy zůstanou."
+        },
+        {
+          "id": "a-sjednoceni-b",
+          "text": "$A \\cup B$",
+          "feedback": "Průnik nemůže být větší než $A$. Prvky z $B$ mimo $A$ ve výsledku nebudou."
+        },
+        {
+          "id": "a",
+          "text": "$A$"
+        },
+        {
+          "id": "b",
+          "text": "$B$",
+          "feedback": "Prvky z $A$ mimo $B$ ve výsledku zůstanou, takže to $B$ být nemůže."
+        }
+      ],
+      "correct": "a",
+      "hint": "Platí $A \\subseteq A \\cup B$.",
+      "explanation": "Zákon absorpce. Přes prvky: $x \\in A \\wedge (x \\in A \\vee x \\in B)$ – je-li $x \\in A$, závorka platí automaticky, takže celé tvrzení je ekvivalentní s $x \\in A$. Obecně: $X \\subseteq Y \\Rightarrow X \\cap Y = X$, a tady $X = A$, $Y = A \\cup B$. Duální podoba je $A \\cup (A \\cap B) = A$.",
+      "difficulty": 2,
+      "tags": [
+        "idm",
+        "mnoziny",
+        "mnozinove-zakony",
+        "absorpce"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "idm-04-rozdil-jako-prunik-s-doplnkem",
+      "type": "single",
+      "prompt": "Nechť $A, B \\subseteq M$. Kterou množinou lze v důkazu nahradit $A \\setminus B$?",
+      "choices": [
+        {
+          "id": "doplnek-a-prunik-b",
+          "text": "$A'_M \\cap B$",
+          "feedback": "To jsou prvky, které jsou v $B$ a nejsou v $A$, tedy $B \\setminus A$."
+        },
+        {
+          "id": "a-prunik-doplnek-b",
+          "text": "$A \\cap B'_M$"
+        },
+        {
+          "id": "doplnek-a-sjednoceni-b",
+          "text": "$A'_M \\cup B$",
+          "feedback": "To je doplněk rozdílu, $(A \\setminus B)'_M$ – přesný opak toho, co hledáš."
+        },
+        {
+          "id": "a-sjednoceni-doplnek-b",
+          "text": "$A \\cup B'_M$",
+          "feedback": "Sjednocení přidá všechno mimo $B$, i prvky, které v $A$ vůbec nejsou."
+        }
+      ],
+      "correct": "a-prunik-doplnek-b",
+      "explanation": "$x \\in A \\setminus B \\Leftrightarrow x \\in A \\wedge x \\notin B$. Protože $A \\subseteq M$, je $x \\in M$ a $x \\notin B$ totéž co $x \\in B'_M$. Proto $A \\setminus B = A \\cap B'_M$. Tahle záměna je v důkazech užitečná: rozdíl nemá skoro žádné hezké vlastnosti, ale průnik je komutativní, asociativní a platí pro něj De Morganovy zákony.",
+      "difficulty": 3,
+      "tags": [
+        "idm",
+        "mnoziny",
+        "mnozinove-zakony",
+        "rozdil",
+        "doplnek"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "idm-04-zakony-s-prazdnou-mnozinou",
+      "type": "multi",
+      "prompt": "Které rovnosti platí pro každou množinu $A \\subseteq M$?",
+      "choices": [
+        {
+          "id": "sjednoceni-prazdna",
+          "text": "$A \\cup \\emptyset = A$"
+        },
+        {
+          "id": "prunik-prazdna",
+          "text": "$A \\cap \\emptyset = A$",
+          "feedback": "Průnik s prázdnou množinou je prázdný – není prvek, který by byl v obou."
+        },
+        {
+          "id": "prazdna-minus-a",
+          "text": "$\\emptyset \\setminus A = \\emptyset$"
+        },
+        {
+          "id": "delta-sama-se-sebou",
+          "text": "$A \\,\\Delta\\, A = A$",
+          "feedback": "Žádný prvek neleží v právě jedné z dvou stejných množin, takže $A \\,\\Delta\\, A = \\emptyset$."
+        },
+        {
+          "id": "a-sjednoceni-doplnek",
+          "text": "$A \\cup A'_M = M$"
+        },
+        {
+          "id": "delta-prazdna",
+          "text": "$A \\,\\Delta\\, \\emptyset = \\emptyset$",
+          "feedback": "Prvky z $A$ leží v právě jedné z množin $A$, $\\emptyset$, takže $A \\,\\Delta\\, \\emptyset = A$."
+        }
+      ],
+      "correct": [
+        "sjednoceni-prazdna",
+        "prazdna-minus-a",
+        "a-sjednoceni-doplnek"
+      ],
+      "partialCredit": true,
+      "explanation": "Prázdná množina se chová jako nula u sčítání pro $\\cup$ a $\\Delta$ ($A \\cup \\emptyset = A$, $A \\,\\Delta\\, \\emptyset = A$) a jako nula u násobení pro $\\cap$ ($A \\cap \\emptyset = \\emptyset$). Dál $A \\setminus \\emptyset = A$, $A \\setminus A = \\emptyset$ a $\\emptyset \\setminus A = \\emptyset$. Množina a její doplněk dohromady dají celé $M$ a jejich průnik je prázdný – to je množinová verze zákona vyloučeného třetího $p \\vee \\neg p$ a sporu $p \\wedge \\neg p$.",
+      "difficulty": 2,
+      "tags": [
+        "idm",
+        "mnoziny",
+        "mnozinove-zakony",
+        "prazdna-mnozina",
+        "doplnek"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "idm-04-de-morgan-doplnek-pruniku",
+      "type": "single",
+      "prompt": "Nechť $A, B \\subseteq M$. Čemu se rovná $(A \\cap B)'_M$?",
+      "choices": [
+        {
+          "id": "prunik-doplnku",
+          "text": "$A'_M \\cap B'_M$",
+          "feedback": "Zapomněl jsi otočit operaci. Prvek z $A$, který není v $B$, do $(A \\cap B)'_M$ patří, ale do $A'_M \\cap B'_M$ ne."
+        },
+        {
+          "id": "doplnek-a-sjednoceni-b",
+          "text": "$A'_M \\cup B$",
+          "feedback": "Tohle je doplněk rozdílu $(A \\setminus B)'_M$, ne průniku."
+        },
+        {
+          "id": "doplnek-minus-doplnek",
+          "text": "$A'_M \\setminus B'_M$",
+          "feedback": "$A'_M \\setminus B'_M = A'_M \\cap B$, tedy $B \\setminus A$. Chybí v ní třeba prvky z $A$ mimo $B$."
+        },
+        {
+          "id": "sjednoceni-doplnku",
+          "text": "$A'_M \\cup B'_M$"
+        }
+      ],
+      "correct": "sjednoceni-doplnku",
+      "hint": "Jak zní negace konjunkce?",
+      "explanation": "De Morganův zákon. Přes prvky: $x \\notin A \\cap B \\Leftrightarrow \\neg(x \\in A \\wedge x \\in B) \\Leftrightarrow x \\notin A \\vee x \\notin B$. Doplněk tedy **otočí průnik na sjednocení** a každou množinu nahradí jejím doplňkem. Stejně funguje druhý zákon: $(A \\cup B)'_M = A'_M \\cap B'_M$.",
+      "difficulty": 2,
+      "tags": [
+        "idm",
+        "mnoziny",
+        "mnozinove-zakony",
+        "de-morgan",
+        "doplnek"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "idm-04-rozdil-se-sjednocenim-a-prunikem",
+      "type": "multi",
+      "prompt": "Které rovnosti platí pro **libovolné** množiny $A$, $B$, $C$?",
+      "choices": [
+        {
+          "id": "minus-sjednoceni-prunik",
+          "text": "$A \\setminus (B \\cup C) = (A \\setminus B) \\cap (A \\setminus C)$"
+        },
+        {
+          "id": "minus-sjednoceni-sjednoceni",
+          "text": "$A \\setminus (B \\cup C) = (A \\setminus B) \\cup (A \\setminus C)$",
+          "feedback": "Pro $A = \\{1, 2\\}$, $B = \\{1\\}$, $C = \\{2\\}$ je vlevo $\\emptyset$, ale vpravo $\\{2\\} \\cup \\{1\\} = \\{1, 2\\}$."
+        },
+        {
+          "id": "minus-prunik-sjednoceni",
+          "text": "$A \\setminus (B \\cap C) = (A \\setminus B) \\cup (A \\setminus C)$"
+        },
+        {
+          "id": "sjednoceni-minus",
+          "text": "$(A \\cup B) \\setminus C = (A \\setminus C) \\cup (B \\setminus C)$"
+        },
+        {
+          "id": "sjednoceni-s-rozdilem",
+          "text": "$A \\cup (B \\setminus C) = (A \\cup B) \\setminus C$",
+          "feedback": "Pro $A = C = \\{1\\}$ a $B = \\emptyset$ je vlevo $\\{1\\}$, ale vpravo $\\emptyset$ – vpravo se odečte $C$ i od $A$."
+        }
+      ],
+      "correct": [
+        "minus-sjednoceni-prunik",
+        "minus-prunik-sjednoceni",
+        "sjednoceni-minus"
+      ],
+      "partialCredit": true,
+      "explanation": "Odečíst sjednocení znamená $x \\in A \\wedge \\neg(x \\in B \\vee x \\in C)$, podle De Morgana $x \\in A \\wedge x \\notin B \\wedge x \\notin C$ – prvek musí přežít **obě** odečtení, proto průnik. Odečíst průnik dá po negaci disjunkci, proto sjednocení. Jsou to De Morganovy zákony „vůči $A$“: stačí za $M$ dosadit $A$. Rozdíl se sjednocením vlevo se chová distributivně, protože $\\setminus C$ je totéž co $\\cap\\, C'$.",
+      "difficulty": 4,
+      "tags": [
+        "idm",
+        "mnoziny",
+        "mnozinove-zakony",
+        "rozdil",
+        "de-morgan"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "idm-04-rozdil-rozdilu",
+      "type": "single",
+      "prompt": "Čemu se pro libovolné množiny $A$, $B$, $C$ rovná $A \\setminus (B \\setminus C)$?",
+      "choices": [
+        {
+          "id": "asociativne",
+          "text": "$(A \\setminus B) \\setminus C$",
+          "feedback": "Rozdíl není asociativní. Pro $A = B = C = \\{1\\}$ vyjde vlevo $\\{1\\}$, ale tady $\\emptyset$."
+        },
+        {
+          "id": "minus-b-sjednoceni-c",
+          "text": "$(A \\setminus B) \\cup C$",
+          "feedback": "Výsledek musí být podmnožinou $A$, jenže $C$ může obsahovat prvky mimo $A$."
+        },
+        {
+          "id": "spravne",
+          "text": "$(A \\setminus B) \\cup (A \\cap C)$"
+        },
+        {
+          "id": "minus-b-sjednoceni-minus-c",
+          "text": "$(A \\setminus B) \\cup (A \\setminus C)$",
+          "feedback": "Tohle je $A \\setminus (B \\cap C)$. Prvek z $A \\cap B$ mimo $C$ sem nepatří, do $A \\setminus (B \\setminus C)$ ale ano."
+        }
+      ],
+      "correct": "spravne",
+      "hint": "Rozepiš $x \\notin B \\setminus C$ a použij distributivitu.",
+      "explanation": "$x \\in A \\wedge x \\notin (B \\setminus C) \\Leftrightarrow x \\in A \\wedge (x \\notin B \\vee x \\in C)$ a po roznásobení $(x \\in A \\wedge x \\notin B) \\vee (x \\in A \\wedge x \\in C)$, tedy $(A \\setminus B) \\cup (A \\cap C)$. Z $A$ se odebere jen ta část $B$, která neleží v $C$ – prvky z $C$ se „vrátí“. Z téhož plyne, že rozdíl není asociativní: $(A \\setminus B) \\setminus C$ prvky z $C$ naopak odebírá.",
+      "difficulty": 5,
+      "tags": [
+        "idm",
+        "mnoziny",
+        "mnozinove-zakony",
+        "rozdil",
+        "distributivita"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "idm-04-dukaz-inkluze-s-pridanym-clenem",
+      "type": "ordering",
+      "prompt": "Seřaď kroky důkazu inkluze $A \\cap B \\subseteq A \\setminus (A \\setminus B)$ tak, jak jdou po sobě. Každý krok plyne z předchozího.",
+      "items": [
+        {
+          "id": "distributivita",
+          "text": "$x \\in A \\wedge (x \\in B \\vee x \\notin A)$"
+        },
+        {
+          "id": "pridany-clen",
+          "text": "$(x \\in A \\wedge x \\in B) \\vee (x \\in A \\wedge x \\notin A)$"
+        },
+        {
+          "id": "zaver",
+          "text": "$x \\in A \\setminus (A \\setminus B)$"
+        },
+        {
+          "id": "zacatek",
+          "text": "$x \\in A \\cap B$"
+        },
+        {
+          "id": "negace-rozdilu",
+          "text": "$x \\in A \\wedge x \\notin A \\setminus B$"
+        },
+        {
+          "id": "definice-pruniku",
+          "text": "$x \\in A \\wedge x \\in B$"
+        }
+      ],
+      "correctOrder": [
+        "zacatek",
+        "definice-pruniku",
+        "pridany-clen",
+        "distributivita",
+        "negace-rozdilu",
+        "zaver"
+      ],
+      "explanation": "Trik tohohle směru: k $x \\in A \\wedge x \\in B$ se přidá disjunkcí člen $(x \\in A \\wedge x \\notin A)$, který je vždy nepravdivý, takže nic nemění ($p \\vee 0 \\Leftrightarrow p$). Pak se vytkne $x \\in A$ (distributivita $\\wedge$ vůči $\\vee$) a závorka $x \\in B \\vee x \\notin A$ je přesně $x \\notin A \\setminus B$. Proč ten člen přidávat? Protože v opačném směru důkazu se objevil a škrtl – tady jdeš stejnou cestou pozpátku.",
+      "difficulty": 4,
+      "tags": [
+        "idm",
+        "mnoziny",
+        "mnozinove-zakony",
+        "dukazy",
+        "rovnost-mnozin"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "idm-04-vypusteni-nepravdiveho-clenu",
+      "type": "single",
+      "prompt": "V důkazu se objeví krok $(x \\in A \\wedge x \\notin A) \\vee (x \\in A \\wedge x \\in B) \\;\\Rightarrow\\; x \\in A \\wedge x \\in B$. Proč je v pořádku?",
+      "choices": [
+        {
+          "id": "vyber-clenu",
+          "text": "Z disjunkce smíš vždy vybrat kterýkoli z jejích členů.",
+          "feedback": "To neplatí: z $p \\vee q$ neplyne $q$. Tady to jde jen proto, že $p$ je nepravdivé."
+        },
+        {
+          "id": "de-morgan",
+          "text": "Je to De Morganův zákon pro disjunkci.",
+          "feedback": "De Morganovy zákony se týkají negace konjunkce a disjunkce. Tady se nic neneguje."
+        },
+        {
+          "id": "pravdivy-clen",
+          "text": "První závorka je vždy pravdivá, a tak nic neříká.",
+          "feedback": "Kdyby byla vždy pravdivá, byla by pravdivá celá disjunkce a nešlo by z ní nic vyvodit."
+        },
+        {
+          "id": "nepravdivy-clen",
+          "text": "První závorka je vždy nepravdivá a $0 \\vee q$ je totéž co $q$."
+        }
+      ],
+      "correct": "nepravdivy-clen",
+      "explanation": "$x \\in A \\wedge x \\notin A$ je spor – pro žádné $x$ neplatí (množinově $A \\cap A' = \\emptyset$). Disjunkce s nepravdivým členem je ekvivalentní se zbytkem: $0 \\vee q \\Leftrightarrow q$. Proto ho smíš škrtnout, a ze stejného důvodu ho smíš v opačném směru důkazu i přidat. Obecně z $p \\vee q$ na $q$ přejít nesmíš.",
+      "difficulty": 3,
+      "tags": [
+        "idm",
+        "mnoziny",
+        "mnozinove-zakony",
+        "dukazy",
+        "vyrokova-logika"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "idm-04-oduvodneni-kroku-dukazu",
+      "type": "matching",
+      "prompt": "Přiřaď ke každé ekvivalenci zákon, který ji odůvodňuje. Dva zákony zbudou.",
+      "left": [
+        {
+          "id": "krok-de-morgan",
+          "text": "$\\neg(x \\in A \\wedge x \\in B) \\Leftrightarrow x \\notin A \\vee x \\notin B$"
+        },
+        {
+          "id": "krok-distributivita",
+          "text": "$x \\in A \\wedge (x \\in B \\vee x \\in C) \\Leftrightarrow (x \\in A \\wedge x \\in B) \\vee (x \\in A \\wedge x \\in C)$"
+        },
+        {
+          "id": "krok-absorpce",
+          "text": "$x \\in A \\vee (x \\in A \\wedge x \\in B) \\Leftrightarrow x \\in A$"
+        },
+        {
+          "id": "krok-dvoji-negace",
+          "text": "$\\neg(x \\notin A) \\Leftrightarrow x \\in A$"
+        },
+        {
+          "id": "krok-komutativita",
+          "text": "$x \\in A \\wedge x \\in B \\Leftrightarrow x \\in B \\wedge x \\in A$"
+        }
+      ],
+      "right": [
+        {
+          "id": "de-morgan",
+          "text": "De Morganův zákon"
+        },
+        {
+          "id": "distributivita",
+          "text": "distributivita"
+        },
+        {
+          "id": "absorpce",
+          "text": "absorpce"
+        },
+        {
+          "id": "dvoji-negace",
+          "text": "dvojí negace"
+        },
+        {
+          "id": "komutativita",
+          "text": "komutativita"
+        },
+        {
+          "id": "asociativita",
+          "text": "asociativita"
+        },
+        {
+          "id": "idempotence",
+          "text": "idempotence"
+        }
+      ],
+      "pairs": [
+        [
+          "krok-de-morgan",
+          "de-morgan"
+        ],
+        [
+          "krok-distributivita",
+          "distributivita"
+        ],
+        [
+          "krok-absorpce",
+          "absorpce"
+        ],
+        [
+          "krok-dvoji-negace",
+          "dvoji-negace"
+        ],
+        [
+          "krok-komutativita",
+          "komutativita"
+        ]
+      ],
+      "explanation": "Každý krok důkazu přes prvky je nějaký zákon výrokové logiky. Zbylé dva: **asociativita** dovoluje přezávorkovat $(p \\wedge q) \\wedge r \\Leftrightarrow p \\wedge (q \\wedge r)$, **idempotence** říká $p \\wedge p \\Leftrightarrow p$ (množinově $A \\cap A = A$). Když v důkazu napíšeš u kroku název zákona, uvidíš hned, jestli jde o ekvivalenci, nebo jen implikaci.",
+      "difficulty": 2,
+      "tags": [
+        "idm",
+        "mnoziny",
+        "mnozinove-zakony",
+        "dukazy",
+        "nazvy-zakonu"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "idm-04-pojem-zakladni-mnozina",
+      "type": "shortText",
+      "prompt": "Doplněk $A'_M$ se vždy bere vůči nějaké množině $M$, která obsahuje všechny uvažované prvky. Jak se $M$ nazývá?",
+      "accept": [
+        "základní množina",
+        "zakladni mnozina",
+        "základní",
+        "zakladni",
+        "univerzum",
+        "universum",
+        "univerzální množina",
+        "univerzalni mnozina"
+      ],
+      "placeholder": "dvě slova",
+      "explanation": "$M$ je **základní množina** (univerzum). Doplněk je definovaný jako $A'_M = M \\setminus A$, tedy $x \\in A'_M \\Leftrightarrow x \\in M \\wedge x \\notin A$. Bez určení $M$ doplněk nedává smysl: doplněk $\\{1, 2\\}$ je v $\\{1, 2, 3\\}$ jen $\\{3\\}$, v $\\mathbb{N}$ nekonečná množina.",
+      "difficulty": 1,
+      "tags": [
+        "idm",
+        "mnoziny",
+        "mnozinove-zakony",
+        "doplnek"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "idm-04-rozdil-a-zpet-sjednoceni",
+      "type": "trueFalse",
+      "prompt": "Pro libovolné množiny $A$, $B$ platí $(A \\setminus B) \\cup B = A$.",
+      "answer": false,
+      "explanation": "Neplatí. Správně je $(A \\setminus B) \\cup B = A \\cup B$: sjednocením s $B$ se vrátí nejen to, co jsme z $A$ odebrali, ale celé $B$. Protipříklad: $A = \\emptyset$, $B = \\{1\\}$ – vlevo $\\{1\\}$, vpravo $\\emptyset$. Rovnost s $A$ platí jen tehdy, když $B \\subseteq A$. Množinový rozdíl se tedy nedá „odčítat a přičítat“ jako čísla.",
+      "difficulty": 3,
+      "tags": [
+        "idm",
+        "mnoziny",
+        "mnozinove-zakony",
+        "rozdil"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "idm-04-kartezsky-soucin-a-sjednoceni",
+      "type": "trueFalse",
+      "prompt": "Pro libovolné množiny $A$, $B$, $C$ platí $A \\times (B \\cup C) = (A \\times B) \\cup (A \\times C)$.",
+      "answer": true,
+      "explanation": "Platí, kartézský součin je distributivní vůči sjednocení. Přes prvky: $[x, y] \\in A \\times (B \\cup C) \\Leftrightarrow x \\in A \\wedge (y \\in B \\vee y \\in C) \\Leftrightarrow (x \\in A \\wedge y \\in B) \\vee (x \\in A \\wedge y \\in C)$, a to je $[x, y] \\in (A \\times B) \\cup (A \\times C)$. Stejně platí i $A \\times (B \\cap C) = (A \\times B) \\cap (A \\times C)$. Komutativní ale součin není: $A \\times B \\neq B \\times A$.",
+      "difficulty": 3,
+      "tags": [
+        "idm",
+        "mnoziny",
+        "mnozinove-zakony",
+        "kartezsky-soucin",
+        "distributivita"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "idm-04-kraceni-ve-sjednoceni",
+      "type": "trueFalse",
+      "prompt": "Z rovnosti $A \\cup B = A \\cup C$ plyne $B = C$.",
+      "answer": false,
+      "explanation": "Neplatí – $A$ se ze sjednocení „vykrátit“ nedá. Protipříklad: $A = \\{1\\}$, $B = \\{1\\}$, $C = \\emptyset$. Pak $A \\cup B = \\{1\\} = A \\cup C$, ale $B \\neq C$. Sjednocení zapomene, odkud prvek z $A$ přišel. Plyne z toho jen $B \\setminus A = C \\setminus A$. Stejně se nedá krátit v průniku.",
+      "difficulty": 4,
+      "tags": [
+        "idm",
+        "mnoziny",
+        "mnozinove-zakony",
+        "sjednoceni"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "idm-04-prazdny-symetricky-rozdil",
+      "type": "trueFalse",
+      "prompt": "Pro libovolné množiny $A$, $B$ platí: $A \\,\\Delta\\, B = \\emptyset$ právě tehdy, když $A = B$.",
+      "answer": true,
+      "explanation": "Platí. $A \\,\\Delta\\, B = (A \\setminus B) \\cup (B \\setminus A)$ je prázdné, právě když jsou prázdné oba rozdíly. $A \\setminus B = \\emptyset$ znamená $A \\subseteq B$, $B \\setminus A = \\emptyset$ znamená $B \\subseteq A$ – a obě inkluze dohromady jsou přesně $A = B$. Symetrický rozdíl tak měří, „jak moc se množiny liší“.",
+      "difficulty": 3,
+      "tags": [
+        "idm",
+        "mnoziny",
+        "mnozinove-zakony",
+        "symetricky-rozdil",
+        "rovnost-mnozin"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "idm-04-symetricky-rozdil-jinym-zapisem",
+      "type": "single",
+      "prompt": "Která množina se pro libovolné $A$, $B$ rovná $A \\,\\Delta\\, B$?",
+      "choices": [
+        {
+          "id": "rozdily-prunikem",
+          "text": "$(A \\setminus B) \\cap (B \\setminus A)$",
+          "feedback": "Tyhle dva rozdíly jsou vždy disjunktní, takže jejich průnik je prázdný. Mají se sjednotit."
+        },
+        {
+          "id": "sjednoceni-bez-pruniku",
+          "text": "$(A \\cup B) \\setminus (A \\cap B)$"
+        },
+        {
+          "id": "prunik-bez-sjednoceni",
+          "text": "$(A \\cap B) \\setminus (A \\cup B)$",
+          "feedback": "Průnik je podmnožinou sjednocení, takže tenhle rozdíl je vždy prázdný."
+        },
+        {
+          "id": "sjednoceni-bez-b",
+          "text": "$(A \\cup B) \\setminus B$",
+          "feedback": "To je jen $A \\setminus B$. Chybí prvky z $B$, které nejsou v $A$."
+        }
+      ],
+      "correct": "sjednoceni-bez-pruniku",
+      "explanation": "Do $A \\,\\Delta\\, B$ patří prvky, které leží v právě jedné z množin. To jsou všechny prvky sjednocení kromě těch společných: $A \\,\\Delta\\, B = (A \\cup B) \\setminus (A \\cap B)$. Rovnocenná je definice $(A \\setminus B) \\cup (B \\setminus A)$. V logice odpovídá symetrický rozdíl vylučovací disjunkci (XOR).",
+      "difficulty": 3,
+      "tags": [
+        "idm",
+        "mnoziny",
+        "mnozinove-zakony",
+        "symetricky-rozdil"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "idm-04-mohutnost-symetrickeho-rozdilu",
+      "type": "numeric",
+      "prompt": "Konečné množiny splňují $|A| = 10$, $|B| = 7$ a $|A \\cap B| = 3$. Kolik prvků má $A \\,\\Delta\\, B$?",
+      "answer": 11,
+      "hint": "Společné prvky do symetrického rozdílu nepatří – ani z jedné strany.",
+      "explanation": "$|A \\setminus B| = 10 - 3 = 7$ a $|B \\setminus A| = 7 - 3 = 4$. Rozdíly jsou disjunktní, takže $|A \\,\\Delta\\, B| = 7 + 4 = 11$. Obecně $|A \\,\\Delta\\, B| = |A| + |B| - 2\\,|A \\cap B|$ – průnik se odečte dvakrát, protože je započítaný v $|A|$ i v $|B|$ a do výsledku nepatří vůbec. Pro srovnání $|A \\cup B| = 10 + 7 - 3 = 14$.",
+      "difficulty": 2,
+      "tags": [
+        "idm",
+        "mnoziny",
+        "mnozinove-zakony",
+        "symetricky-rozdil",
+        "mohutnost"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "idm-04-rozdil-intervalu",
+      "type": "single",
+      "prompt": "Pro intervaly $A = \\langle 1, 5)$ a $B = (3, 8\\rangle$ urči $A \\setminus B$.",
+      "choices": [
+        {
+          "id": "prunik",
+          "text": "$(3, 5)$",
+          "feedback": "To je $A \\cap B$, tedy co z $A$ ubereš, ne co zbude."
+        },
+        {
+          "id": "otevreny-zprava",
+          "text": "$\\langle 1, 3)$",
+          "feedback": "Číslo $3$ v $B$ neleží, protože $B$ je zleva otevřený. V $A$ ale je, takže v rozdílu zůstane."
+        },
+        {
+          "id": "uzavreny",
+          "text": "$\\langle 1, 3\\rangle$"
+        },
+        {
+          "id": "b-minus-a",
+          "text": "$\\langle 5, 8\\rangle$",
+          "feedback": "To je opačný rozdíl $B \\setminus A$."
+        }
+      ],
+      "correct": "uzavreny",
+      "explanation": "$x \\in A \\setminus B \\Leftrightarrow x \\in A \\wedge x \\notin B$. Z $\\langle 1, 5)$ se odebere všechno, co je větší než $3$. Zajímavé jsou jen krajní body: $1 \\in A$ a $1 \\notin B$, takže zůstává; $3 \\in A$ a $3 \\notin B$ (kulatá závorka), takže zůstává taky. Vyjde $\\langle 1, 3\\rangle$. Pro kontrolu $A \\cup B = \\langle 1, 8\\rangle$ a $A \\cap B = (3, 5)$.",
+      "difficulty": 2,
+      "tags": [
+        "idm",
+        "mnoziny",
+        "mnozinove-zakony",
+        "intervaly",
+        "rozdil"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "idm-04-komutativni-operace",
+      "type": "multi",
+      "prompt": "Pro které operace $\\circ$ platí $A \\circ B = B \\circ A$ pro všechny množiny $A$, $B$?",
+      "choices": [
+        {
+          "id": "sjednoceni",
+          "text": "sjednocení $\\cup$"
+        },
+        {
+          "id": "prunik",
+          "text": "průnik $\\cap$"
+        },
+        {
+          "id": "rozdil",
+          "text": "rozdíl $\\setminus$",
+          "feedback": "Pro $A = \\{1\\}$, $B = \\emptyset$ je $A \\setminus B = \\{1\\}$, ale $B \\setminus A = \\emptyset$."
+        },
+        {
+          "id": "symetricky",
+          "text": "symetrický rozdíl $\\Delta$"
+        },
+        {
+          "id": "soucin",
+          "text": "kartézský součin $\\times$",
+          "feedback": "$\\{1\\} \\times \\{2\\} = \\{[1, 2]\\}$, ale $\\{2\\} \\times \\{1\\} = \\{[2, 1]\\}$ a $[1, 2] \\neq [2, 1]$."
+        }
+      ],
+      "correct": [
+        "sjednoceni",
+        "prunik",
+        "symetricky"
+      ],
+      "partialCredit": true,
+      "explanation": "Komutativní jsou ty operace, jejichž logický protějšek je symetrický: $\\vee$ (sjednocení), $\\wedge$ (průnik) a XOR (symetrický rozdíl). Tytéž tři jsou i asociativní, takže v nich smíš závorky i pořadí přehazovat libovolně. Rozdíl odpovídá $p \\wedge \\neg q$ – role $A$ a $B$ jsou různé. Kartézský součin skládá uspořádané dvojice, a u nich na pořadí záleží.",
+      "difficulty": 2,
+      "tags": [
+        "idm",
+        "mnoziny",
+        "mnozinove-zakony",
+        "komutativita"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "idm-04-operace-a-logicke-spojky",
+      "type": "matching",
+      "prompt": "Přiřaď k množinovému pojmu logickou spojku, kterou se v důkazu přes prvky nahrazuje. Jedna spojka zbude.",
+      "left": [
+        {
+          "id": "sjednoceni",
+          "text": "sjednocení $A \\cup B$"
+        },
+        {
+          "id": "prunik",
+          "text": "průnik $A \\cap B$"
+        },
+        {
+          "id": "doplnek",
+          "text": "doplněk $A'_M$"
+        },
+        {
+          "id": "inkluze",
+          "text": "inkluze $A \\subseteq B$"
+        },
+        {
+          "id": "rovnost",
+          "text": "rovnost $A = B$"
+        }
+      ],
+      "right": [
+        {
+          "id": "disjunkce",
+          "text": "disjunkce $\\vee$"
+        },
+        {
+          "id": "konjunkce",
+          "text": "konjunkce $\\wedge$"
+        },
+        {
+          "id": "negace",
+          "text": "negace $\\neg$"
+        },
+        {
+          "id": "implikace",
+          "text": "implikace $\\Rightarrow$"
+        },
+        {
+          "id": "ekvivalence",
+          "text": "ekvivalence $\\Leftrightarrow$"
+        },
+        {
+          "id": "xor",
+          "text": "vylučovací disjunkce (XOR)"
+        }
+      ],
+      "pairs": [
+        [
+          "sjednoceni",
+          "disjunkce"
+        ],
+        [
+          "prunik",
+          "konjunkce"
+        ],
+        [
+          "doplnek",
+          "negace"
+        ],
+        [
+          "inkluze",
+          "implikace"
+        ],
+        [
+          "rovnost",
+          "ekvivalence"
+        ]
+      ],
+      "explanation": "$A \\subseteq B$ znamená „pro každé $x$: $x \\in A \\Rightarrow x \\in B$“ a $A = B$ znamená „pro každé $x$: $x \\in A \\Leftrightarrow x \\in B$“. Rovnost je tedy dvojice implikací, proto se dokazuje dvěma inkluzemi. XOR zbyl, protože odpovídá symetrickému rozdílu $A \\,\\Delta\\, B$. Díky tomuhle slovníku platí pro množiny stejné zákony jako ve výrokové logice – De Morgan, distributivita, absorpce.",
+      "difficulty": 2,
+      "tags": [
+        "idm",
+        "mnoziny",
+        "mnozinove-zakony",
+        "prevod-na-logiku",
+        "vyrokova-logika"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "idm-04-distributivita-pruniku",
+      "type": "single",
+      "prompt": "Čemu se pro libovolné množiny rovná $A \\cap (B \\cup C)$?",
+      "choices": [
+        {
+          "id": "sjednoceni-pruniku",
+          "text": "$(A \\cap B) \\cup (A \\cap C)$"
+        },
+        {
+          "id": "prunik-pruniku",
+          "text": "$(A \\cap B) \\cap (A \\cap C)$",
+          "feedback": "To je $A \\cap B \\cap C$. Prvek z $A \\cap B$ mimo $C$ by chyběl."
+        },
+        {
+          "id": "prunik-sjednoceni",
+          "text": "$(A \\cup B) \\cap (A \\cup C)$",
+          "feedback": "Tohle je distributivita obráceně, rovná se $A \\cup (B \\cap C)$. Obsahuje celé $A$, i prvky mimo $B \\cup C$."
+        },
+        {
+          "id": "zavorka-jen-u-b",
+          "text": "$(A \\cap B) \\cup C$",
+          "feedback": "Průnik s $A$ musíš „roznásobit“ na oba členy. Prvky z $C$ mimo $A$ sem nepatří."
+        }
+      ],
+      "correct": "sjednoceni-pruniku",
+      "explanation": "Distributivní zákon: průnik se roznásobí přes sjednocení stejně jako násobení přes sčítání, $a(b + c) = ab + ac$. Přes prvky je to distributivita $\\wedge$ vůči $\\vee$: $p \\wedge (q \\vee r) \\Leftrightarrow (p \\wedge q) \\vee (p \\wedge r)$. Na rozdíl od čísel ale platí i duální zákon $A \\cup (B \\cap C) = (A \\cup B) \\cap (A \\cup C)$ – u čísel $a + bc \\neq (a + b)(a + c)$.",
+      "difficulty": 2,
+      "tags": [
+        "idm",
+        "mnoziny",
+        "mnozinove-zakony",
+        "distributivita"
+      ],
+      "status": "draft"
+    },
+    {
+      "id": "idm-04-dukaz-de-morgan",
+      "type": "ordering",
+      "prompt": "Seřaď kroky důkazu inkluze $(A \\cup B)'_M \\subseteq A'_M \\cap B'_M$ tak, jak jdou po sobě. Každý krok plyne z předchozího.",
+      "items": [
+        {
+          "id": "de-morgan",
+          "text": "$x \\in M \\wedge x \\notin A \\wedge x \\notin B$"
+        },
+        {
+          "id": "zaver",
+          "text": "$x \\in A'_M \\cap B'_M$"
+        },
+        {
+          "id": "definice-doplnku",
+          "text": "$x \\in M \\wedge x \\notin A \\cup B$"
+        },
+        {
+          "id": "zdvojeni",
+          "text": "$(x \\in M \\wedge x \\notin A) \\wedge (x \\in M \\wedge x \\notin B)$"
+        },
+        {
+          "id": "zacatek",
+          "text": "$x \\in (A \\cup B)'_M$"
+        },
+        {
+          "id": "negace-sjednoceni",
+          "text": "$x \\in M \\wedge \\neg(x \\in A \\vee x \\in B)$"
+        }
+      ],
+      "correctOrder": [
+        "zacatek",
+        "definice-doplnku",
+        "negace-sjednoceni",
+        "de-morgan",
+        "zdvojeni",
+        "zaver"
+      ],
+      "explanation": "Postup: definice doplňku, definice sjednocení, De Morganův zákon pro negaci disjunkce, a pak **idempotence** – $x \\in M$ se zkopíruje ($p \\Leftrightarrow p \\wedge p$), aby šlo každou závorku přečíst jako doplněk. Poslední krok je definice průniku. Protože každý krok je ekvivalence, dá se celý řetězec přečíst i pozpátku a tím je dokázaná i opačná inkluze.",
+      "difficulty": 3,
+      "tags": [
+        "idm",
+        "mnoziny",
+        "mnozinove-zakony",
+        "dukazy",
+        "de-morgan"
+      ],
+      "status": "draft"
+    }
+  ]
+}
